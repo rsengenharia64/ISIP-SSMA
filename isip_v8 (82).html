@@ -441,6 +441,7 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
       <button class="seg-btn" onclick="setSeg('siderurgia',this)" title="Siderurgia">&#9883; SID</button>
       <button class="seg-btn" onclick="setSeg('cimento',this)" title="Cimento">&#127959; CIM</button>
       <button class="seg-btn" onclick="setSeg('petroleo',this)" title="Petroleo e Gas">&#128167; P&amp;G</button>
+      <button class="seg-btn" onclick="setSeg('usinas',this)" title="Usinas">&#9889; USI</button>
     </div>
     <div class="ml">
       <div class="sv-bar">
@@ -737,6 +738,18 @@ var AREAS_DB=[
 ]},
 {seg:'Trabalho em Altura',areas:[
   {n:'Estrutura Superior / Andaime',tipo:'Critica',crit:'CRITICO',riscos:['Queda >2m','Queda objetos','Colapso estrutura','Choque eletrico'],nrs:['NR-35','NR-18','NR-6'],intl:['ISO 45001','BS 8800'],cap:4,tech:'BLE+Wearable',trein:['NR-35 completo'],epi:'Cinto paraquedista, trava-quedas, capacete c/ jugular',sensor:'BLE + wearable (queda)',bloq:'Sem NR-35 = bloqueio total'}
+]},
+{seg:'Cimenteira',areas:[
+  {n:'Forno Rotativo',tipo:'Critica',crit:'CRITICO',riscos:['Calor extremo >300C','Poeira calcario','Queimadura','Engolfamento refratario'],nrs:['NR-15','NR-12','NR-33','NR-6'],intl:['ISO 45001','ISO 14001'],cap:6,tech:'UWB+Wearable',trein:['NR-15','NR-33','Op. Forno'],epi:'Capacete, luva termica, mascara PFF2, bota seguranca',sensor:'UWB + sensor temperatura + poeira',bloq:'Sem treinamento forno = bloqueio'},
+  {n:'Silos Cimento',tipo:'Critica',crit:'CRITICO',riscos:['Engolfamento','Asfixia','Queda interna','Poeira concentrada'],nrs:['NR-33','NR-35','NR-6'],intl:['ISO 45001','OSHA 1910.146'],cap:3,tech:'UWB obrigatorio',trein:['NR-33 completo','NR-35'],epi:'Detector gases, cinto, trava-quedas, EPRA, mascara',sensor:'UWB + detector O2/CO2',bloq:'Sem NR-33 = bloqueio total'},
+  {n:'Moinho Cru/Cimento',tipo:'Operacional',crit:'ALTO',riscos:['Ruido extremo >100dB','Poeira silica','EC no moinho','Prensamento'],nrs:['NR-12','NR-15','NR-33','NR-6'],intl:['ISO 45001'],cap:8,tech:'BLE',trein:['NR-12','NR-33','LOTO'],epi:'Protetor auditivo duplo, mascara PFF2, capacete',sensor:'BLE + sensor ruido + poeira',bloq:'Sem NR-12/LOTO = bloqueio'}
+]},
+{seg:'Usinas',areas:[
+  {n:'Casa de Maquinas / Turbinas',tipo:'Critica',crit:'CRITICO',riscos:['Vapor sob pressao','Partes girantes','Ruido extremo >110dB','Choque eletrico AT'],nrs:['NR-10','NR-12','NR-13','NR-6'],intl:['ISO 45001','IEC 61511','NFPA 70E'],cap:8,tech:'UWB+Wearable',trein:['NR-10 SEP','NR-12','NR-13','Op. Turbinas'],epi:'Capacete, protetor auditivo duplo, luva isolante, bota isolante',sensor:'UWB + vibration + temperatura',bloq:'Sem NR-10/NR-13 = bloqueio total'},
+  {n:'Caldeira',tipo:'Critica',crit:'CRITICO',riscos:['Explosao caldeira','Vapor pressurizado','Queimadura grave','EC refratario','Gases toxicos'],nrs:['NR-13','NR-33','NR-15','NR-6'],intl:['ISO 45001','ASME','IEC 61511'],cap:6,tech:'UWB+Gas',trein:['NR-13','NR-33','Op. Caldeira','Emergencia'],epi:'Mascara gases, luva termica, avental termico, capacete',sensor:'UWB + detector gas + pressao + temperatura',bloq:'Sem NR-13/NR-33 = bloqueio total'},
+  {n:'Subestacao AT',tipo:'Critica',crit:'CRITICO',riscos:['Arco eletrico AT','Choque eletrico letal','Incendio','Campo eletromagnetico'],nrs:['NR-10','NR-6'],intl:['NFPA 70E','IEC 61511','IEEE C2'],cap:4,tech:'BLE+UWB',trein:['NR-10 SEP','Manobra AT','LOTO'],epi:'Luva isolante classe 2, bota isolante, vestimenta arco, capacete FR',sensor:'BLE + sensor eletromagnetico',bloq:'Sem NR-10 SEP = bloqueio total'},
+  {n:'Torre Resfriamento',tipo:'Operacional',crit:'ALTO',riscos:['Queda de altura','Legionella','EC interior','Vapor'],nrs:['NR-35','NR-33','NR-12','NR-6'],intl:['ISO 45001'],cap:5,tech:'BLE',trein:['NR-35','NR-33','Biosseguranca'],epi:'Cinto paraquedista, mascara, bota antiderrapante',sensor:'BLE + sensor biologico',bloq:'Sem NR-35/NR-33 = bloqueio'},
+  {n:'Administrativa',tipo:'Apoio',crit:'BAIXO',riscos:['Ergonomia','Incendio predial'],nrs:['NR-17','NR-23','NR-6'],intl:['ISO 45001'],cap:30,tech:'BLE',trein:['Integracao','Brigadista'],epi:'Nao aplicavel (area administrativa)',sensor:'BLE beacon',bloq:'Sem integracao = bloqueio acesso'}
 ]}
 ];
 var canvas,ctx,W,H,pt=0,view='exposicao',rendered={},simOn=false;
@@ -763,8 +776,10 @@ function scolor(s){
 /* === SPLASH === */
 var CURRENT_PROFILE='tecnico';
 var PROFILE_LABELS={admin:'Admin Corporativo',gestor:'Gestor de Unidade',tecnico:'Tecnico SST',operacional:'Operacional',auditor:'Auditor'};
-function canSeeSensitive(){return CURRENT_PROFILE==='admin'||CURRENT_PROFILE==='tecnico'||CURRENT_PROFILE==='gestor';}
+function canSeeSensitive(){return CURRENT_PROFILE==='admin'||CURRENT_PROFILE==='tecnico'||CURRENT_PROFILE==='gestor'||CURRENT_PROFILE==='auditor';}
 function canEdit(){return CURRENT_PROFILE==='admin'||CURRENT_PROFILE==='tecnico';}
+function canAudit(){return CURRENT_PROFILE==='admin'||CURRENT_PROFILE==='auditor';}
+function canOperate(){return CURRENT_PROFILE!=='auditor';}
 var TV_MODE=false;
 function toggleTV(){TV_MODE=!TV_MODE;document.body.classList.toggle('tv-mode',TV_MODE);var b=G('tv-badge');if(b){b.textContent=TV_MODE?'TV ON':'TV';b.style.background=TV_MODE?'rgba(0,255,136,.15)':'rgba(0,212,255,.05)';}}
 function enterApp(){
@@ -774,9 +789,12 @@ function enterApp(){
   var restrictedTabs=['pupilo','journey'];
   if(CURRENT_PROFILE==='operacional'){
     restrictedTabs.forEach(function(t){
-      var origR=R[t];
       R[t]=function(){var m=G('m-'+t);m.innerHTML='<div class="ib am" style="margin:20px"><div class="ibt">&#128274; Acesso Restrito</div><p style="font-size:11px;color:var(--t2)">Seu perfil (<strong>'+PROFILE_LABELS[CURRENT_PROFILE]+'</strong>) nao possui permissao para acessar dados sensiveis de saude e jornada.<br><br>Solicite acesso ao administrador ou entre com perfil Tecnico SST.</p></div>';};
     });
+  }
+  /* Auditor: read-only, no simulator access */
+  if(CURRENT_PROFILE==='auditor'){
+    var simBtn=G('simpanel');if(simBtn)simBtn.style.display='none';
   }
   var s=G('splash');s.style.opacity='0';setTimeout(function(){s.style.display='none';G('app').style.display='flex';initAll();},500);
 }
@@ -946,7 +964,9 @@ function drawMap(){
   ctx.textAlign='left';ctx.textBaseline='alphabetic';
   try{var wc=parseInt(gridC.slice(1,3),16)+','+parseInt(gridC.slice(3,5),16)+','+parseInt(gridC.slice(5,7),16);ctx.fillStyle='rgba('+wc+',0.035)';}catch(e){ctx.fillStyle=crgba('cy',0.035);}
   ctx.font='bold '+W*0.065+'px "Orbitron",monospace';
-  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('SIGMINE',W/2,H*0.5);
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  var segWatermark=(typeof CURRENT_SEG!=='undefined'&&typeof SEG_CONFIG!=='undefined'&&SEG_CONFIG[CURRENT_SEG])?SEG_CONFIG[CURRENT_SEG].label.toUpperCase():'ISIP';
+  ctx.fillText(segWatermark,W/2,H*0.5);
   /* Violation overlay — top right */
   if(RULE_VIOLATIONS&&RULE_VIOLATIONS.length>0){
     var vx=W-90,vy=12;
@@ -1132,7 +1152,7 @@ function toggleEM(){
 }
 
 /* === SIMULATOR === */
-function toggleSim(){var sp=G('simpanel');sp.classList.toggle('on');simOn=sp.classList.contains('on');G('opbadge').className='badge '+(simOn?'badge-sim':'badge-op');G('opbadge').innerHTML=simOn?'&#127922; SIMULANDO':'&#9889; OPERACAO';showSaveInd(simOn?'saving':'ok',simOn?'MODO SIMULACAO ATIVO':'MODO OPERACAO');if(!simOn){ZONES=JSON.parse(JSON.stringify(ZONES_BASE));WORKERS.forEach(function(w,i){w.jornadaH=_d.WORKERS[i].jornadaH;w.status=_d.WORKERS[i].status;w.cogScore=_d.WORKERS[i].cogScore;w.apt=_d.WORKERS[i].apt;});drawMap();updatePanels();['exec','dash','journey','worker3d'].forEach(function(mod){rendered[mod]=false;});}}
+function toggleSim(){var sp=G('simpanel');sp.classList.toggle('on');simOn=sp.classList.contains('on');G('opbadge').className='badge '+(simOn?'badge-sim':'badge-op');G('opbadge').innerHTML=simOn?'&#127922; SIMULANDO':'&#9889; OPERACAO';showSaveInd(simOn?'saving':'ok',simOn?'MODO SIMULACAO ATIVO':'MODO OPERACAO');if(!simOn){var resetZones=SEG_ZONES[CURRENT_SEG]||ZONES_BASE;ZONES_BASE=JSON.parse(JSON.stringify(resetZones));ZONES=JSON.parse(JSON.stringify(ZONES_BASE));WORKERS.forEach(function(w,i){if(_d.WORKERS[i]){w.jornadaH=_d.WORKERS[i].jornadaH;w.status=_d.WORKERS[i].status;w.cogScore=_d.WORKERS[i].cogScore;w.apt=_d.WORKERS[i].apt;}});drawMap();updatePanels();Object.keys(rendered).forEach(function(mod){rendered[mod]=false;});}}
 function simAct(a){
   var fb='';
   switch(a){
@@ -1144,7 +1164,7 @@ function simAct(a){
     case 'evac':toggleEM();return;
     case 'add':ZONES[0].people+=5;fb='+5 pessoas na Britagem Primaria (total: '+ZONES[0].people+')';break;
     case 'remove':ZONES[6].people=Math.max(0,ZONES[6].people-3);fb='-3 pessoas no Pit Norte (total: '+ZONES[6].people+')';break;
-    case 'reset':ZONES=JSON.parse(JSON.stringify(ZONES_BASE));WORKERS.forEach(function(w,i){w.jornadaH=_d.WORKERS[i].jornadaH;w.status=_d.WORKERS[i].status;w.cogScore=_d.WORKERS[i].cogScore;w.apt=_d.WORKERS[i].apt;});fb='Todos os dados normalizados';break;
+    case 'reset':var resetZones=SEG_ZONES[CURRENT_SEG]||ZONES_BASE;ZONES_BASE=JSON.parse(JSON.stringify(resetZones));ZONES=JSON.parse(JSON.stringify(ZONES_BASE));WORKERS.forEach(function(w,i){if(_d.WORKERS[i]){w.jornadaH=_d.WORKERS[i].jornadaH;w.status=_d.WORKERS[i].status;w.cogScore=_d.WORKERS[i].cogScore;w.apt=_d.WORKERS[i].apt;}});fb='Dados normalizados (segmento: '+SEG_CONFIG[CURRENT_SEG].label+')';break;
     case 'fadiga':WORKERS.forEach(function(w){w.cogScore=Math.max(20,w.cogScore-25);});fb='Fadiga cognitiva simulada — scores reduzidos em 25 pontos';break;
     case 'inapto':WORKERS[6].apt=false;WORKERS[6].status='alert';ZONES[8].people+=1;fb='Bruno Oliveira (INAPTO) detectado em Estrutura Superior — BLOQUEIO';break;
     case 'simultan':ZONES[3].people=6;fb='EC-2 Esp.Confinado com 6 pessoas (capacidade: 4) — EXCESSO';break;
@@ -1166,9 +1186,11 @@ var RULE_ENGINE={
       case 'R005':return w.status==='blocked';
       case 'R006':return w.jornadaH>8&&w.conf;
       case 'R007':return w.cogScore<50;
-      case 'R008':return false;/* requires device data */
-      case 'R009':return false;/* requires sensor data */
+      case 'R008':return w.jornadaH>6&&w.cogScore<60;/* fadiga combinada */
+      case 'R009':return w.jornadaH>10&&!w.apt;/* jornada excessiva + inapto */
       case 'R010':return !w.apt&&w.cogScore<60;
+      case 'R011':return w.riskScore>=8;/* risco individual critico */
+      case 'R012':return w.descanso<8;/* interjornada gravemente insuficiente */
       default:return false;
     }
   },
@@ -1527,7 +1549,7 @@ h+='<tr><td class="fpl"><strong>Acoes</strong></td><td>NORMAL → MONITORAMENTO 
 h+='</tbody></table></div>';
 /* Config panel */
 h+='<div class="ib am" style="margin-bottom:8px"><div class="ibt">&#9881; Parametros por Planta (Editaveis)</div>';
-h+='<div style="margin-bottom:8px"><select id="jrn-planta" style="background:var(--p2);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:4px 8px;font-family:var(--hud);font-size:11px" onchange="var v=this.value;var cfg={\'mina-brucutu\':{ida:45,volta:50,tol:10,base:\'Portaria BLE\'},\'mina-alegria\':{ida:60,volta:65,tol:15,base:\'Portaria BLE\'},\'csn-presidente-vargas\':{ida:30,volta:35,tol:10,base:\'Portaria + Ponto\'},\'samarco-germano\':{ida:55,volta:60,tol:10,base:\'Portaria BLE\'},\'ternium-ipatinga\':{ida:25,volta:30,tol:5,base:\'Portaria RFID\'}};var c=cfg[v]||cfg[\'mina-brucutu\'];G(\'jrn-ida\').textContent=c.ida+\'min\';G(\'jrn-volta\').textContent=c.volta+\'min\';G(\'jrn-tol\').textContent=c.tol+\'min\';G(\'jrn-base\').textContent=c.base;">';
+h+='<div style="margin-bottom:8px"><select id="jrn-planta" style="background:var(--deep);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:4px 8px;font-family:var(--hud);font-size:11px" onchange="var v=this.value;var cfg={\'mina-brucutu\':{ida:45,volta:50,tol:10,base:\'Portaria BLE\'},\'mina-alegria\':{ida:60,volta:65,tol:15,base:\'Portaria BLE\'},\'csn-presidente-vargas\':{ida:30,volta:35,tol:10,base:\'Portaria + Ponto\'},\'samarco-germano\':{ida:55,volta:60,tol:10,base:\'Portaria BLE\'},\'ternium-ipatinga\':{ida:25,volta:30,tol:5,base:\'Portaria RFID\'}};var c=cfg[v]||cfg[\'mina-brucutu\'];G(\'jrn-ida\').textContent=c.ida+\'min\';G(\'jrn-volta\').textContent=c.volta+\'min\';G(\'jrn-tol\').textContent=c.tol+\'min\';G(\'jrn-base\').textContent=c.base;">';
 h+='<option value="mina-brucutu">Mina Brucutu (Vale)</option><option value="mina-alegria">Mina Alegria (Samarco)</option><option value="csn-presidente-vargas">CSN Presidente Vargas</option><option value="samarco-germano">Samarco Germano</option><option value="ternium-ipatinga">Ternium Ipatinga</option></select></div>';
 h+='<div class="g2" style="margin-bottom:6px">';
 h+='<div class="card"><div class="cl">Trajeto Ida</div><div class="cv sm" id="jrn-ida">45min</div></div>';
@@ -2150,9 +2172,23 @@ function gerarRelatorio(){
       var alertW=WORKERS.filter(function(w){return w.status==='alert'||!w.apt||w.cogScore<50;});
       if(alertW.length===0){rowFull('Nenhum trabalhador em alerta.');}
       alertW.forEach(function(w){row(w.name+' ('+w.role+')','Risco:'+w.riskScore+' Cog:'+w.cogScore+' Jorn:'+w.jornadaH+'h '+(w.apt?'APTO':'INAPTO'));});ln();
-      /* Section 5 */
-      title('5. EMPRESAS');
+      /* Section 5: Pupilometria */
+      title('5. PUPILOMETRIA — ULTIMO SCORE COGNITIVO');
+      WORKERS.forEach(function(w){
+        var cogLab=w.cogScore>=70?'APTO':w.cogScore>=50?'ALERTA':'CRITICO';
+        row(w.name+' ('+w.role+')',w.cogScore+'/100 — '+cogLab+' | Jornada: '+w.jornadaH+'h');
+      });ln();
+      /* Section 6 */
+      title('6. EMPRESAS');
       EMPRESAS.forEach(function(e){var ew=WORKERS.filter(function(w){return w.co===e.nome;}).length;row(e.nome+' ('+e.tipo+')',ew+' trabalhadores');});
+      /* Section 7: Segmento */
+      title('7. CONFIGURACAO DO SEGMENTO');
+      if(typeof SEG_CONFIG!=='undefined'&&SEG_CONFIG[seg]){
+        row('Segmento:',SEG_CONFIG[seg].label);
+        row('NRs aplicaveis:',SEG_CONFIG[seg].nrs.join(', '));
+        row('Areas tipicas:',SEG_CONFIG[seg].areas.slice(0,5).join(', '));
+        row('Documentos obrig.:',SEG_CONFIG[seg].docs.join(', '));
+      }ln();
       /* Footer */
       checkPage();y+=10;
       pdf.setDrawColor(0,150,220);pdf.line(14,y,pw-14,y);y+=6;
@@ -2184,20 +2220,6 @@ setInterval(updateClock,1000);updateClock();
 window.addEventListener('beforeunload',function(){saveState();});
 /* Try restore on init */
 try{if(loadState()){showSaveInd('ok','RESTAURADO');}}catch(e){}
-
-/* ============================================================
-   P1 — PUPILOMETRIA MODULE (6 sub-tabs)
-   ============================================================ */
-var PUP_RECORDS=[
-  {id:1,worker:'Carlos Mendes',time:'14:30',score:62,blink:18,perclos:0.18,dilat:4.2,status:'alerta',zone:'Britagem P1'},
-  {id:2,worker:'Jose Santos',time:'14:15',score:88,blink:14,perclos:0.08,dilat:3.8,status:'apto',zone:'SE-1'},
-  {id:3,worker:'Fabio Nunes',time:'13:50',score:41,blink:22,perclos:0.28,dilat:5.1,status:'critico',zone:'EC-2'},
-  {id:4,worker:'Bruno Oliveira',time:'13:30',score:55,blink:20,perclos:0.22,dilat:4.8,status:'alerta',zone:'Estrutura Sup.'},
-  {id:5,worker:'Diego Rocha',time:'12:00',score:77,blink:12,perclos:0.10,dilat:3.5,status:'apto',zone:'Pit Norte'},
-  {id:6,worker:'Pedro Costa',time:'11:30',score:71,blink:15,perclos:0.12,dilat:3.9,status:'apto',zone:'Area Carga'},
-  {id:7,worker:'Marcos Lima',time:'10:45',score:68,blink:16,perclos:0.15,dilat:4.0,status:'alerta',zone:'Forno F-1'},
-  {id:8,worker:'Tatiana Lopes',time:'08:30',score:94,blink:11,perclos:0.05,dilat:3.2,status:'apto',zone:'Torre Ctrl'}
-];
 
 /* ============================================================
    P1 — PUPILOMETRIA COMPLETA — PIPELINE REAL
@@ -2307,7 +2329,7 @@ h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-t
 
 /* COLUNA 1: INICIAR TESTE */
 h+='<div class="ib bl"><div class="ibt">&#128248; Iniciar Avaliacao</div>';
-h+='<div style="margin:8px 0"><select id="pup-test-worker" style="width:100%;background:var(--p2);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:6px;font-family:var(--hud);font-size:11px">';
+h+='<div style="margin:8px 0"><select id="pup-test-worker" style="width:100%;background:var(--deep);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:6px;font-family:var(--hud);font-size:11px">';
 h+='<option value="">Selecionar trabalhador...</option>';
 WORKERS.forEach(function(w){h+='<option value="'+w.id+'">'+w.name+' — '+w.role+'</option>';});
 h+='</select></div>';
@@ -2393,7 +2415,7 @@ h+='<div class="tcon" id="pup-camera" style="display:none">';
 /* Worker selector */
 h+='<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:8px;background:rgba(var(--cy-rgb),.04);border:1px solid rgba(var(--cy-rgb),.15);border-radius:6px">';
 h+='<div style="font-family:var(--hud);font-size:11px;font-weight:700;color:var(--cy);white-space:nowrap">&#128100; IDENTIFICACAO:</div>';
-h+='<select id="pup-worker-sel" style="flex:1;background:var(--p2);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:6px 10px;font-family:var(--hud);font-size:12px;font-weight:700">';
+h+='<select id="pup-worker-sel" style="flex:1;background:var(--deep);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:6px 10px;font-family:var(--hud);font-size:12px;font-weight:700">';
 WORKERS.forEach(function(w){h+='<option value="'+w.id+'">'+esc(w.name)+' — '+esc(w.role)+' ('+esc(w.co)+')</option>';});
 h+='<option value="manual">&#9999; Cadastro manual (visitante/terceiro)</option>';
 h+='</select>';
@@ -2402,9 +2424,9 @@ h+='</div>';
 h+='<div id="pup-manual-entry" style="display:none;padding:8px 12px;margin-bottom:8px;background:rgba(var(--wn-rgb),.04);border:1px solid rgba(var(--wn-rgb),.15);border-radius:6px">';
 h+='<div style="font-family:var(--hud);font-size:10px;color:var(--wn);margin-bottom:6px">CADASTRO MANUAL — VISITANTE / TERCEIRO</div>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">';
-h+='<input id="pup-m-nome" placeholder="Nome completo" style="background:var(--p2);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
-h+='<input id="pup-m-funcao" placeholder="Funcao / cargo" style="background:var(--p2);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
-h+='<input id="pup-m-empresa" placeholder="Empresa" style="background:var(--p2);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
+h+='<input id="pup-m-nome" placeholder="Nome completo" style="background:var(--deep);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
+h+='<input id="pup-m-funcao" placeholder="Funcao / cargo" style="background:var(--deep);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
+h+='<input id="pup-m-empresa" placeholder="Empresa" style="background:var(--deep);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
 h+='</div></div>';
 h+='<script>document.addEventListener("change",function(e){if(e.target&&e.target.id==="pup-worker-sel"){var me=G("pup-manual-entry");if(me)me.style.display=e.target.value==="manual"?"block":"none";}});<\/script>';
 /* Stage header */
@@ -3392,6 +3414,18 @@ var PLANT_CHAINS={
       {n:'EXPEDICAO',sub:'Terminal',color:'var(--ok)',steps:[{id:'7.1',n:'Pier',eq:'3 Bercos',detail:'VLCC 300.000 DWT'},{id:'7.2',n:'Dutos',eq:'450 km',detail:'API 5L X65'}]}
     ],
     kpis:[{n:'PRODUCAO',v:'150k',u:'bpd',m:'META: 160k'},{n:'DISPONIB.',v:'94%',u:'',m:''},{n:'SEGURANCA',v:'0.8',u:'TRIR',m:''},{n:'EFICIENCIA',v:'97%',u:'Solomon',m:''},{n:'EMISSOES',v:'-15%',u:'vs 2023',m:''}]
+  },
+  usinas:{title:'USINA TERMOELETRICA — CICLO COMPLETO',sub:'Do combustivel a energia | Recepcao → Combustao → Geracao → Transformacao → Transmissao',
+    stages:[
+      {n:'COMBUSTIVEL',sub:'Recepcao e preparo',color:'var(--wn)',steps:[{id:'1.1',n:'Patio Carvao/Biomassa',eq:'Empilhadeira/Retomadora',detail:'2.000t/dia'},{id:'1.2',n:'Moagem',eq:'4 Moinhos',detail:'Pulverizacao <75μm'}]},
+      {n:'CALDEIRA',sub:'Geracao de vapor',color:'var(--rd)',steps:[{id:'2.1',n:'Fornalha',eq:'Caldeira aquatubular',detail:'540°C / 170 bar'},{id:'2.2',n:'Superaquecedor',eq:'2 Estagios',detail:'Vapor superaquecido'},{id:'2.3',n:'Economizador',eq:'Pre-aquecimento',detail:'Agua alimentacao'}]},
+      {n:'TURBINA',sub:'Conversao mecanica',color:'var(--cy)',steps:[{id:'3.1',n:'Turbina Vapor',eq:'350MW',detail:'3.600 RPM'},{id:'3.2',n:'Turbina Gas',eq:'150MW',detail:'Ciclo combinado'}]},
+      {n:'GERADOR',sub:'Conversao eletrica',color:'var(--el)',steps:[{id:'4.1',n:'Gerador Sincrono',eq:'500MVA',detail:'13.8kV'},{id:'4.2',n:'Excitacao',eq:'Brushless',detail:'AVR automatico'}]},
+      {n:'CONDENSACAO',sub:'Ciclo termico',color:'var(--pu)',steps:[{id:'5.1',n:'Condensador',eq:'Tubo/Casco',detail:'Vacuo 0.1 bar'},{id:'5.2',n:'Torre Resfr.',eq:'Hiperbolica',detail:'120.000m3/h'}]},
+      {n:'SUBESTACAO',sub:'Transformacao AT',color:'var(--ok)',steps:[{id:'6.1',n:'Transformadores',eq:'SE 230kV',detail:'3 Bancos 200MVA'},{id:'6.2',n:'Protecao',eq:'Reles digitais',detail:'SEL/ABB'}]},
+      {n:'TRANSMISSAO',sub:'Despacho',color:'var(--wn)',steps:[{id:'7.1',n:'LT 230kV',eq:'2 Circuitos',detail:'180 km'},{id:'7.2',n:'ONS',eq:'Despacho',detail:'Operacao NI'}]}
+    ],
+    kpis:[{n:'CAPACIDADE',v:'500',u:'MW',m:'META: 95% FC'},{n:'DISPONIB.',v:'93%',u:'',m:''},{n:'SEGURANCA',v:'1.2',u:'TRIR',m:''},{n:'RENDIM.',v:'42%',u:'Ciclo comb.',m:''},{n:'EMISSOES',v:'-10%',u:'vs 2023',m:''}]
   }
 };
 R['planta']=function(){
@@ -3692,6 +3726,29 @@ var critW=WORKERS.filter(function(w){return !w.apt;});
 checks.push({n:'Workers inaptos detectados',ok:true,d:critW.length+' inaptos — '+rv.filter(function(v){return v.priority==='Critica';}).length+' violacoes criticas'});
 /* Check 12: Login/profile */
 checks.push({n:'Perfil de acesso definido',ok:typeof CURRENT_PROFILE!=='undefined',d:'Perfil: '+(typeof CURRENT_PROFILE!=='undefined'?PROFILE_LABELS[CURRENT_PROFILE]:'INDEFINIDO')});
+/* Check 13: SEG_CONFIG has all 5 segments */
+var segCount=typeof SEG_CONFIG!=='undefined'?Object.keys(SEG_CONFIG).length:0;
+checks.push({n:'SEG_CONFIG — 5 segmentos configurados',ok:segCount>=5,d:segCount+'/5 segmentos'});
+/* Check 14: SEG_ZONES has matching zones */
+var segZCount=typeof SEG_ZONES!=='undefined'?Object.keys(SEG_ZONES).length:0;
+checks.push({n:'SEG_ZONES — Zonas por segmento',ok:segZCount>=4,d:segZCount+' segmentos com zonas dedicadas'});
+/* Check 15: EQUIP_DB coverage */
+var eqCount=typeof EQUIP_DB!=='undefined'?Object.keys(EQUIP_DB).length:0;
+checks.push({n:'EQUIP_DB — Biblioteca equipamentos',ok:eqCount>=4,d:eqCount+' segmentos com equipamentos'});
+/* Check 16: PLANT_CHAINS coverage */
+var pcCount=typeof PLANT_CHAINS!=='undefined'?Object.keys(PLANT_CHAINS).length:0;
+checks.push({n:'PLANT_CHAINS — Plantas por segmento',ok:pcCount>=4,d:pcCount+' segmentos com planta visual'});
+/* Check 17: Theme CSS variables */
+var csVoid=getComputedStyle(document.body).getPropertyValue('--void').trim();
+checks.push({n:'CSS Variables — tema ativo',ok:csVoid.length>0,d:'--void: '+csVoid});
+/* Check 18: jsPDF available */
+checks.push({n:'jsPDF carregado (exportacao PDF)',ok:!!(window.jspdf&&window.jspdf.jsPDF),d:window.jspdf?'Disponivel':'Indisponivel — fallback TXT'});
+/* Check 19: Pupilometria records */
+var pupCount=typeof PUP_RECORDS!=='undefined'?PUP_RECORDS.length:0;
+checks.push({n:'PUP_RECORDS — registros pupilometria',ok:pupCount>0,d:pupCount+' registros'});
+/* Check 20: Metrics coherence — efetivo vs zones */
+var zoneTotal=0;ZONES.forEach(function(z){zoneTotal+=z.people;});
+checks.push({n:'Coerencia efetivo campo vs zonas',ok:zoneTotal>0,d:'Soma zonas: '+zoneTotal+' pessoas | Workers: '+WORKERS.length});
 
 var passCount=checks.filter(function(c){return c.ok;}).length;
 var pctPass=Math.round(passCount/checks.length*100);
@@ -3755,7 +3812,15 @@ function setTheme(cls,btn){
   /* Update body background to match --void */
   var cs=getComputedStyle(document.body);
   document.body.style.background=cs.getPropertyValue('--void');
+  /* Force status bar and topbar to reflow with new variables */
+  var topbar=G('topbar');if(topbar)topbar.style.background=cs.getPropertyValue('--deep');
+  var layerbar=G('layerbar');if(layerbar)layerbar.style.background=cs.getPropertyValue('--deep');
+  var rp=G('rp');if(rp)rp.style.background=cs.getPropertyValue('--deep');
+  var sb=G('sb');if(sb)sb.style.background=cs.getPropertyValue('--deep');
   Object.keys(rendered).forEach(function(mod){rendered[mod]=false;});
+  /* Re-render currently open module */
+  var openMod=document.querySelector('.mod.on');
+  if(openMod){var modId=openMod.id.replace('m-','');if(R[modId]){try{R[modId]();rendered[modId]=true;}catch(e){}}}
   drawMap();updatePanels();
   showSaveInd('ok','TEMA: '+(({'':'ISIP','t-vale':'Vale','t-samarco':'Samarco','t-csn':'CSN','t-ternium':'Ternium','t-nexa':'Nexa'})[cls]||'Default'));
   try{localStorage.setItem('isip_theme',cls);}catch(e){}
@@ -3803,6 +3868,14 @@ var SEG_CONFIG={
     riscos:['Explosao/BLEVE','H2S toxico','Vazamento HC','Incendio','Queda ao mar','Eletricidade estatica','Pressao alta'],
     epis:['Capacete c/ jugular','Macacao FR','Bota antifaisca','Detector 4 gases','Mascara fuga','Luva antiestatica','Colete salva-vidas'],
     docs:['PGR','PAE','PCMSO','LTCAT','POP','APR','PT','AST']
+  },
+  usinas:{
+    label:'Usinas',nrs:['NR-1','NR-4','NR-6','NR-7','NR-9','NR-10','NR-12','NR-13','NR-15','NR-33','NR-35'],
+    racs:['RAC 01 — LOTO','RAC 02 — Altura','RAC 03 — EC','RAC 04 — Caldeiras/Vasos','RAC 05 — Eletrica AT','RAC 06 — Produtos Quimicos'],
+    areas:['Casa de maquinas','Turbinas','Caldeira','Subestacao','Torre resfriamento','Sala controle','Condensador','Casa de bombas','Patio carvao/biomassa','Quimioterapia agua','Area administrativa'],
+    riscos:['Choque eletrico AT','Vapor sob pressao','Queimadura','Queda','Gases toxicos','Ruido extremo','Explosao caldeira'],
+    epis:['Capacete c/ jugular','Luva isolante','Bota isolante','Protetor auditivo','Mascara gases','Oculos ampla visao','Cinto paraquedista'],
+    docs:['PGR','PAE','PCMSO','LTCAT','POP','APR','PT']
   }
 };
 
@@ -3875,6 +3948,23 @@ var SEG_ZONES={
     {id:'ZD',name:'Area Admin.',x:0.56,y:0.68,w:0.18,h:0.16,people:3,time:7.0,apt:0.4,jrn:0.6,env:0.3,act:'Gestao',equip:'Escritorio',area:'Administrativo',adb:'Administrativa'},
     {id:'ZE',name:'Area Classificada',x:0.68,y:0.04,w:0.16,h:0.16,people:3,time:2.0,apt:1.4,jrn:1.4,env:1.9,act:'Inspecao',equip:'Detector 4 gases',area:'Classificada',adb:'Area de Flare'},
     {id:'ZF',name:'Heliporto',x:0.64,y:0.48,w:0.16,h:0.14,people:1,time:0.5,apt:0.7,jrn:0.8,env:0.6,act:'Embarque',equip:'Helideck',area:'Logistica',adb:'Administrativa'}
+  ],
+  usinas:[
+    {id:'Z1',name:'Casa de Maquinas',x:0.02,y:0.04,w:0.24,h:0.2,people:7,time:4.0,apt:1.4,jrn:1.5,env:1.6,act:'Operacao turbinas',equip:'Turbina a vapor 350MW',area:'Geracao',adb:'Linha de Processo'},
+    {id:'Z2',name:'Caldeira CLD-01',x:0.28,y:0.04,w:0.2,h:0.18,people:5,time:3.5,apt:1.3,jrn:1.4,env:1.9,act:'Operacao caldeira',equip:'Caldeira aquatubular',area:'Vapor',adb:'Alto-Forno'},
+    {id:'Z3',name:'Subestacao 230kV',x:0.5,y:0.04,w:0.18,h:0.14,people:3,time:1.5,apt:1.1,jrn:1.2,env:1.3,act:'Manutencao eletrica',equip:'SE 230kV',area:'Eletrica',adb:'Sala Eletrica'},
+    {id:'Z4',name:'Torre Resfriamento',x:0.02,y:0.28,w:0.18,h:0.16,people:3,time:2.0,apt:1.0,jrn:1.1,env:1.4,act:'Manutencao torre',equip:'Torre hiperbolica',area:'Utilidades',adb:'Linha de Processo'},
+    {id:'Z5',name:'Condensador',x:0.22,y:0.28,w:0.2,h:0.16,people:4,time:3.0,apt:1.2,jrn:1.3,env:1.5,act:'Inspecao condensador',equip:'Condensador tubo/casco',area:'Processo',adb:'Linha de Processo'},
+    {id:'Z6',name:'Patio Carvao/Biomassa',x:0.44,y:0.26,w:0.22,h:0.18,people:5,time:3.5,apt:1.1,jrn:1.2,env:1.3,act:'Alimentacao combustivel',equip:'Empilhadeira/retomadora',area:'Logistica',adb:'Correia Transportadora'},
+    {id:'Z7',name:'Casa de Bombas',x:0.02,y:0.5,w:0.18,h:0.16,people:3,time:2.5,apt:0.9,jrn:1.0,env:1.0,act:'Operacao bombas',equip:'Bombas centrifugas',area:'Utilidades',adb:'Linha de Processo'},
+    {id:'Z8',name:'EC Caldeira',x:0.22,y:0.5,w:0.18,h:0.16,people:2,time:0.8,apt:1.6,jrn:1.5,env:2.0,act:'Inspecao interna',equip:'Caldeira parada',area:'Confinado',adb:'Espaco Confinado'},
+    {id:'Z9',name:'Quimioterapia Agua',x:0.42,y:0.5,w:0.2,h:0.16,people:3,time:2.0,apt:1.0,jrn:1.1,env:1.2,act:'Tratamento quimico',equip:'Dosadores',area:'Quimica',adb:'Linha de Processo'},
+    {id:'ZA',name:'Sala Controle',x:0.02,y:0.72,w:0.18,h:0.14,people:4,time:8.0,apt:0.6,jrn:0.8,env:0.4,act:'Supervisao DCS',equip:'SDCD/SCADA',area:'Controle',adb:'Sala Eletrica'},
+    {id:'ZB',name:'Almoxarifado',x:0.22,y:0.72,w:0.16,h:0.14,people:2,time:3.0,apt:0.7,jrn:0.9,env:0.5,act:'Logistica pecas',equip:'Estantes/empilhadeira',area:'Logistica',adb:'Administrativa'},
+    {id:'ZC',name:'Lab Quimico',x:0.4,y:0.68,w:0.14,h:0.14,people:2,time:4.0,apt:0.5,jrn:0.7,env:0.5,act:'Analises agua/vapor',equip:'Espectrometro',area:'Qualidade',adb:'Linha de Processo'},
+    {id:'ZD',name:'Oficina Mecanica',x:0.56,y:0.5,w:0.18,h:0.14,people:3,time:2.5,apt:0.9,jrn:1.0,env:0.8,act:'Manutencao geral',equip:'Torno/Fresadora',area:'Manutencao',adb:'Linha de Processo'},
+    {id:'ZE',name:'Turbina Gas TG-01',x:0.68,y:0.04,w:0.16,h:0.16,people:4,time:3.0,apt:1.3,jrn:1.3,env:1.7,act:'Operacao TG',equip:'Turbina gas 150MW',area:'Geracao',adb:'Linha de Processo'},
+    {id:'ZF',name:'Area Admin.',x:0.56,y:0.72,w:0.18,h:0.14,people:3,time:7.0,apt:0.4,jrn:0.6,env:0.3,act:'Gestao',equip:'Escritorio',area:'Administrativo',adb:'Administrativa'}
   ]
 };
 
@@ -3889,11 +3979,21 @@ function setSeg(seg,btn){
     ZONES_BASE=JSON.parse(JSON.stringify(SEG_ZONES[seg]));
     ZONES=JSON.parse(JSON.stringify(ZONES_BASE));
   }
+  /* Update EMPRESAS context label */
+  var segLabel=SEG_CONFIG[seg].label;
+  EMPRESAS[0].nome=segLabel+'A';EMPRESAS[0].tipo='Propria';
   /* Re-render ALL modules (full propagation) */
   Object.keys(rendered).forEach(function(mod){rendered[mod]=false;});
+  /* Re-render currently visible module tab */
+  var openMod=document.querySelector('.mod.on');
+  if(openMod){
+    var modId=openMod.id.replace('m-','');
+    if(R[modId]){try{R[modId]();rendered[modId]=true;}catch(e){}}
+  }
   /* Redraw map with new zones */
   drawMap();
   updatePanels();
+  initTicker();
   showSaveInd('ok','SEGMENTO: '+SEG_CONFIG[seg].label+' — '+ZONES.length+' zonas carregadas');
 }
 
@@ -3960,6 +4060,14 @@ var EQUIP_DB={
     {nome:'Compressor de Gas',cat:'Processo',crit:'Critico',nrs:['NR-12','NR-16','NR-20'],epis:['Macacao FR','Detector 4 gases','Bota antifaisca'],riscos:['Explosao','Vazamento HC','Ruido'],trein:['NR-16','NR-20','Op. Compressor']},
     {nome:'Vaso de Pressao',cat:'Processo',crit:'Critico',nrs:['NR-13','NR-33'],epis:['Capacete','Detector gases','Mascara fuga'],riscos:['Ruptura catastrofica','Gases toxicos','EC'],trein:['NR-13','NR-33','Inspecao vasos']},
     {nome:'Torre de Destilacao',cat:'Processo',crit:'Critico',nrs:['NR-13','NR-33','NR-35'],epis:['Macacao FR','Cinto','Detector','Mascara'],riscos:['Queda','Atmosfera explosiva','H2S','Calor'],trein:['NR-33','NR-35','NR-13','Servico a quente']}
+  ],
+  usinas:[
+    {nome:'Turbina a Vapor',cat:'Processo',crit:'Critico',nrs:['NR-10','NR-12','NR-13'],epis:['Capacete','Protetor auditivo','Luva termica','Oculos'],riscos:['Vapor sob pressao','Ruido extremo','Partes girantes','Choque eletrico'],trein:['Op. Turbinas','NR-10','NR-12','LOTO']},
+    {nome:'Caldeira Aquatubular',cat:'Processo',crit:'Critico',nrs:['NR-13','NR-33','NR-15'],epis:['Capacete','Mascara gases','Luva termica','Bota seguranca'],riscos:['Explosao','Vapor pressurizado','Queimadura','Asfixia EC'],trein:['NR-13','NR-33','Op. Caldeira','Emergencia']},
+    {nome:'Transformador de Potencia',cat:'Eletrica',crit:'Critico',nrs:['NR-10','NR-12'],epis:['Luva isolante','Bota isolante','Capacete c/ protetor facial','Vestimenta arco'],riscos:['Arco eletrico','Choque AT','Incendio','Explosao'],trein:['NR-10','SEP','LOTO','Manobra AT']},
+    {nome:'Turbina a Gas',cat:'Processo',crit:'Critico',nrs:['NR-10','NR-12','NR-20'],epis:['Capacete','Protetor auditivo','Detector gases','Macacao FR'],riscos:['Explosao gas','Ruido extremo','Incendio','Partes girantes'],trein:['Op. TG','NR-12','NR-20','LOTO']},
+    {nome:'Torre de Resfriamento',cat:'Utilidades',crit:'Alto',nrs:['NR-12','NR-35','NR-33'],epis:['Capacete','Cinto paraquedista','Mascara','Bota antiderrapante'],riscos:['Queda de altura','Legionella','EC','Vapor'],trein:['NR-35','NR-33','Biosseguranca']},
+    {nome:'Bomba de Alta Pressao',cat:'Utilidades',crit:'Alto',nrs:['NR-12','NR-13'],epis:['Capacete','Luva','Protetor auditivo','Oculos'],riscos:['Vazamento pressao','Ruido','Partes girantes'],trein:['NR-12','LOTO','Op. Bombas']}
   ]
 };
 
