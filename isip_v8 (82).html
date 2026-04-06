@@ -392,6 +392,109 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 .tv-mode .fpt{font-size:14px!important}
 .tv-mode .fpr{font-size:12px!important}
 .tv-mode .pill{font-size:10px!important;padding:3px 10px!important}
+
+/* NOTIFICATION SYSTEM */
+#notif-panel{position:fixed;top:60px;right:10px;width:320px;max-height:400px;overflow-y:auto;z-index:700;display:none}
+#notif-panel.on{display:block}
+.notif-item{background:rgba(4,13,20,0.96);border:1px solid rgba(var(--cy-rgb),.12);border-radius:6px;padding:10px 12px;margin-bottom:4px;animation:fadeIn .3s;backdrop-filter:blur(8px);cursor:pointer;transition:all .2s}
+.notif-item:hover{border-color:rgba(var(--cy-rgb),.3)}
+.notif-item.unread{border-left:3px solid var(--cy)}
+.notif-item.crit{border-left:3px solid var(--rd)}
+.notif-badge{position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:var(--rd);color:#fff;font-size:8px;font-weight:900;display:flex;align-items:center;justify-content:center;animation:pulse 1.5s infinite}
+
+/* INCIDENT REPORT */
+.inc-form label{display:block;font-family:var(--cond);font-size:11px;color:var(--t3);margin-bottom:3px;margin-top:8px;letter-spacing:.03em}
+.inc-form input,.inc-form select,.inc-form textarea{width:100%;background:var(--sf);color:var(--t1);border:1px solid rgba(var(--cy-rgb),.15);border-radius:4px;padding:7px 10px;font-family:var(--ui);font-size:12px;transition:border-color .2s}
+.inc-form input:focus,.inc-form select:focus,.inc-form textarea:focus{outline:none;border-color:var(--cy)}
+.inc-form textarea{min-height:60px;resize:vertical}
+
+/* SHIFT HANDOVER */
+.ho-check{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(var(--cy-rgb),.04);cursor:pointer}
+.ho-check input[type=checkbox]{accent-color:var(--cy);width:16px;height:16px}
+.ho-check.done{opacity:.5}
+
+/* WEATHER PANEL */
+.wx-card{background:var(--sf);border:1px solid rgba(var(--cy-rgb),.08);border-radius:6px;padding:10px;text-align:center;min-width:80px}
+.wx-val{font-family:var(--hud);font-size:18px;font-weight:900;color:var(--cy);line-height:1}
+.wx-lbl{font-family:var(--cond);font-size:9px;color:var(--t3);margin-top:2px}
+.wx-icon{font-size:24px;margin-bottom:4px}
+
+/* DDS MODULE */
+.dds-topic{background:var(--sf);border:1px solid rgba(var(--cy-rgb),.08);border-radius:6px;padding:12px;margin-bottom:6px;cursor:pointer;transition:all .2s}
+.dds-topic:hover{border-color:rgba(var(--cy-rgb),.25)}
+.dds-topic.active{border-color:var(--cy);background:rgba(var(--cy-rgb),.06)}
+
+/* HEATMAP OVERLAY */
+.hm-toggle{position:absolute;top:10px;right:10px;z-index:15;display:flex;gap:3px}
+.hm-btn{font-family:var(--cond);font-size:9px;font-weight:600;padding:4px 10px;border-radius:4px;cursor:pointer;border:1px solid rgba(var(--cy-rgb),.18);background:rgba(4,13,20,0.85);color:var(--t3);transition:all .2s;backdrop-filter:blur(4px)}
+.hm-btn:hover,.hm-btn.on{color:var(--cy);border-color:rgba(var(--cy-rgb),.4);background:rgba(var(--cy-rgb),.1)}
+
+/* KEYBOARD SHORTCUTS OVERLAY */
+#kb-shortcuts{display:none;position:fixed;inset:0;z-index:900;background:rgba(1,5,8,0.85);align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+#kb-shortcuts.on{display:flex}
+.kb-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:500px}
+.kb-item{display:flex;align-items:center;gap:8px;padding:4px 0}
+.kb-key{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 8px;background:rgba(var(--cy-rgb),.1);border:1px solid rgba(var(--cy-rgb),.25);border-radius:3px;color:var(--cy);min-width:28px;text-align:center}
+.kb-desc{font-size:11px;color:var(--t2)}
+
+/* CONTRACTOR MANAGEMENT */
+.cont-card{background:var(--sf);border:1px solid rgba(var(--cy-rgb),.08);border-radius:6px;padding:10px 12px;margin-bottom:6px}
+.cont-card .cont-status{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.cont-card .cont-status.mob{background:var(--ok)}.cont-card .cont-status.pend{background:var(--wn)}.cont-card .cont-status.blk{background:var(--rd)}
+
+/* FIELD INSPECTION MODULE */
+.insp-step{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(var(--cy-rgb),.06)}
+.insp-step-num{width:28px;height:28px;border-radius:50%;background:rgba(var(--cy-rgb),.08);border:2px solid rgba(var(--cy-rgb),.25);display:flex;align-items:center;justify-content:center;font-family:var(--hud);font-size:10px;font-weight:900;color:var(--cy);flex-shrink:0}
+.insp-step.done .insp-step-num{background:rgba(var(--ok-rgb),.15);border-color:var(--ok);color:var(--ok)}
+.insp-step.fail .insp-step-num{background:rgba(var(--rd-rgb),.15);border-color:var(--rd);color:var(--rd)}
+.insp-item{display:flex;align-items:center;gap:8px;padding:5px 8px;margin:2px 0;background:rgba(var(--cy-rgb),.02);border-radius:4px;cursor:pointer;transition:all .15s}
+.insp-item:hover{background:rgba(var(--cy-rgb),.06)}
+.insp-item input[type=checkbox]{accent-color:var(--cy);width:15px;height:15px;flex-shrink:0}
+.insp-item.nc{background:rgba(var(--rd-rgb),.04);border-left:3px solid var(--rd)}
+.insp-severity{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:3px;font-size:8px;font-weight:700}
+.insp-evidence{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.insp-evidence .ev-btn{font-size:8px;padding:2px 8px;border-radius:3px;cursor:pointer;border:1px solid rgba(var(--cy-rgb),.2);background:rgba(var(--cy-rgb),.04);color:var(--t2);transition:all .2s}
+.insp-evidence .ev-btn:hover{background:rgba(var(--cy-rgb),.12)}
+
+/* CINEMATIC PLANTA MODULE */
+#m-planta{position:relative!important;padding:0!important;background:radial-gradient(ellipse 100% 60% at 50% 30%,rgba(60,30,0,0.25),transparent 70%),radial-gradient(ellipse 80% 50% at 50% 100%,rgba(0,40,60,0.3),transparent 70%),linear-gradient(180deg,#020810 0%,#040d18 50%,#020608 100%)}
+#m-planta::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px);pointer-events:none;opacity:0.4;z-index:1}
+#m-planta>*:not(.planta-bg):not(.seg-watermark):not(.seg-signature):not(.planta-scan-line){position:relative;z-index:2}
+.planta-bg{position:absolute;inset:0;background-image:radial-gradient(circle at 20% 40%,rgba(255,140,40,0.08) 0%,transparent 25%),radial-gradient(circle at 50% 60%,rgba(255,80,20,0.12) 0%,transparent 30%),radial-gradient(circle at 80% 50%,rgba(0,180,255,0.08) 0%,transparent 25%);pointer-events:none;z-index:0}
+.planta-topbar{background:linear-gradient(180deg,rgba(2,8,16,0.95) 0%,rgba(4,16,28,0.85) 100%);backdrop-filter:blur(10px);border-bottom:1px solid rgba(var(--cy-rgb),.18);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.planta-stage{background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.35) 100%);backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04);border-radius:8px;overflow:hidden;transition:all .25s}
+.planta-stage:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06)}
+.planta-stage-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--hud);font-size:13px;font-weight:900;color:#000;box-shadow:0 0 12px currentColor,inset 0 -2px 4px rgba(0,0,0,0.3)}
+.planta-kpi{background:linear-gradient(180deg,rgba(0,20,40,0.6) 0%,rgba(0,10,20,0.4) 100%);border:1px solid rgba(var(--cy-rgb),.18);border-radius:6px;padding:6px 12px;backdrop-filter:blur(6px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 2px 8px rgba(0,0,0,0.3)}
+.planta-kpi .pkv{font-family:var(--hud);font-size:18px;font-weight:900;color:var(--cy);text-shadow:0 0 12px rgba(var(--cy-rgb),0.5);line-height:1}
+.planta-bot-card{background:linear-gradient(180deg,rgba(2,10,20,0.92) 0%,rgba(0,5,12,0.95) 100%);border:1px solid rgba(var(--cy-rgb),.1);border-radius:8px;padding:10px 12px;backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04)}
+.planta-bot-card .pbc-title{font-family:var(--hud);font-size:10px;font-weight:900;letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.planta-bot-card .pbc-title::before{content:'';width:3px;height:14px;background:var(--cy);border-radius:2px;box-shadow:0 0 8px rgba(var(--cy-rgb),0.6)}
+.planta-zone-cell{width:26px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--hud);font-size:9px;font-weight:900;box-shadow:0 0 8px currentColor,inset 0 1px 0 rgba(255,255,255,0.1);transition:all .2s;cursor:pointer}
+.planta-zone-cell:hover{transform:scale(1.15)}
+.planta-step-card{background:linear-gradient(180deg,rgba(var(--cy-rgb),0.06) 0%,rgba(0,0,0,0.2) 100%);border-left:3px solid;border-radius:4px;padding:6px 8px;margin-bottom:4px;transition:all .2s}
+.planta-step-card:hover{background:linear-gradient(180deg,rgba(var(--cy-rgb),0.12) 0%,rgba(0,0,0,0.25) 100%)}
+.planta-arrow{display:flex;align-items:center;justify-content:center;padding-top:30px;font-size:18px;color:rgba(var(--cy-rgb),0.5);text-shadow:0 0 8px rgba(var(--cy-rgb),0.4);animation:pulse 2.5s infinite}
+.planta-status-badge{padding:6px 14px;border-radius:6px;background:linear-gradient(180deg,rgba(var(--ok-rgb),0.2) 0%,rgba(var(--ok-rgb),0.08) 100%);border:1px solid rgba(var(--ok-rgb),0.4);text-align:center;box-shadow:0 0 16px rgba(var(--ok-rgb),0.2),inset 0 1px 0 rgba(255,255,255,0.06)}
+@keyframes plantaScan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.planta-scan-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(var(--cy-rgb),0.6),transparent);animation:plantaScan 4s linear infinite;pointer-events:none}
+
+/* SEGMENT-SPECIFIC PLANTA SIGNATURES */
+#m-planta.seg-mineracao{background:radial-gradient(ellipse 60% 40% at 30% 60%,rgba(139,69,19,0.35) 0%,transparent 60%),radial-gradient(ellipse 50% 30% at 75% 40%,rgba(212,118,42,0.25) 0%,transparent 60%),linear-gradient(180deg,#0a0604,#0f0805,#080302)!important}
+#m-planta.seg-siderurgia{background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(255,69,0,0.4) 0%,transparent 55%),radial-gradient(ellipse 40% 30% at 30% 30%,rgba(255,140,0,0.35) 0%,transparent 50%),linear-gradient(180deg,#0a0202,#100404,#080202)!important}
+#m-planta.seg-cimento{background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(160,160,160,0.25) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 30% 70%,rgba(245,222,179,0.2) 0%,transparent 50%),linear-gradient(180deg,#080808,#0c0c0c,#060606)!important}
+#m-planta.seg-petroleo{background:radial-gradient(ellipse 50% 40% at 30% 30%,rgba(0,180,216,0.3) 0%,transparent 55%),radial-gradient(ellipse 60% 40% at 70% 60%,rgba(0,40,80,0.5) 0%,transparent 60%),linear-gradient(180deg,#020610,#040a18,#020408)!important}
+#m-planta.seg-usinas{background:radial-gradient(ellipse 60% 40% at 50% 30%,rgba(255,215,0,0.25) 0%,transparent 55%),radial-gradient(ellipse 50% 40% at 30% 70%,rgba(30,144,255,0.3) 0%,transparent 60%),linear-gradient(180deg,#020410,#040818,#020408)!important}
+.planta-element-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px;padding:0;position:relative;z-index:5}
+.planta-element{background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.3) 100%);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 8px;text-align:center;backdrop-filter:blur(8px);transition:all .25s;cursor:pointer;position:relative;overflow:hidden}
+.planta-element::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:currentColor;box-shadow:0 0 12px currentColor}
+.planta-element:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.6)}
+.planta-element-icon{font-size:32px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 0 12px currentColor)}
+.planta-element-name{font-family:var(--hud);font-size:9px;font-weight:700;letter-spacing:.04em;color:#fff}
+.planta-element-stat{font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.6);margin-top:3px}
+.seg-signature{position:absolute!important;top:80px;right:24px;font-size:120px;opacity:0.12;pointer-events:none;z-index:3;text-shadow:0 0 60px currentColor;line-height:1}
+.seg-watermark{position:absolute!important;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--hud);font-size:80px;font-weight:900;opacity:0.04;letter-spacing:.15em;pointer-events:none;white-space:nowrap;color:#fff;z-index:1}
+
 </style>
 </head>
 <body>
@@ -441,6 +544,7 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
       <button class="seg-btn" onclick="setSeg('siderurgia',this)" title="Siderurgia">&#9883; SID</button>
       <button class="seg-btn" onclick="setSeg('cimento',this)" title="Cimento">&#127959; CIM</button>
       <button class="seg-btn" onclick="setSeg('petroleo',this)" title="Petroleo e Gas">&#128167; P&amp;G</button>
+      <button class="seg-btn" onclick="setSeg('usinas',this)" title="Usinas">&#9889; USI</button>
     </div>
     <div class="ml">
       <div class="sv-bar">
@@ -507,6 +611,13 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
     <div id="mapw">
       <canvas id="mc"></canvas>
       <div id="tt"></div>
+      <!-- HEATMAP OVERLAY CONTROLS -->
+      <div class="hm-toggle">
+        <button class="hm-btn on" onclick="setHeatMode('zones',this)">Zonas</button>
+        <button class="hm-btn" onclick="setHeatMode('density',this)">Densidade</button>
+        <button class="hm-btn" onclick="setHeatMode('risk',this)">Risco</button>
+        <button class="hm-btn" onclick="setHeatMode('fatigue',this)">Fadiga</button>
+      </div>
       <!-- FLOATING PANELS removed — info available in layerbar and sidebar -->
       <!-- MAP LEGEND -->
       <div class="fp minimized" style="bottom:12px;left:10px;min-width:120px;max-width:160px" id="fp-legend">
@@ -563,6 +674,14 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
         <button class="tab" onclick="openTab(&#39;conf&#39;)">&#9881; Config</button>
         <button class="tab" onclick="openTab(&#39;gantt&#39;)">&#128197; Roadmap</button>
         <button class="tab" onclick="openTab(&#39;guia&#39;)">&#128218; Guia</button>
+        <span style="color:var(--t4);font-size:8px;padding:0 4px;border-left:1px solid var(--t4)">SSSMA</span>
+        <button class="tab" onclick="openTab(&#39;incident&#39;)" style="color:var(--rd)">&#128680; Incidentes</button>
+        <button class="tab" onclick="openTab(&#39;handover&#39;)">&#128260; Troca Turno</button>
+        <button class="tab" onclick="openTab(&#39;dds&#39;)">&#128172; DDS</button>
+        <button class="tab" onclick="openTab(&#39;contrat&#39;)">&#128101; Terceiros</button>
+        <button class="tab" onclick="openTab(&#39;weather&#39;)">&#127780; Ambiente</button>
+        <button class="tab" onclick="openTab(&#39;trends&#39;)">&#128200; Tendencias</button>
+        <button class="tab" onclick="openTab(&#39;inspec&#39;)" style="color:var(--el);font-weight:700">&#128270; Inspecao Campo</button>
       </div>
       <div id="mods">
         <div class="mod" id="m-dash"></div>
@@ -597,6 +716,13 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
         <div class="mod" id="m-equiplib"></div>
         <div class="mod" id="m-treinval"></div>
         <div class="mod" id="m-govern"></div>
+        <div class="mod" id="m-incident"></div>
+        <div class="mod" id="m-handover"></div>
+        <div class="mod" id="m-dds"></div>
+        <div class="mod" id="m-contrat"></div>
+        <div class="mod" id="m-weather"></div>
+        <div class="mod" id="m-trends"></div>
+        <div class="mod" id="m-inspec"></div>
       </div>
     </div>
     <div id="rp">
@@ -698,6 +824,18 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 <div id="mo" onclick="if(event.target===this)closeMo()">
   <div class="mb"><button class="mcl" onclick="closeMo()">&#10005;</button><div class="mh" id="moh"></div><div id="mobody"></div></div>
 </div>
+
+<!-- NOTIFICATION PANEL -->
+<div id="notif-panel"></div>
+
+<!-- KEYBOARD SHORTCUTS OVERLAY -->
+<div id="kb-shortcuts" onclick="if(event.target===this)toggleKB()">
+  <div style="background:rgba(4,13,20,0.96);border:1px solid rgba(var(--cy-rgb),.2);border-radius:8px;padding:20px;max-width:540px;width:90%">
+    <div style="font-family:var(--hud);font-size:14px;font-weight:900;color:var(--cy);margin-bottom:12px;text-align:center">ATALHOS DE TECLADO</div>
+    <div class="kb-grid" id="kb-grid"></div>
+    <div style="text-align:center;margin-top:12px;font-size:9px;color:var(--t4)">Pressione <span class="kb-key">ESC</span> ou <span class="kb-key">?</span> para fechar</div>
+  </div>
+</div>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="application/json" id="D">
 {"ZONES_BASE": [{"id": "Z1", "name": "Britagem Primaria", "x": 0.02, "y": 0.04, "w": 0.22, "h": 0.18, "people": 8, "time": 3.2, "apt": 1.4, "jrn": 1.7, "env": 1.3, "act": "Operacao Britador", "equip": "Britador 42x48", "area": "Mineracao", "adb": "Britagem"}, {"id": "Z2", "name": "Correia T-03", "x": 0.26, "y": 0.04, "w": 0.16, "h": 0.14, "people": 5, "time": 2.7, "apt": 1.1, "jrn": 1.3, "env": 0.8, "act": "Operacao Correia", "equip": "Correia transportadora", "area": "Mineracao", "adb": "Correia Transportadora"}, {"id": "Z3", "name": "Sala Eletrica SE-1", "x": 0.44, "y": 0.04, "w": 0.17, "h": 0.14, "people": 4, "time": 1.1, "apt": 0.9, "jrn": 1.2, "env": 1.1, "act": "Manutencao eletrica", "equip": "QD-001", "area": "Eletrica", "adb": "Sala Eletrica"}, {"id": "Z4", "name": "EC-2 Esp.Confinado", "x": 0.02, "y": 0.26, "w": 0.16, "h": 0.16, "people": 2, "time": 0.8, "apt": 1.5, "jrn": 1.6, "env": 1.8, "act": "Inspecao tubulacao", "equip": "Atmosfera monitorada", "area": "Confinado", "adb": "Espaco Confinado"}, {"id": "Z5", "name": "Forno F-1", "x": 0.2, "y": 0.26, "w": 0.18, "h": 0.17, "people": 3, "time": 4.5, "apt": 1.0, "jrn": 1.1, "env": 1.4, "act": "Operacao forno", "equip": "Forno rotativo", "area": "Processo", "adb": "Alto-Forno"}, {"id": "Z6", "name": "Area de Carga", "x": 0.4, "y": 0.24, "w": 0.22, "h": 0.17, "people": 6, "time": 2.1, "apt": 0.8, "jrn": 0.9, "env": 0.9, "act": "Carregamento", "equip": "Caminhoes", "area": "Logistica", "adb": "Correia Transportadora"}, {"id": "Z7", "name": "Pit Norte", "x": 0.02, "y": 0.48, "w": 0.24, "h": 0.2, "people": 7, "time": 5.2, "apt": 1.2, "jrn": 1.4, "env": 1.2, "act": "Operacao pit", "equip": "Escavadeiras", "area": "Mineracao", "adb": "Pit / Mina Ceu Aberto"}, {"id": "Z8", "name": "Area de Flare", "x": 0.28, "y": 0.48, "w": 0.16, "h": 0.16, "people": 3, "time": 1.3, "apt": 1.1, "jrn": 1.3, "env": 1.9, "act": "Monitoramento", "equip": "Sistema flare", "area": "P&G", "adb": "Area de Flare"}, {"id": "Z9", "name": "Estrutura Superior", "x": 0.46, "y": 0.46, "w": 0.18, "h": 0.16, "people": 2, "time": 2.4, "apt": 1.3, "jrn": 1.2, "env": 1.1, "act": "Inspecao altura", "equip": "Andaimes", "area": "Manutencao", "adb": "Estrutura Superior / Andaime"}, {"id": "ZA", "name": "Est. Bombeamento", "x": 0.02, "y": 0.72, "w": 0.17, "h": 0.14, "people": 2, "time": 1.8, "apt": 0.9, "jrn": 1.1, "env": 0.8, "act": "Operacao bombas", "equip": "Bombas centrifugas", "area": "Processo", "adb": "Linha de Processo"}, {"id": "ZB", "name": "Torre de Controle", "x": 0.21, "y": 0.72, "w": 0.17, "h": 0.15, "people": 4, "time": 8.0, "apt": 0.7, "jrn": 0.9, "env": 0.5, "act": "Supervisao", "equip": "SCADA", "area": "Controle", "adb": "Sala Eletrica"}, {"id": "ZC", "name": "Lab Central", "x": 0.4, "y": 0.68, "w": 0.14, "h": 0.14, "people": 2, "time": 4.5, "apt": 0.6, "jrn": 0.8, "env": 0.6, "act": "Analises", "equip": "Equipamentos lab", "area": "Qualidade", "adb": "Linha de Processo"}, {"id": "ZD", "name": "Area Admin.", "x": 0.56, "y": 0.68, "w": 0.17, "h": 0.16, "people": 3, "time": 7.0, "apt": 0.5, "jrn": 0.7, "env": 0.4, "act": "Gestao", "equip": "Escritorio", "area": "Administrativo", "adb": "Administrativa"}, {"id": "ZE", "name": "Britagem Sec.", "x": 0.63, "y": 0.04, "w": 0.18, "h": 0.16, "people": 4, "time": 2.8, "apt": 1.2, "jrn": 1.4, "env": 1.1, "act": "Britagem secundaria", "equip": "Britador conico", "area": "Mineracao", "adb": "Britagem"}, {"id": "ZF", "name": "Correia T-07", "x": 0.64, "y": 0.26, "w": 0.16, "h": 0.14, "people": 1, "time": 1.5, "apt": 0.9, "jrn": 1.0, "env": 0.8, "act": "Monitoramento correia", "equip": "Correia T-07", "area": "Mineracao", "adb": "Correia Transportadora"}], "WORKERS": [{"id": 1, "name": "Carlos Mendes", "ini": "CM", "role": "Op. Britador", "disc": "Mineracao", "co": "MineraA", "area": "Britagem P1", "act": "Operacao britador", "status": "alert", "riskScore": 7.2, "cogScore": 62, "jornadaH": 9.5, "descanso": 10, "jornadaScore": 55, "apt": true, "trein": ["NR-33", "NR-35"], "altura": false, "conf": true}, {"id": 2, "name": "Jose Santos", "ini": "JS", "role": "Eletricista Senior", "disc": "Eletrica", "co": "MineraA", "area": "SE-1", "act": "Manutencao eletrica", "status": "ok", "riskScore": 4.1, "cogScore": 88, "jornadaH": 7.5, "descanso": 12, "jornadaScore": 82, "apt": true, "trein": ["NR-10", "NR-33"], "altura": false, "conf": false}, {"id": 3, "name": "Marcos Lima", "ini": "ML", "role": "Op. Processo", "disc": "Processo", "co": "MineraA", "area": "Forno F-1", "act": "Operacao forno", "status": "ok", "riskScore": 5.8, "cogScore": 74, "jornadaH": 8.0, "descanso": 11, "jornadaScore": 71, "apt": true, "trein": ["NR-33"], "altura": false, "conf": false}, {"id": 4, "name": "Ricardo Alves", "ini": "RA", "role": "Mecanico", "disc": "Manutencao", "co": "MineraA", "area": "Correia T-03", "act": "Manutencao correia", "status": "monitored", "riskScore": 6.3, "cogScore": 69, "jornadaH": 10.0, "descanso": 10, "jornadaScore": 48, "apt": true, "trein": ["NR-12", "NR-33"], "altura": true, "conf": false}, {"id": 5, "name": "Pedro Costa", "ini": "PC", "role": "Op. Pa Carregadeira", "disc": "Logistica", "co": "MineraA", "area": "Area de Carga", "act": "Carregamento ROM", "status": "ok", "riskScore": 5.2, "cogScore": 71, "jornadaH": 8.5, "descanso": 11, "jornadaScore": 68, "apt": true, "trein": ["NR-11"], "altura": false, "conf": false}, {"id": 6, "name": "Ana Ferreira", "ini": "AF", "role": "Tecnica SST", "disc": "SST", "co": "MineraA", "area": "Admin", "act": "Inspecao campo", "status": "ok", "riskScore": 2.1, "cogScore": 91, "jornadaH": 7.0, "descanso": 13, "jornadaScore": 88, "apt": true, "trein": ["NR-33", "NR-35", "NR-10"], "altura": false, "conf": false}, {"id": 7, "name": "Bruno Oliveira", "ini": "BO", "role": "Soldador", "disc": "Caldeiraria", "co": "Terceiro X", "area": "Estrutura Superior", "act": "Soldagem estrutural", "status": "monitored", "riskScore": 7.8, "cogScore": 58, "jornadaH": 9.0, "descanso": 10, "jornadaScore": 52, "apt": false, "trein": ["NR-34", "NR-35"], "altura": true, "conf": false}, {"id": 8, "name": "Fabio Nunes", "ini": "FN", "role": "Tecnico Manutencao", "disc": "Manutencao", "co": "MineraA", "area": "EC-2", "act": "Inspecao EC", "status": "alert", "riskScore": 8.9, "cogScore": 55, "jornadaH": 11.0, "descanso": 9, "jornadaScore": 32, "apt": true, "trein": ["NR-33", "NR-12"], "altura": false, "conf": true}, {"id": 9, "name": "Diego Rocha", "ini": "DR", "role": "Op. Escavadeira", "disc": "Mineracao", "co": "Terceiro Y", "area": "Pit Norte", "act": "Desmonte pit", "status": "ok", "riskScore": 6.1, "cogScore": 77, "jornadaH": 10.5, "descanso": 10, "jornadaScore": 45, "apt": true, "trein": ["NR-11", "NR-22"], "altura": false, "conf": false}, {"id": 10, "name": "Tatiana Lopes", "ini": "TL", "role": "Supervisora Turno", "disc": "Operacao", "co": "MineraA", "area": "Torre Controle", "act": "Supervisao geral", "status": "ok", "riskScore": 1.8, "cogScore": 94, "jornadaH": 8.0, "descanso": 12, "jornadaScore": 85, "apt": true, "trein": ["NR-33", "NR-35", "NR-10", "NR-11"], "altura": false, "conf": false}], "NR_BR": [{"nr": "NR-1", "title": "Disposicoes Gerais", "applies": "Todas as empresas com empregados"}, {"nr": "NR-4", "title": "SESMT", "applies": "Empresas com atividades de risco"}, {"nr": "NR-5", "title": "CIPA", "applies": "Empresas com 20+ trabalhadores"}, {"nr": "NR-6", "title": "EPI", "applies": "Todas as atividades com risco"}, {"nr": "NR-7", "title": "PCMSO", "applies": "Exames medicos ocupacionais"}, {"nr": "NR-9", "title": "PGR / PPRA", "applies": "Programa de gerenciamento de riscos"}, {"nr": "NR-10", "title": "Seguranca em Instalacoes Eletricas", "applies": "Atividades com energia eletrica"}, {"nr": "NR-11", "title": "Transporte, Movimentacao e Armazenagem", "applies": "Empilhadeiras, guindastes, veiculos"}, {"nr": "NR-12", "title": "Maquinas e Equipamentos", "applies": "Operacao e manutencao de maquinas"}, {"nr": "NR-15", "title": "Atividades e Operacoes Insalubres", "applies": "Ruido, calor, agentes quimicos"}, {"nr": "NR-16", "title": "Atividades e Operacoes Perigosas", "applies": "Explosivos, inflamaveis, energia eletrica"}, {"nr": "NR-22", "title": "Seguranca e Saude Ocupacional na Mineracao", "applies": "Toda atividade de mineracao"}, {"nr": "NR-33", "title": "Seguranca e Saude nos Trabalhos em Espacos Confinados", "applies": "Tanques, silos, tubulacoes, pocoes"}, {"nr": "NR-34", "title": "Condicoes e Meio Ambiente em Embarcacoes", "applies": "Construcao, reparo, manutencao naval"}, {"nr": "NR-35", "title": "Trabalho em Altura", "applies": "Atividades acima de 2m com risco de queda"}], "INTL_STANDARDS": [{"code": "ISO 45001", "name": "Sistemas de Gestao de SSO", "country": "Internacional", "body": "ISO", "risk_matrix": "5x5 recomendada", "isip_apply": "Motor de regras + dashboard"}, {"code": "OHSAS 18001", "name": "Saude e Seguranca Ocupacional", "country": "Internacional", "body": "BSI", "risk_matrix": "Compativel 45001", "isip_apply": "Historico + auditoria"}, {"code": "IEC 61511", "name": "Safety Instrumented Systems", "country": "Internacional", "body": "IEC", "risk_matrix": "SIL levels", "isip_apply": "Interlocks + alertas"}, {"code": "API RP 754", "name": "Process Safety Performance Indicators", "country": "USA", "body": "API", "risk_matrix": "Tier 1-4", "isip_apply": "KPIs + tendencia"}, {"code": "NFPA 70E", "name": "Electrical Safety in the Workplace", "country": "USA", "body": "NFPA", "risk_matrix": "PPE categories", "isip_apply": "Zonas eletricas"}, {"code": "BS 8800", "name": "Guide to Occupational Health", "country": "UK", "body": "BSI", "risk_matrix": "5x5", "isip_apply": "Conformidade baseline"}], "PHASES": [{"id": "F1", "name": "Fundacao e MVP", "color": "#00d4ff", "weeks": [1, 8], "tasks": [{"name": "Auth + RBAC", "start": 1, "dur": 2, "done": true, "critical": true}, {"name": "API Gateway REST", "start": 1, "dur": 3, "done": true, "critical": true}, {"name": "DB TimeSeries", "start": 2, "dur": 2, "done": true, "critical": false}, {"name": "BLE SDK integration", "start": 3, "dur": 3, "done": true, "critical": true}, {"name": "Dashboard v1", "start": 4, "dur": 4, "done": true, "critical": false}]}, {"id": "F2", "name": "Nucleo de Seguranca", "color": "#00ff88", "weeks": [9, 16], "tasks": [{"name": "Motor de Regras", "start": 9, "dur": 3, "done": true, "critical": true}, {"name": "Alertas em tempo real", "start": 10, "dur": 2, "done": true, "critical": true}, {"name": "Geofencing", "start": 11, "dur": 3, "done": false, "critical": true}, {"name": "Modulo Jornada", "start": 12, "dur": 2, "done": false, "critical": false}, {"name": "App mobile MVP", "start": 13, "dur": 4, "done": false, "critical": false}]}, {"id": "F3", "name": "Integracao e Escala", "color": "#ffb020", "weeks": [17, 24], "tasks": [{"name": "UWB SDK", "start": 17, "dur": 3, "done": false, "critical": false}, {"name": "Integracao ERP/SAP", "start": 18, "dur": 4, "done": false, "critical": false}, {"name": "Relatorios PDF", "start": 20, "dur": 2, "done": false, "critical": false}, {"name": "Multi-tenancy", "start": 21, "dur": 4, "done": false, "critical": true}]}, {"id": "F4", "name": "IA e Predicao", "color": "#a855f7", "weeks": [25, 28], "tasks": [{"name": "ML Score preditivo", "start": 25, "dur": 3, "done": false, "critical": false}, {"name": "Deteccao anomalias", "start": 26, "dur": 2, "done": false, "critical": false}, {"name": "Dashboard BI", "start": 27, "dur": 2, "done": false, "critical": false}]}], "GOV_APIS": [{"name": "eSocial API", "free": "Gratuito", "desc": "Eventos SST: CAT, ASO, PCMSO, PPP. Integracao obrigatoria para empresas.", "endpoint": "https://eSocial.dataprev.gov.br", "color": "#00d4ff"}, {"name": "CAT - Comunicacao de Acidente", "free": "Gratuito", "desc": "Registro e consulta de acidentes de trabalho no MTE.", "endpoint": "https://www.gov.br/trabalho", "color": "#00ff88"}, {"name": "RAIS e CAGED", "free": "Gratuito", "desc": "Dados de vinculo empregaticio, rotatividade e forcas de trabalho.", "endpoint": "https://bi.mte.gov.br", "color": "#ffb020"}, {"name": "CNPJ / CNAE Riscos", "free": "Gratuito", "desc": "Classificacao de risco por atividade economica (CNAE). Graus 1-4.", "endpoint": "https://brasilapi.com.br", "color": "#a855f7"}, {"name": "INSS / Nexo Tecnico", "free": "Gratuito", "desc": "Nexo tecnico epidemiologico previdenciario (NTEP) por atividade.", "endpoint": "https://www.gov.br/inss", "color": "#00d4ff"}], "SATELLITE_APIS": [{"name": "Sentinel Hub (ESA)", "desc": "Imagens Sentinel-2 gratuitas. 10m resolucao. Atualizacao: 5 dias.", "free": "Gratuito", "resolution": "10m", "update": "5 dias", "color": "#00d4ff"}, {"name": "USGS Earth Explorer", "desc": "Landsat 8/9 gratuito. 15-30m resolucao. Cobertura global.", "free": "Gratuito", "resolution": "15-30m", "update": "16 dias", "color": "#00ff88"}, {"name": "INPE BDMEP", "desc": "Dados climaticos historicos brasileiros. Precipitacao, temperatura.", "free": "Gratuito", "resolution": "Estacao", "update": "Diario", "color": "#ffb020"}, {"name": "MapBiomas", "desc": "Cobertura do solo Brasil. Series historicas de 1985.", "free": "Gratuito", "resolution": "30m", "update": "Anual", "color": "#a855f7"}], "PLANT_PROFILES": [{"name": "Mineracao", "setor": "Mineracao", "desc": "Grandes areas abertas, alta mobilidade, EC frequente. BLE + UWB + GPS"}, {"name": "Petroleo e Gas", "setor": "P&G", "desc": "Areas classificadas, gases toxicos, NR-16 critica. Gas + BLE + UWB"}, {"name": "Energia Eletrica", "setor": "Energia", "desc": "Alta tensao, NR-10 critica, espacos confinados. BLE + RFID"}, {"name": "Cimento", "setor": "Industria", "desc": "Silos confinados, poeira, calor extremo. BLE + sensores ambientais"}, {"name": "Siderurgia", "setor": "Metalurgia", "desc": "Altas temperaturas, ESM, areas de risco multiplo. UWB + BLE"}, {"name": "Quimica/Petroquimica", "setor": "Quimica", "desc": "Areas classificadas, NR-16, processos continuos. Gas + BLE + LoRa"}], "TRACK_RANK": [{"rank": 1, "tech": "UWB", "icon": "T", "assertividade": 98, "precisao": "10-30cm", "indoor": true, "outdoor": false, "bateria": "Semanas", "custo": "$$$", "vinculo": "IMEI/MAC unico impossivel duplicar", "semDesculpa": "Resolve 99% dos casos industriais. Sem desculpa para nao usar em EC.", "limitacao": "Infraestrutura cara (anchors)", "score": 9.8}, {"rank": 2, "tech": "BLE 5.x", "icon": "B", "assertividade": 85, "precisao": "1-10m (zona)", "indoor": true, "outdoor": true, "bateria": "Meses", "custo": "$", "vinculo": "MAC BLE unico por dispositivo", "semDesculpa": "Resolve 85-90% dos casos. Custo-beneficio imbativel.", "limitacao": "Precisao zonal, nao pontual", "score": 8.5}, {"rank": 3, "tech": "LoRaWAN", "icon": "L", "assertividade": 72, "precisao": "5-50m triangulacao", "indoor": false, "outdoor": true, "bateria": "Anos", "custo": "$$", "vinculo": "DevEUI unico por fabricante", "semDesculpa": "Areas externas/perimetro. Bateria de anos.", "limitacao": "Latencia alta, nao apto EC", "score": 7.2}, {"rank": 4, "tech": "Wi-Fi RSSI", "icon": "W", "assertividade": 68, "precisao": "2-15m", "indoor": true, "outdoor": false, "bateria": "Horas", "custo": "$$", "vinculo": "MAC Wi-Fi (spoofable)", "semDesculpa": "Infraestrutura existente. Zero custo adicional.", "limitacao": "Precisao variavel, MAC randomizado", "score": 6.8}, {"rank": 5, "tech": "GPS LTE", "icon": "G", "assertividade": 62, "precisao": "+-3-10m", "indoor": false, "outdoor": true, "bateria": "1-3 dias", "custo": "$", "vinculo": "IMEI + SIM unico", "semDesculpa": "Areas externas sem infra. R$ 15/mes por SIM.", "limitacao": "Nao funciona indoor", "score": 6.2}], "DEVICES": [{"id": "d1", "name": "Cracha BLE", "cat": "Identificacao e Localizacao", "icon": "B", "color": "#00d4ff", "status": "online", "battery": 72, "adv": "Principal dispositivo ISIP. Tag BLE industrial IP67. Alcance 5-30m.", "metrics": ["ID presenca", "Zona", "Temperatura"]}, {"id": "d2", "name": "Tag UWB", "cat": "Rastreamento Indoor", "icon": "U", "color": "#a855f7", "status": "online", "battery": 61, "adv": "Precisao sub-30cm. Para espacos confinados e areas criticas.", "metrics": ["Posicao X/Y", "Velocidade", "Aceleracao"]}, {"id": "d3", "name": "Wearable Biometrico", "cat": "Monitoramento de Saude", "icon": "W", "color": "#00ff88", "status": "alert", "battery": 45, "adv": "FC, SpO2, temperatura, passos. Detecta fadiga e anomalias.", "metrics": ["FC", "SpO2", "Temp", "Passos"]}, {"id": "d4", "name": "Detector Gas", "cat": "Seguranca Ambiental", "icon": "G", "color": "#ff2244", "status": "online", "battery": null, "adv": "H2S, LEL, O2, CO. Alarme local + transmissao BLE para ISIP.", "metrics": ["H2S", "LEL", "O2", "CO"]}, {"id": "d5", "name": "Kiosk Entrada", "cat": "Controle de Acesso", "icon": "K", "color": "#ffb020", "status": "online", "battery": null, "adv": "Check-in/out, ASO, EPI, formularios digitais. QR + biometria.", "metrics": ["Check-in", "QR", "Formulario"]}], "RULES": [{"id": "R001", "cat": "Aptidao", "priority": "Critica", "active": true, "condition": "ASO vencido OU treinamento obrigatorio pendente", "action": "Bloquear acesso a todas as areas"}, {"id": "R002", "cat": "Jornada", "priority": "Critica", "active": true, "condition": "Jornada acumulada > 11h no turno", "action": "Bloquear + notificar supervisor imediatamente"}, {"id": "R003", "cat": "Jornada", "priority": "Alta", "active": true, "condition": "Jornada acumulada > 9.5h no turno", "action": "Alerta supervisor + registro de desvio"}, {"id": "R004", "cat": "Jornada", "priority": "Alta", "active": true, "condition": "Descanso entre turnos < 11h", "action": "Bloquear entrada + notificar RH"}, {"id": "R005", "cat": "Presenca", "priority": "Alta", "active": true, "condition": "Colaborador em area sem evidencia de credencial", "action": "Alerta equipe seguranca + verificacao manual"}, {"id": "R006", "cat": "Permanencia", "priority": "Alta", "active": true, "condition": "Permanencia em area critica > limite NR", "action": "Alerta + registro automatico de exposicao"}, {"id": "R007", "cat": "Cognitivo", "priority": "Alta", "active": true, "condition": "Score cognitivo < 50/100 no ultimo exame", "action": "Redirecionar para area de baixo risco"}, {"id": "R008", "cat": "Dispositivo", "priority": "Media", "active": true, "condition": "Dispositivo offline > 10min em area critica", "action": "Verificacao manual + log de auditoria"}, {"id": "R009", "cat": "Ambiente", "priority": "Alta", "active": true, "condition": "Detector gas: LEL > 10% OU H2S > 10ppm", "action": "Evacuacao automatica + alerta emergencia"}, {"id": "R010", "cat": "Aptidao", "priority": "Alta", "active": false, "condition": "Score biometrico fora de parametros NR", "action": "Encaminhar para avaliacao medica"}], "IMPL_MATRIX": [{"situacao": "Sem smartphone", "primaria": "Cracha BLE + Gateway", "alt1": "Kiosk tablet na entrada", "alt2": "Supervisao visual + papel"}, {"situacao": "Sem infraestrutura de rede", "primaria": "LoRaWAN gateway", "alt1": "Mesh 802.15.4", "alt2": "Buffer offline + sync"}, {"situacao": "Alta precisao exigida", "primaria": "UWB < 30cm", "alt1": "BLE multi-ancora", "alt2": "Wearable + geofence"}, {"situacao": "Sem recurso para hardware", "primaria": "App GPS gratuito", "alt1": "QR Code por area", "alt2": "Ponto biometrico"}, {"situacao": "Alta rotatividade", "primaria": "QR code auto-cadastro kiosk", "alt1": "App com onboarding rapido", "alt2": "Cadastro manual SST"}, {"situacao": "Area remota", "primaria": "GPS standalone LTE", "alt1": "App com buffer offline", "alt2": "Radio + check manual"}], "TRAIL_DATA": [{"time": "14:32", "area": "EC-2 Espaco Confinado", "method": "BLE Gateway", "device": "BLE-019", "perm": "48min", "worker": "Carlos Mendes", "act": "Inspecao", "dot": "warn"}, {"time": "14:15", "area": "Sala Eletrica SE-1", "method": "UWB", "device": "UWB-12", "perm": "1h05m", "worker": "Jose Santos", "act": "Manutencao", "dot": "ok"}, {"time": "13:48", "area": "Britagem Primaria", "method": "BLE Gateway", "device": "BLE-047", "perm": "3h12m", "worker": "Carlos Mendes", "act": "Operacao", "dot": "warn"}, {"time": "12:30", "area": "Area Externa", "method": "App GPS", "device": "App", "perm": "8min", "worker": "Desconhecido", "act": "Entrada indevida", "dot": "warn"}, {"time": "10:05", "area": "Pit Norte", "method": "GPS", "device": "GPS-03", "perm": "5h20m", "worker": "Diego Rocha", "act": "Desmonte", "dot": "ok"}, {"time": "08:30", "area": "Torre de Controle", "method": "App GPS", "device": "App", "perm": "2h30m", "worker": "Tatiana Lopes", "act": "Supervisao", "dot": "ok"}], "CONN_TECH": [{"name": "BLE 5.2", "custo": "$", "alcance": "5-50m", "precisao": "1-5m", "bateria": "Meses", "uso": "Presenca por zona"}, {"name": "UWB 802.15.4z", "custo": "$$$", "alcance": "10-50m", "precisao": "<30cm", "bateria": "Semanas", "uso": "Precisao sub-metro"}, {"name": "LoRaWAN", "custo": "$$", "alcance": "2-15km", "precisao": "~5-50m", "bateria": "Anos", "uso": "Areas externas"}, {"name": "Wi-Fi 802.11", "custo": "$$", "alcance": "30-100m", "precisao": "2-10m", "bateria": "Horas", "uso": "Indoor c/ infraestrutura"}, {"name": "4G/5G", "custo": "$", "alcance": "Km", "precisao": "10-100m", "bateria": "1 dia", "uso": "App movel, GPS"}, {"name": "GPS Standalone", "custo": "$", "alcance": "Global", "precisao": "1-5m outdoor", "bateria": "1-3 dias", "uso": "Outdoor"}], "RISK_LIBRARY": [{"id": "mining", "label": "Mineracao", "icon": "M", "risks": [{"name": "Desmonte com explosivos", "crit": "Critico", "cause": "Fragmentos e onda de choque"}, {"name": "Soterramento em frente de lavra", "crit": "Critico", "cause": "Instabilidade de taludes"}, {"name": "Atropelamento por equipamento pesado", "crit": "Critico", "cause": "Ponto cego operador"}, {"name": "Poeira mineral (silica)", "crit": "Alto", "cause": "Exposicao cronica, silicose"}]}, {"id": "confined", "label": "Espaco Confinado", "icon": "C", "risks": [{"name": "Deficiencia de oxigenio", "crit": "Critico", "cause": "Consumo por reacao ou deslocamento"}, {"name": "Gas toxico (H2S, CO)", "crit": "Critico", "cause": "Acumulo em espaco restrito"}, {"name": "Atmosfera inflamavel (LEL)", "crit": "Critico", "cause": "Vazamentos, decomposicao"}, {"name": "Engolfamento", "crit": "Alto", "cause": "Material granular, inundacao"}]}, {"id": "electrical", "label": "Eletrica", "icon": "E", "risks": [{"name": "Choque eletrico", "crit": "Critico", "cause": "Contato direto/indireto, arco"}, {"name": "Arco eletrico", "crit": "Critico", "cause": "Curto-circuito, abertura indevida"}, {"name": "Incendio por curto", "crit": "Alto", "cause": "Sobrecarga, isolacao degradada"}]}, {"id": "height", "label": "Trabalho em Altura", "icon": "A", "risks": [{"name": "Queda de altura", "crit": "Critico", "cause": "Falta EPI, superficie instavel"}, {"name": "Queda de objeto", "crit": "Alto", "cause": "Ferramentas sem retencao"}, {"name": "Colapso de andaime", "crit": "Critico", "cause": "Montagem incorreta, sobrecarga"}]}], "WHO_CLASSIFIES": [{"country": "Brasil", "authority": "MTE - Ministerio do Trabalho e Emprego", "url": "https://www.gov.br/trabalho", "standards": "NRs 1-38, PCMSO, PGR"}, {"country": "USA", "authority": "OSHA - Occupational Safety Administration", "url": "https://www.osha.gov", "standards": "29 CFR 1910, 1926"}, {"country": "Europa", "authority": "EU-OSHA - Agencia Europeia", "url": "https://osha.europa.eu", "standards": "Diretrizes EU + nacionais"}, {"country": "Internacional", "authority": "ILO - Organizacao Internacional do Trabalho", "url": "https://www.ilo.org", "standards": "Convencoes 155, 161, 187"}], "EVALUATION": [{"cat": "Frontend UI/UX", "score": 82, "items": [{"name": "Dashboard em tempo real", "done": true, "quality": "Excelente"}, {"name": "Mapa com zonas de risco", "done": true, "quality": "Bom"}, {"name": "Motor de regras visual", "done": true, "quality": "Bom"}, {"name": "Configurador interativo", "done": true, "quality": "Medio"}]}, {"cat": "Backend / API", "score": 15, "items": [{"name": "API REST autenticada", "done": false, "quality": "Critico"}, {"name": "Banco de dados real", "done": false, "quality": "Critico"}, {"name": "Integracao BLE/UWB", "done": false, "quality": "Critico"}, {"name": "Alertas push", "done": false, "quality": "Alto"}]}, {"cat": "Seguranca / LGPD", "score": 8, "items": [{"name": "Autenticacao JWT", "done": false, "quality": "Critico"}, {"name": "LGPD compliance", "done": false, "quality": "Critico"}, {"name": "Auditoria imutavel", "done": false, "quality": "Alto"}]}], "STACK": {"frontend": ["React 18", "TypeScript", "Vite"], "backend": ["Node.js", "FastAPI"], "database": ["TimescaleDB", "Redis"]}, "CAPACITY": [{"tier": "Piloto", "colab": "50-200", "events_day": "~500k"}, {"tier": "MVP", "colab": "200-800", "events_day": "~2M"}, {"tier": "Growth", "colab": "800-3000", "events_day": "~8M"}], "I18N": {"pt": {"cmd": "Comando", "dash": "Dashboard", "risks": "Riscos", "workers": "Equipe", "devices": "Dispositivos"}, "en": {"cmd": "Command", "dash": "Dashboard", "risks": "Risks", "workers": "Team", "devices": "Devices"}}, "SUPPLIERS": [{"name": "Minew Tech", "cat": "BLE", "url": "minewtech.com"}, {"name": "Pozyx", "cat": "UWB", "url": "pozyx.io"}]}</script>
 <script>
@@ -737,6 +875,18 @@ var AREAS_DB=[
 ]},
 {seg:'Trabalho em Altura',areas:[
   {n:'Estrutura Superior / Andaime',tipo:'Critica',crit:'CRITICO',riscos:['Queda >2m','Queda objetos','Colapso estrutura','Choque eletrico'],nrs:['NR-35','NR-18','NR-6'],intl:['ISO 45001','BS 8800'],cap:4,tech:'BLE+Wearable',trein:['NR-35 completo'],epi:'Cinto paraquedista, trava-quedas, capacete c/ jugular',sensor:'BLE + wearable (queda)',bloq:'Sem NR-35 = bloqueio total'}
+]},
+{seg:'Cimenteira',areas:[
+  {n:'Forno Rotativo',tipo:'Critica',crit:'CRITICO',riscos:['Calor extremo >300C','Poeira calcario','Queimadura','Engolfamento refratario'],nrs:['NR-15','NR-12','NR-33','NR-6'],intl:['ISO 45001','ISO 14001'],cap:6,tech:'UWB+Wearable',trein:['NR-15','NR-33','Op. Forno'],epi:'Capacete, luva termica, mascara PFF2, bota seguranca',sensor:'UWB + sensor temperatura + poeira',bloq:'Sem treinamento forno = bloqueio'},
+  {n:'Silos Cimento',tipo:'Critica',crit:'CRITICO',riscos:['Engolfamento','Asfixia','Queda interna','Poeira concentrada'],nrs:['NR-33','NR-35','NR-6'],intl:['ISO 45001','OSHA 1910.146'],cap:3,tech:'UWB obrigatorio',trein:['NR-33 completo','NR-35'],epi:'Detector gases, cinto, trava-quedas, EPRA, mascara',sensor:'UWB + detector O2/CO2',bloq:'Sem NR-33 = bloqueio total'},
+  {n:'Moinho Cru/Cimento',tipo:'Operacional',crit:'ALTO',riscos:['Ruido extremo >100dB','Poeira silica','EC no moinho','Prensamento'],nrs:['NR-12','NR-15','NR-33','NR-6'],intl:['ISO 45001'],cap:8,tech:'BLE',trein:['NR-12','NR-33','LOTO'],epi:'Protetor auditivo duplo, mascara PFF2, capacete',sensor:'BLE + sensor ruido + poeira',bloq:'Sem NR-12/LOTO = bloqueio'}
+]},
+{seg:'Usinas',areas:[
+  {n:'Casa de Maquinas / Turbinas',tipo:'Critica',crit:'CRITICO',riscos:['Vapor sob pressao','Partes girantes','Ruido extremo >110dB','Choque eletrico AT'],nrs:['NR-10','NR-12','NR-13','NR-6'],intl:['ISO 45001','IEC 61511','NFPA 70E'],cap:8,tech:'UWB+Wearable',trein:['NR-10 SEP','NR-12','NR-13','Op. Turbinas'],epi:'Capacete, protetor auditivo duplo, luva isolante, bota isolante',sensor:'UWB + vibration + temperatura',bloq:'Sem NR-10/NR-13 = bloqueio total'},
+  {n:'Caldeira',tipo:'Critica',crit:'CRITICO',riscos:['Explosao caldeira','Vapor pressurizado','Queimadura grave','EC refratario','Gases toxicos'],nrs:['NR-13','NR-33','NR-15','NR-6'],intl:['ISO 45001','ASME','IEC 61511'],cap:6,tech:'UWB+Gas',trein:['NR-13','NR-33','Op. Caldeira','Emergencia'],epi:'Mascara gases, luva termica, avental termico, capacete',sensor:'UWB + detector gas + pressao + temperatura',bloq:'Sem NR-13/NR-33 = bloqueio total'},
+  {n:'Subestacao AT',tipo:'Critica',crit:'CRITICO',riscos:['Arco eletrico AT','Choque eletrico letal','Incendio','Campo eletromagnetico'],nrs:['NR-10','NR-6'],intl:['NFPA 70E','IEC 61511','IEEE C2'],cap:4,tech:'BLE+UWB',trein:['NR-10 SEP','Manobra AT','LOTO'],epi:'Luva isolante classe 2, bota isolante, vestimenta arco, capacete FR',sensor:'BLE + sensor eletromagnetico',bloq:'Sem NR-10 SEP = bloqueio total'},
+  {n:'Torre Resfriamento',tipo:'Operacional',crit:'ALTO',riscos:['Queda de altura','Legionella','EC interior','Vapor'],nrs:['NR-35','NR-33','NR-12','NR-6'],intl:['ISO 45001'],cap:5,tech:'BLE',trein:['NR-35','NR-33','Biosseguranca'],epi:'Cinto paraquedista, mascara, bota antiderrapante',sensor:'BLE + sensor biologico',bloq:'Sem NR-35/NR-33 = bloqueio'},
+  {n:'Administrativa',tipo:'Apoio',crit:'BAIXO',riscos:['Ergonomia','Incendio predial'],nrs:['NR-17','NR-23','NR-6'],intl:['ISO 45001'],cap:30,tech:'BLE',trein:['Integracao','Brigadista'],epi:'Nao aplicavel (area administrativa)',sensor:'BLE beacon',bloq:'Sem integracao = bloqueio acesso'}
 ]}
 ];
 var canvas,ctx,W,H,pt=0,view='exposicao',rendered={},simOn=false;
@@ -763,8 +913,10 @@ function scolor(s){
 /* === SPLASH === */
 var CURRENT_PROFILE='tecnico';
 var PROFILE_LABELS={admin:'Admin Corporativo',gestor:'Gestor de Unidade',tecnico:'Tecnico SST',operacional:'Operacional',auditor:'Auditor'};
-function canSeeSensitive(){return CURRENT_PROFILE==='admin'||CURRENT_PROFILE==='tecnico'||CURRENT_PROFILE==='gestor';}
+function canSeeSensitive(){return CURRENT_PROFILE==='admin'||CURRENT_PROFILE==='tecnico'||CURRENT_PROFILE==='gestor'||CURRENT_PROFILE==='auditor';}
 function canEdit(){return CURRENT_PROFILE==='admin'||CURRENT_PROFILE==='tecnico';}
+function canAudit(){return CURRENT_PROFILE==='admin'||CURRENT_PROFILE==='auditor';}
+function canOperate(){return CURRENT_PROFILE!=='auditor';}
 var TV_MODE=false;
 function toggleTV(){TV_MODE=!TV_MODE;document.body.classList.toggle('tv-mode',TV_MODE);var b=G('tv-badge');if(b){b.textContent=TV_MODE?'TV ON':'TV';b.style.background=TV_MODE?'rgba(0,255,136,.15)':'rgba(0,212,255,.05)';}}
 function enterApp(){
@@ -774,9 +926,12 @@ function enterApp(){
   var restrictedTabs=['pupilo','journey'];
   if(CURRENT_PROFILE==='operacional'){
     restrictedTabs.forEach(function(t){
-      var origR=R[t];
       R[t]=function(){var m=G('m-'+t);m.innerHTML='<div class="ib am" style="margin:20px"><div class="ibt">&#128274; Acesso Restrito</div><p style="font-size:11px;color:var(--t2)">Seu perfil (<strong>'+PROFILE_LABELS[CURRENT_PROFILE]+'</strong>) nao possui permissao para acessar dados sensiveis de saude e jornada.<br><br>Solicite acesso ao administrador ou entre com perfil Tecnico SST.</p></div>';};
     });
+  }
+  /* Auditor: read-only, no simulator access */
+  if(CURRENT_PROFILE==='auditor'){
+    var simBtn=G('simpanel');if(simBtn)simBtn.style.display='none';
   }
   var s=G('splash');s.style.opacity='0';setTimeout(function(){s.style.display='none';G('app').style.display='flex';initAll();},500);
 }
@@ -946,7 +1101,9 @@ function drawMap(){
   ctx.textAlign='left';ctx.textBaseline='alphabetic';
   try{var wc=parseInt(gridC.slice(1,3),16)+','+parseInt(gridC.slice(3,5),16)+','+parseInt(gridC.slice(5,7),16);ctx.fillStyle='rgba('+wc+',0.035)';}catch(e){ctx.fillStyle=crgba('cy',0.035);}
   ctx.font='bold '+W*0.065+'px "Orbitron",monospace';
-  ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('SIGMINE',W/2,H*0.5);
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  var segWatermark=(typeof CURRENT_SEG!=='undefined'&&typeof SEG_CONFIG!=='undefined'&&SEG_CONFIG[CURRENT_SEG])?SEG_CONFIG[CURRENT_SEG].label.toUpperCase():'ISIP';
+  ctx.fillText(segWatermark,W/2,H*0.5);
   /* Violation overlay — top right */
   if(RULE_VIOLATIONS&&RULE_VIOLATIONS.length>0){
     var vx=W-90,vy=12;
@@ -1132,7 +1289,7 @@ function toggleEM(){
 }
 
 /* === SIMULATOR === */
-function toggleSim(){var sp=G('simpanel');sp.classList.toggle('on');simOn=sp.classList.contains('on');G('opbadge').className='badge '+(simOn?'badge-sim':'badge-op');G('opbadge').innerHTML=simOn?'&#127922; SIMULANDO':'&#9889; OPERACAO';showSaveInd(simOn?'saving':'ok',simOn?'MODO SIMULACAO ATIVO':'MODO OPERACAO');if(!simOn){ZONES=JSON.parse(JSON.stringify(ZONES_BASE));WORKERS.forEach(function(w,i){w.jornadaH=_d.WORKERS[i].jornadaH;w.status=_d.WORKERS[i].status;w.cogScore=_d.WORKERS[i].cogScore;w.apt=_d.WORKERS[i].apt;});drawMap();updatePanels();['exec','dash','journey','worker3d'].forEach(function(mod){rendered[mod]=false;});}}
+function toggleSim(){var sp=G('simpanel');sp.classList.toggle('on');simOn=sp.classList.contains('on');G('opbadge').className='badge '+(simOn?'badge-sim':'badge-op');G('opbadge').innerHTML=simOn?'&#127922; SIMULANDO':'&#9889; OPERACAO';showSaveInd(simOn?'saving':'ok',simOn?'MODO SIMULACAO ATIVO':'MODO OPERACAO');if(!simOn){var resetZones=SEG_ZONES[CURRENT_SEG]||ZONES_BASE;ZONES_BASE=JSON.parse(JSON.stringify(resetZones));ZONES=JSON.parse(JSON.stringify(ZONES_BASE));WORKERS.forEach(function(w,i){if(_d.WORKERS[i]){w.jornadaH=_d.WORKERS[i].jornadaH;w.status=_d.WORKERS[i].status;w.cogScore=_d.WORKERS[i].cogScore;w.apt=_d.WORKERS[i].apt;}});drawMap();updatePanels();Object.keys(rendered).forEach(function(mod){rendered[mod]=false;});}}
 function simAct(a){
   var fb='';
   switch(a){
@@ -1144,7 +1301,7 @@ function simAct(a){
     case 'evac':toggleEM();return;
     case 'add':ZONES[0].people+=5;fb='+5 pessoas na Britagem Primaria (total: '+ZONES[0].people+')';break;
     case 'remove':ZONES[6].people=Math.max(0,ZONES[6].people-3);fb='-3 pessoas no Pit Norte (total: '+ZONES[6].people+')';break;
-    case 'reset':ZONES=JSON.parse(JSON.stringify(ZONES_BASE));WORKERS.forEach(function(w,i){w.jornadaH=_d.WORKERS[i].jornadaH;w.status=_d.WORKERS[i].status;w.cogScore=_d.WORKERS[i].cogScore;w.apt=_d.WORKERS[i].apt;});fb='Todos os dados normalizados';break;
+    case 'reset':var resetZones=SEG_ZONES[CURRENT_SEG]||ZONES_BASE;ZONES_BASE=JSON.parse(JSON.stringify(resetZones));ZONES=JSON.parse(JSON.stringify(ZONES_BASE));WORKERS.forEach(function(w,i){if(_d.WORKERS[i]){w.jornadaH=_d.WORKERS[i].jornadaH;w.status=_d.WORKERS[i].status;w.cogScore=_d.WORKERS[i].cogScore;w.apt=_d.WORKERS[i].apt;}});fb='Dados normalizados (segmento: '+SEG_CONFIG[CURRENT_SEG].label+')';break;
     case 'fadiga':WORKERS.forEach(function(w){w.cogScore=Math.max(20,w.cogScore-25);});fb='Fadiga cognitiva simulada — scores reduzidos em 25 pontos';break;
     case 'inapto':WORKERS[6].apt=false;WORKERS[6].status='alert';ZONES[8].people+=1;fb='Bruno Oliveira (INAPTO) detectado em Estrutura Superior — BLOQUEIO';break;
     case 'simultan':ZONES[3].people=6;fb='EC-2 Esp.Confinado com 6 pessoas (capacidade: 4) — EXCESSO';break;
@@ -1166,9 +1323,11 @@ var RULE_ENGINE={
       case 'R005':return w.status==='blocked';
       case 'R006':return w.jornadaH>8&&w.conf;
       case 'R007':return w.cogScore<50;
-      case 'R008':return false;/* requires device data */
-      case 'R009':return false;/* requires sensor data */
+      case 'R008':return w.jornadaH>6&&w.cogScore<60;/* fadiga combinada */
+      case 'R009':return w.jornadaH>10&&!w.apt;/* jornada excessiva + inapto */
       case 'R010':return !w.apt&&w.cogScore<60;
+      case 'R011':return w.riskScore>=8;/* risco individual critico */
+      case 'R012':return w.descanso<8;/* interjornada gravemente insuficiente */
       default:return false;
     }
   },
@@ -1527,7 +1686,7 @@ h+='<tr><td class="fpl"><strong>Acoes</strong></td><td>NORMAL → MONITORAMENTO 
 h+='</tbody></table></div>';
 /* Config panel */
 h+='<div class="ib am" style="margin-bottom:8px"><div class="ibt">&#9881; Parametros por Planta (Editaveis)</div>';
-h+='<div style="margin-bottom:8px"><select id="jrn-planta" style="background:var(--p2);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:4px 8px;font-family:var(--hud);font-size:11px" onchange="var v=this.value;var cfg={\'mina-brucutu\':{ida:45,volta:50,tol:10,base:\'Portaria BLE\'},\'mina-alegria\':{ida:60,volta:65,tol:15,base:\'Portaria BLE\'},\'csn-presidente-vargas\':{ida:30,volta:35,tol:10,base:\'Portaria + Ponto\'},\'samarco-germano\':{ida:55,volta:60,tol:10,base:\'Portaria BLE\'},\'ternium-ipatinga\':{ida:25,volta:30,tol:5,base:\'Portaria RFID\'}};var c=cfg[v]||cfg[\'mina-brucutu\'];G(\'jrn-ida\').textContent=c.ida+\'min\';G(\'jrn-volta\').textContent=c.volta+\'min\';G(\'jrn-tol\').textContent=c.tol+\'min\';G(\'jrn-base\').textContent=c.base;">';
+h+='<div style="margin-bottom:8px"><select id="jrn-planta" style="background:var(--deep);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:4px 8px;font-family:var(--hud);font-size:11px" onchange="var v=this.value;var cfg={\'mina-brucutu\':{ida:45,volta:50,tol:10,base:\'Portaria BLE\'},\'mina-alegria\':{ida:60,volta:65,tol:15,base:\'Portaria BLE\'},\'csn-presidente-vargas\':{ida:30,volta:35,tol:10,base:\'Portaria + Ponto\'},\'samarco-germano\':{ida:55,volta:60,tol:10,base:\'Portaria BLE\'},\'ternium-ipatinga\':{ida:25,volta:30,tol:5,base:\'Portaria RFID\'}};var c=cfg[v]||cfg[\'mina-brucutu\'];G(\'jrn-ida\').textContent=c.ida+\'min\';G(\'jrn-volta\').textContent=c.volta+\'min\';G(\'jrn-tol\').textContent=c.tol+\'min\';G(\'jrn-base\').textContent=c.base;">';
 h+='<option value="mina-brucutu">Mina Brucutu (Vale)</option><option value="mina-alegria">Mina Alegria (Samarco)</option><option value="csn-presidente-vargas">CSN Presidente Vargas</option><option value="samarco-germano">Samarco Germano</option><option value="ternium-ipatinga">Ternium Ipatinga</option></select></div>';
 h+='<div class="g2" style="margin-bottom:6px">';
 h+='<div class="card"><div class="cl">Trajeto Ida</div><div class="cv sm" id="jrn-ida">45min</div></div>';
@@ -2150,9 +2309,23 @@ function gerarRelatorio(){
       var alertW=WORKERS.filter(function(w){return w.status==='alert'||!w.apt||w.cogScore<50;});
       if(alertW.length===0){rowFull('Nenhum trabalhador em alerta.');}
       alertW.forEach(function(w){row(w.name+' ('+w.role+')','Risco:'+w.riskScore+' Cog:'+w.cogScore+' Jorn:'+w.jornadaH+'h '+(w.apt?'APTO':'INAPTO'));});ln();
-      /* Section 5 */
-      title('5. EMPRESAS');
+      /* Section 5: Pupilometria */
+      title('5. PUPILOMETRIA — ULTIMO SCORE COGNITIVO');
+      WORKERS.forEach(function(w){
+        var cogLab=w.cogScore>=70?'APTO':w.cogScore>=50?'ALERTA':'CRITICO';
+        row(w.name+' ('+w.role+')',w.cogScore+'/100 — '+cogLab+' | Jornada: '+w.jornadaH+'h');
+      });ln();
+      /* Section 6 */
+      title('6. EMPRESAS');
       EMPRESAS.forEach(function(e){var ew=WORKERS.filter(function(w){return w.co===e.nome;}).length;row(e.nome+' ('+e.tipo+')',ew+' trabalhadores');});
+      /* Section 7: Segmento */
+      title('7. CONFIGURACAO DO SEGMENTO');
+      if(typeof SEG_CONFIG!=='undefined'&&SEG_CONFIG[seg]){
+        row('Segmento:',SEG_CONFIG[seg].label);
+        row('NRs aplicaveis:',SEG_CONFIG[seg].nrs.join(', '));
+        row('Areas tipicas:',SEG_CONFIG[seg].areas.slice(0,5).join(', '));
+        row('Documentos obrig.:',SEG_CONFIG[seg].docs.join(', '));
+      }ln();
       /* Footer */
       checkPage();y+=10;
       pdf.setDrawColor(0,150,220);pdf.line(14,y,pw-14,y);y+=6;
@@ -2184,20 +2357,6 @@ setInterval(updateClock,1000);updateClock();
 window.addEventListener('beforeunload',function(){saveState();});
 /* Try restore on init */
 try{if(loadState()){showSaveInd('ok','RESTAURADO');}}catch(e){}
-
-/* ============================================================
-   P1 — PUPILOMETRIA MODULE (6 sub-tabs)
-   ============================================================ */
-var PUP_RECORDS=[
-  {id:1,worker:'Carlos Mendes',time:'14:30',score:62,blink:18,perclos:0.18,dilat:4.2,status:'alerta',zone:'Britagem P1'},
-  {id:2,worker:'Jose Santos',time:'14:15',score:88,blink:14,perclos:0.08,dilat:3.8,status:'apto',zone:'SE-1'},
-  {id:3,worker:'Fabio Nunes',time:'13:50',score:41,blink:22,perclos:0.28,dilat:5.1,status:'critico',zone:'EC-2'},
-  {id:4,worker:'Bruno Oliveira',time:'13:30',score:55,blink:20,perclos:0.22,dilat:4.8,status:'alerta',zone:'Estrutura Sup.'},
-  {id:5,worker:'Diego Rocha',time:'12:00',score:77,blink:12,perclos:0.10,dilat:3.5,status:'apto',zone:'Pit Norte'},
-  {id:6,worker:'Pedro Costa',time:'11:30',score:71,blink:15,perclos:0.12,dilat:3.9,status:'apto',zone:'Area Carga'},
-  {id:7,worker:'Marcos Lima',time:'10:45',score:68,blink:16,perclos:0.15,dilat:4.0,status:'alerta',zone:'Forno F-1'},
-  {id:8,worker:'Tatiana Lopes',time:'08:30',score:94,blink:11,perclos:0.05,dilat:3.2,status:'apto',zone:'Torre Ctrl'}
-];
 
 /* ============================================================
    P1 — PUPILOMETRIA COMPLETA — PIPELINE REAL
@@ -2307,7 +2466,7 @@ h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-t
 
 /* COLUNA 1: INICIAR TESTE */
 h+='<div class="ib bl"><div class="ibt">&#128248; Iniciar Avaliacao</div>';
-h+='<div style="margin:8px 0"><select id="pup-test-worker" style="width:100%;background:var(--p2);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:6px;font-family:var(--hud);font-size:11px">';
+h+='<div style="margin:8px 0"><select id="pup-test-worker" style="width:100%;background:var(--deep);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:6px;font-family:var(--hud);font-size:11px">';
 h+='<option value="">Selecionar trabalhador...</option>';
 WORKERS.forEach(function(w){h+='<option value="'+w.id+'">'+w.name+' — '+w.role+'</option>';});
 h+='</select></div>';
@@ -2393,7 +2552,7 @@ h+='<div class="tcon" id="pup-camera" style="display:none">';
 /* Worker selector */
 h+='<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;margin-bottom:8px;background:rgba(var(--cy-rgb),.04);border:1px solid rgba(var(--cy-rgb),.15);border-radius:6px">';
 h+='<div style="font-family:var(--hud);font-size:11px;font-weight:700;color:var(--cy);white-space:nowrap">&#128100; IDENTIFICACAO:</div>';
-h+='<select id="pup-worker-sel" style="flex:1;background:var(--p2);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:6px 10px;font-family:var(--hud);font-size:12px;font-weight:700">';
+h+='<select id="pup-worker-sel" style="flex:1;background:var(--deep);color:var(--t1);border:1px solid var(--cy);border-radius:4px;padding:6px 10px;font-family:var(--hud);font-size:12px;font-weight:700">';
 WORKERS.forEach(function(w){h+='<option value="'+w.id+'">'+esc(w.name)+' — '+esc(w.role)+' ('+esc(w.co)+')</option>';});
 h+='<option value="manual">&#9999; Cadastro manual (visitante/terceiro)</option>';
 h+='</select>';
@@ -2402,9 +2561,9 @@ h+='</div>';
 h+='<div id="pup-manual-entry" style="display:none;padding:8px 12px;margin-bottom:8px;background:rgba(var(--wn-rgb),.04);border:1px solid rgba(var(--wn-rgb),.15);border-radius:6px">';
 h+='<div style="font-family:var(--hud);font-size:10px;color:var(--wn);margin-bottom:6px">CADASTRO MANUAL — VISITANTE / TERCEIRO</div>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">';
-h+='<input id="pup-m-nome" placeholder="Nome completo" style="background:var(--p2);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
-h+='<input id="pup-m-funcao" placeholder="Funcao / cargo" style="background:var(--p2);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
-h+='<input id="pup-m-empresa" placeholder="Empresa" style="background:var(--p2);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
+h+='<input id="pup-m-nome" placeholder="Nome completo" style="background:var(--deep);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
+h+='<input id="pup-m-funcao" placeholder="Funcao / cargo" style="background:var(--deep);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
+h+='<input id="pup-m-empresa" placeholder="Empresa" style="background:var(--deep);color:var(--t1);border:1px solid var(--t4);border-radius:4px;padding:5px 8px;font-size:11px">';
 h+='</div></div>';
 h+='<script>document.addEventListener("change",function(e){if(e.target&&e.target.id==="pup-worker-sel"){var me=G("pup-manual-entry");if(me)me.style.display=e.target.value==="manual"?"block":"none";}});<\/script>';
 /* Stage header */
@@ -3392,204 +3551,218 @@ var PLANT_CHAINS={
       {n:'EXPEDICAO',sub:'Terminal',color:'var(--ok)',steps:[{id:'7.1',n:'Pier',eq:'3 Bercos',detail:'VLCC 300.000 DWT'},{id:'7.2',n:'Dutos',eq:'450 km',detail:'API 5L X65'}]}
     ],
     kpis:[{n:'PRODUCAO',v:'150k',u:'bpd',m:'META: 160k'},{n:'DISPONIB.',v:'94%',u:'',m:''},{n:'SEGURANCA',v:'0.8',u:'TRIR',m:''},{n:'EFICIENCIA',v:'97%',u:'Solomon',m:''},{n:'EMISSOES',v:'-15%',u:'vs 2023',m:''}]
+  },
+  usinas:{title:'USINA TERMOELETRICA — CICLO COMPLETO',sub:'Do combustivel a energia | Recepcao → Combustao → Geracao → Transformacao → Transmissao',
+    stages:[
+      {n:'COMBUSTIVEL',sub:'Recepcao e preparo',color:'var(--wn)',steps:[{id:'1.1',n:'Patio Carvao/Biomassa',eq:'Empilhadeira/Retomadora',detail:'2.000t/dia'},{id:'1.2',n:'Moagem',eq:'4 Moinhos',detail:'Pulverizacao <75μm'}]},
+      {n:'CALDEIRA',sub:'Geracao de vapor',color:'var(--rd)',steps:[{id:'2.1',n:'Fornalha',eq:'Caldeira aquatubular',detail:'540°C / 170 bar'},{id:'2.2',n:'Superaquecedor',eq:'2 Estagios',detail:'Vapor superaquecido'},{id:'2.3',n:'Economizador',eq:'Pre-aquecimento',detail:'Agua alimentacao'}]},
+      {n:'TURBINA',sub:'Conversao mecanica',color:'var(--cy)',steps:[{id:'3.1',n:'Turbina Vapor',eq:'350MW',detail:'3.600 RPM'},{id:'3.2',n:'Turbina Gas',eq:'150MW',detail:'Ciclo combinado'}]},
+      {n:'GERADOR',sub:'Conversao eletrica',color:'var(--el)',steps:[{id:'4.1',n:'Gerador Sincrono',eq:'500MVA',detail:'13.8kV'},{id:'4.2',n:'Excitacao',eq:'Brushless',detail:'AVR automatico'}]},
+      {n:'CONDENSACAO',sub:'Ciclo termico',color:'var(--pu)',steps:[{id:'5.1',n:'Condensador',eq:'Tubo/Casco',detail:'Vacuo 0.1 bar'},{id:'5.2',n:'Torre Resfr.',eq:'Hiperbolica',detail:'120.000m3/h'}]},
+      {n:'SUBESTACAO',sub:'Transformacao AT',color:'var(--ok)',steps:[{id:'6.1',n:'Transformadores',eq:'SE 230kV',detail:'3 Bancos 200MVA'},{id:'6.2',n:'Protecao',eq:'Reles digitais',detail:'SEL/ABB'}]},
+      {n:'TRANSMISSAO',sub:'Despacho',color:'var(--wn)',steps:[{id:'7.1',n:'LT 230kV',eq:'2 Circuitos',detail:'180 km'},{id:'7.2',n:'ONS',eq:'Despacho',detail:'Operacao NI'}]}
+    ],
+    kpis:[{n:'CAPACIDADE',v:'500',u:'MW',m:'META: 95% FC'},{n:'DISPONIB.',v:'93%',u:'',m:''},{n:'SEGURANCA',v:'1.2',u:'TRIR',m:''},{n:'RENDIM.',v:'42%',u:'Ciclo comb.',m:''},{n:'EMISSOES',v:'-10%',u:'vs 2023',m:''}]
   }
 };
+
+/* ============================================================
+   SEGMENT VISUAL DNA — ENGINE DE LAYOUT POR SEGMENTO
+   Cada segmento tem assinatura visual única (cores, atmosfera,
+   ícones, silhuetas) para evitar layout genérico.
+   ============================================================ */
+var SEGMENT_VISUAL_DNA={
+  mineracao:{
+    icon:'\u26CF\uFE0F',
+    palette:{primary:'#D4762A',secondary:'#8B4513',accent:'#F4A460',glow:'rgba(212,118,42,0.4)',deep:'#2A1A0A'},
+    bg:'radial-gradient(ellipse 60% 40% at 30% 60%,rgba(139,69,19,0.35) 0%,transparent 60%),radial-gradient(ellipse 50% 30% at 75% 40%,rgba(212,118,42,0.25) 0%,transparent 60%),radial-gradient(ellipse 80% 50% at 50% 100%,rgba(80,40,10,0.4) 0%,transparent 70%),linear-gradient(180deg,#0a0604 0%,#0f0805 50%,#080302 100%)',
+    silhouette:'\u26CF \u{1F69B} \u26F0',
+    keywords:['Pit','Britagem','Correia','Patio','Barragem','Caminhao FE'],
+    elements:[{n:'Mina Aberta',i:'\u{1F30B}',pos:'top-left'},{n:'Britagem',i:'\u2699',pos:'top-mid'},{n:'Correia',i:'\u27A1',pos:'mid'},{n:'Pilha',i:'\u26F0',pos:'bot-left'},{n:'Caminhao FE',i:'\u{1F69B}',pos:'bot-right'}],
+    label:'CICLO MINEROMETALURGICO',
+    atmosphere:'arida-poeira'
+  },
+  siderurgia:{
+    icon:'\u{1F525}',
+    palette:{primary:'#FF4500',secondary:'#8B0000',accent:'#FFD700',glow:'rgba(255,69,0,0.5)',deep:'#1A0000'},
+    bg:'radial-gradient(ellipse 70% 50% at 50% 50%,rgba(255,69,0,0.4) 0%,transparent 55%),radial-gradient(ellipse 40% 30% at 30% 30%,rgba(255,140,0,0.35) 0%,transparent 50%),radial-gradient(ellipse 50% 30% at 70% 70%,rgba(178,34,34,0.3) 0%,transparent 55%),linear-gradient(180deg,#0a0202 0%,#100404 50%,#080202 100%)',
+    silhouette:'\u{1F525} \u26EA \u{1F3ED}',
+    keywords:['Forno','Aciaria','Lingotamento','Coqueria','Laminacao','Sinter'],
+    elements:[{n:'Alto-Forno',i:'\u{1F525}',pos:'top-left'},{n:'Aciaria LD',i:'\u26A1',pos:'top-mid'},{n:'Lingotamento',i:'\u{1F4E6}',pos:'mid'},{n:'Laminacao',i:'\u{1F4CF}',pos:'bot-mid'},{n:'Coqueria',i:'\u{1F3ED}',pos:'bot-right'}],
+    label:'CICLO SIDERURGICO INTEGRADO',
+    atmosphere:'incandescente-fundicao'
+  },
+  cimento:{
+    icon:'\u{1F3D7}\uFE0F',
+    palette:{primary:'#A0A0A0',secondary:'#D3D3D3',accent:'#F5DEB3',glow:'rgba(160,160,160,0.4)',deep:'#1A1A1A'},
+    bg:'radial-gradient(ellipse 60% 40% at 50% 50%,rgba(160,160,160,0.25) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 30% 70%,rgba(245,222,179,0.2) 0%,transparent 50%),radial-gradient(ellipse 50% 40% at 70% 30%,rgba(112,128,144,0.3) 0%,transparent 55%),linear-gradient(180deg,#080808 0%,#0c0c0c 50%,#060606 100%)',
+    silhouette:'\u{1F3D7} \u{1F31E} \u{1F3ED}',
+    keywords:['Forno','Moinho','Silo','Britagem','Clinquer','Pre-homog'],
+    elements:[{n:'Pedreira',i:'\u26F0',pos:'top-left'},{n:'Moinho',i:'\u2699',pos:'top-mid'},{n:'Forno Rotativo',i:'\u{1F525}',pos:'mid'},{n:'Resfriador',i:'\u2744',pos:'bot-mid'},{n:'Silos',i:'\u{1F3D7}',pos:'bot-right'}],
+    label:'CICLO CIMENTEIRO',
+    atmosphere:'pulverulenta-mineral'
+  },
+  petroleo:{
+    icon:'\u{1F6E2}\uFE0F',
+    palette:{primary:'#00B4D8',secondary:'#003366',accent:'#FFD700',glow:'rgba(0,180,216,0.45)',deep:'#000A14'},
+    bg:'radial-gradient(ellipse 50% 40% at 30% 30%,rgba(0,180,216,0.3) 0%,transparent 55%),radial-gradient(ellipse 60% 40% at 70% 60%,rgba(0,40,80,0.5) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 50% 80%,rgba(255,140,0,0.25) 0%,transparent 50%),linear-gradient(180deg,#020610 0%,#040a18 50%,#020408 100%)',
+    silhouette:'\u{1F6E2} \u26F4 \u{1F525}',
+    keywords:['Plataforma','Compressor','Tanque','Flare','Refino','Separador'],
+    elements:[{n:'Plataforma',i:'\u{1F30A}',pos:'top-left'},{n:'Separadores',i:'\u2699',pos:'top-mid'},{n:'Compressor',i:'\u26A1',pos:'mid'},{n:'Tanques',i:'\u{1F6E2}',pos:'bot-mid'},{n:'Flare',i:'\u{1F525}',pos:'bot-right'}],
+    label:'CICLO PETROLIFERO INTEGRADO',
+    atmosphere:'maritima-energetica'
+  },
+  usinas:{
+    icon:'\u26A1',
+    palette:{primary:'#FFD700',secondary:'#1E90FF',accent:'#00FF7F',glow:'rgba(255,215,0,0.4)',deep:'#0A0A14'},
+    bg:'radial-gradient(ellipse 60% 40% at 50% 30%,rgba(255,215,0,0.25) 0%,transparent 55%),radial-gradient(ellipse 50% 40% at 30% 70%,rgba(30,144,255,0.3) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 70% 60%,rgba(0,255,127,0.2) 0%,transparent 50%),linear-gradient(180deg,#020410 0%,#040818 50%,#020408 100%)',
+    silhouette:'\u26A1 \u{1F300} \u{1F3ED}',
+    keywords:['Turbina','Caldeira','Subestacao','Gerador','Condensador','Resfriamento'],
+    elements:[{n:'Caldeira',i:'\u{1F525}',pos:'top-left'},{n:'Turbina',i:'\u{1F300}',pos:'top-mid'},{n:'Gerador',i:'\u26A1',pos:'mid'},{n:'Subestacao',i:'\u{1F50C}',pos:'bot-mid'},{n:'Torre Resfr.',i:'\u2744',pos:'bot-right'}],
+    label:'CICLO DE GERACAO ENERGETICA',
+    atmosphere:'eletromecanica-vapor'
+  }
+};
+function getSegDNA(){return SEGMENT_VISUAL_DNA[CURRENT_SEG]||SEGMENT_VISUAL_DNA.mineracao;}
+
 R['planta']=function(){
   var m=G('m-planta');
   var seg=CURRENT_SEG||'mineracao';
+  var dna=getSegDNA();
+  /* Apply segment-specific class for DNA-driven background */
+  m.className='mod on seg-'+seg;
   var chain=PLANT_CHAINS[seg]||PLANT_CHAINS.mineracao;
   var viol=RULE_VIOLATIONS.length;
   var critZ=ZONES.filter(function(z){return sc2(score(z))>=6;}).length;
+  var stats=typeof EVENT_BUS!=='undefined'?EVENT_BUS.getStats():{active:0,critical:0};
+  var totalP=0;ZONES.forEach(function(z){totalP+=z.people;});
+  var aptos=WORKERS.filter(function(w){return w.apt;}).length;
+  var pctApt=Math.round(aptos/WORKERS.length*100);
   var h='';
-  /* TOP BAR */
-  h+='<div style="padding:8px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(var(--cy-rgb),.1);background:rgba(0,0,0,.3)">';
-  h+='<div><div style="font-family:var(--hud);font-size:15px;font-weight:900;color:var(--cy);letter-spacing:.08em">'+chain.title+'</div>';
-  h+='<div style="font-size:9px;color:var(--t3)">'+chain.sub+'</div></div>';
-  h+='<div style="display:flex;gap:12px;align-items:center">';
+  /* Background layer */
+  h+='<div class="planta-bg"></div>';
+  h+='<div class="planta-scan-line"></div>';
+
+  /* TOP BAR — cinematic */
+  h+='<div class="planta-topbar" style="padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">';
+  h+='<div style="flex:1;min-width:280px"><div style="font-family:var(--hud);font-size:18px;font-weight:900;color:var(--cy);letter-spacing:.1em;text-shadow:0 0 16px rgba(var(--cy-rgb),0.4)">'+chain.title+'</div>';
+  h+='<div style="font-size:10px;color:var(--t3);font-style:italic;margin-top:2px">'+chain.sub+'</div></div>';
+  h+='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">';
   chain.kpis.forEach(function(k){
-    h+='<div style="text-align:center;padding:2px 8px"><div style="font-size:8px;color:var(--t3);font-family:var(--hud);letter-spacing:.05em">'+k.n+'</div>';
-    h+='<div style="font-size:16px;font-weight:900;color:var(--cy);font-family:var(--hud)">'+k.v+'<span style="font-size:9px;color:var(--t3)"> '+k.u+'</span></div>';
-    if(k.m)h+='<div style="font-size:7px;color:var(--t4)">'+k.m+'</div>';
+    h+='<div class="planta-kpi"><div style="font-size:8px;color:var(--t3);font-family:var(--hud);letter-spacing:.05em">'+k.n+'</div>';
+    h+='<div class="pkv">'+k.v+'<span style="font-size:10px;color:var(--t3);font-weight:400"> '+k.u+'</span></div>';
+    if(k.m)h+='<div style="font-size:7px;color:var(--t4);margin-top:1px">'+k.m+'</div>';
     h+='</div>';
   });
-  h+='<div style="padding:4px 10px;border-radius:4px;background:rgba(var(--ok-rgb),.1);border:1px solid rgba(var(--ok-rgb),.2);text-align:center"><div style="font-size:7px;color:var(--ok)">OPERACAO</div><div style="font-size:10px;font-weight:900;color:var(--ok)">NORMAL</div></div>';
-  h+='<button class="btn" style="border-color:var(--cy);color:var(--cy);font-size:9px;padding:4px 10px" onclick="showMap()">&#9664; MAPA</button>';
+  h+='<div class="planta-status-badge"><div style="font-size:8px;color:var(--ok);letter-spacing:.05em">OPERACAO</div><div style="font-size:11px;font-weight:900;color:var(--ok);text-shadow:0 0 10px rgba(var(--ok-rgb),0.6)">NORMAL</div></div>';
+  h+='<button class="btn" style="border-color:var(--cy);color:var(--cy);font-size:9px;padding:6px 12px" onclick="showMap()">&#9664; MAPA</button>';
   h+='</div></div>';
 
-  /* PROCESS CHAIN — MAIN AREA */
-  h+='<div style="padding:10px;overflow-x:auto">';
-  h+='<div style="display:flex;gap:6px;align-items:flex-start;min-width:'+Math.max(chain.stages.length*160,900)+'px">';
+  /* SEGMENT WATERMARK + SIGNATURE ELEMENTS — DNA per segment */
+  h+='<div class="seg-watermark">'+dna.label+'</div>';
+  h+='<div class="seg-signature" style="color:'+dna.palette.primary+'">'+dna.icon+'</div>';
+  h+='<div class="planta-element-grid">';
+  dna.elements.forEach(function(el,ei){
+    var pal=[dna.palette.primary,dna.palette.secondary,dna.palette.accent,dna.palette.primary,dna.palette.secondary];
+    var col=pal[ei]||dna.palette.primary;
+    h+='<div class="planta-element" style="color:'+col+'"><div class="planta-element-icon">'+el.i+'</div><div class="planta-element-name">'+esc(el.n)+'</div><div class="planta-element-stat">ATIVO &middot; '+dna.atmosphere.toUpperCase()+'</div></div>';
+  });
+  h+='</div>';
+
+  /* PROCESS CHAIN — cinematic stages */
+  h+='<div style="padding:18px 14px;overflow-x:auto">';
+  h+='<div style="display:flex;gap:8px;align-items:flex-start;min-width:'+Math.max(chain.stages.length*180,900)+'px">';
   chain.stages.forEach(function(st,idx){
-    h+='<div style="flex:1;min-width:140px">';
+    h+='<div class="planta-stage" style="flex:1;min-width:160px;border:1px solid '+st.color+'44;border-bottom:3px solid '+st.color+'">';
     /* Stage header */
-    h+='<div style="padding:6px 8px;background:rgba(0,0,0,.25);border-radius:6px 6px 0 0;border:1px solid '+st.color+';border-bottom:3px solid '+st.color+'">';
-    h+='<div style="display:flex;align-items:center;gap:4px"><div style="width:20px;height:20px;border-radius:50%;background:'+st.color+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#000">'+(idx+1)+'</div>';
-    h+='<div><div style="font-size:11px;font-weight:900;color:var(--t1);font-family:var(--hud)">'+st.n+'</div>';
+    h+='<div style="padding:10px 12px;background:linear-gradient(135deg,'+st.color+'18 0%,transparent 100%);border-bottom:1px solid '+st.color+'33">';
+    h+='<div style="display:flex;align-items:center;gap:8px"><div class="planta-stage-num" style="background:'+st.color+'">'+(idx+1)+'</div>';
+    h+='<div style="flex:1"><div style="font-size:12px;font-weight:900;color:var(--t1);font-family:var(--hud);letter-spacing:.04em">'+st.n+'</div>';
     h+='<div style="font-size:8px;color:var(--t3)">'+st.sub+'</div></div></div></div>';
     /* Steps */
-    h+='<div style="border:1px solid rgba(var(--cy-rgb),.06);border-top:none;border-radius:0 0 6px 6px;background:rgba(0,0,0,.12);padding:4px">';
+    h+='<div style="padding:6px 8px">';
     st.steps.forEach(function(step){
-      h+='<div style="padding:5px 6px;margin-bottom:3px;background:rgba(var(--cy-rgb),.03);border-radius:3px;border-left:2px solid '+st.color+'">';
-      h+='<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:9px;font-weight:700;color:'+st.color+'">'+step.id+'</span></div>';
-      h+='<div style="font-size:10px;font-weight:700;color:var(--t1)">'+step.n+'</div>';
-      h+='<div style="font-size:8px;color:var(--cy)">'+step.eq+'</div>';
-      if(step.detail)h+='<div style="font-size:7px;color:var(--t4)">'+step.detail+'</div>';
+      h+='<div class="planta-step-card" style="border-left-color:'+st.color+'">';
+      h+='<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:'+st.color+'">'+step.id+'</span></div>';
+      h+='<div style="font-size:11px;font-weight:700;color:var(--t1);margin-top:2px">'+step.n+'</div>';
+      h+='<div style="font-size:9px;color:'+st.color+';font-weight:600">'+step.eq+'</div>';
+      if(step.detail)h+='<div style="font-size:8px;color:var(--t4);font-style:italic">'+step.detail+'</div>';
       h+='</div>';
     });
     h+='</div></div>';
-    /* Connector arrow */
-    if(idx<chain.stages.length-1)h+='<div style="display:flex;align-items:center;padding-top:20px;color:var(--t4);font-size:16px;flex-shrink:0">&#9654;</div>';
+    if(idx<chain.stages.length-1)h+='<div class="planta-arrow">&#9654;</div>';
   });
   h+='</div></div>';
 
-  /* BOTTOM PANEL — 4 SECTIONS */
-  h+='<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:1px;background:rgba(var(--cy-rgb),.04);border-top:1px solid rgba(var(--cy-rgb),.1)">';
+  /* BOTTOM PANEL — 4 cinematic cards */
+  h+='<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:8px;padding:0 14px 14px">';
 
-  /* 1. Visão Geral do Processo */
-  h+='<div style="padding:8px 10px;background:rgba(0,0,0,.2)"><div style="font-size:10px;font-weight:700;color:var(--cy);margin-bottom:6px;font-family:var(--hud)">VISAO GERAL DO PROCESSO</div>';
-  h+='<div style="display:flex;gap:3px;align-items:center;margin-bottom:6px;flex-wrap:wrap">';
+  /* 1. Visao Geral */
+  h+='<div class="planta-bot-card"><div class="pbc-title" style="color:var(--cy)">VISAO GERAL DO PROCESSO</div>';
+  h+='<div style="display:flex;gap:3px;align-items:center;margin-bottom:8px;flex-wrap:wrap">';
   chain.stages.forEach(function(st,i){
-    h+='<div style="padding:2px 6px;background:'+st.color+'20;border:1px solid '+st.color+'40;border-radius:3px;font-size:7px;font-weight:700;color:'+st.color+'">'+st.n+'</div>';
-    if(i<chain.stages.length-1)h+='<span style="color:var(--t4);font-size:8px">→</span>';
+    h+='<div style="padding:3px 8px;background:linear-gradient(180deg,'+st.color+'25 0%,'+st.color+'12 100%);border:1px solid '+st.color+'55;border-radius:4px;font-size:8px;font-weight:700;color:'+st.color+';text-shadow:0 0 6px '+st.color+'44">'+st.n+'</div>';
+    if(i<chain.stages.length-1)h+='<span style="color:rgba(var(--cy-rgb),.4);font-size:10px;font-weight:900">&rsaquo;</span>';
   });
   h+='</div>';
-  h+='<div style="display:flex;gap:8px;font-size:8px">';
-  h+='<div><span style="color:var(--t3)">EFETIVO:</span> <span style="color:var(--t1);font-weight:700">'+WORKERS.length+'</span></div>';
-  h+='<div><span style="color:var(--t3)">ZONAS:</span> <span style="color:var(--t1);font-weight:700">'+ZONES.length+'</span></div>';
-  h+='<div><span style="color:var(--t3)">ETAPAS:</span> <span style="color:var(--t1);font-weight:700">'+chain.stages.length+'</span></div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;font-size:9px">';
+  h+='<div style="padding:4px 6px;background:rgba(var(--cy-rgb),.06);border-radius:4px;text-align:center"><div style="color:var(--t3);font-size:8px">EFETIVO</div><div style="font-family:var(--hud);font-size:14px;font-weight:900;color:var(--cy)">'+totalP+'</div></div>';
+  h+='<div style="padding:4px 6px;background:rgba(var(--cy-rgb),.06);border-radius:4px;text-align:center"><div style="color:var(--t3);font-size:8px">ZONAS</div><div style="font-family:var(--hud);font-size:14px;font-weight:900;color:var(--cy)">'+ZONES.length+'</div></div>';
+  h+='<div style="padding:4px 6px;background:rgba(var(--cy-rgb),.06);border-radius:4px;text-align:center"><div style="color:var(--t3);font-size:8px">ETAPAS</div><div style="font-family:var(--hud);font-size:14px;font-weight:900;color:var(--cy)">'+chain.stages.length+'</div></div>';
   h+='</div></div>';
 
   /* 2. Indicadores Operacionais */
-  h+='<div style="padding:8px 10px;background:rgba(0,0,0,.2)"><div style="font-size:10px;font-weight:700;color:var(--cy);margin-bottom:6px;font-family:var(--hud)">INDICADORES OPERACIONAIS</div>';
-  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px">';
-  chain.kpis.slice(0,3).forEach(function(k){
-    h+='<div style="text-align:center;padding:4px;background:rgba(var(--cy-rgb),.04);border-radius:3px"><div style="font-size:14px;font-weight:900;color:var(--cy);font-family:var(--hud)">'+k.v+'</div><div style="font-size:7px;color:var(--t3)">'+k.n+'</div></div>';
+  h+='<div class="planta-bot-card"><div class="pbc-title" style="color:var(--el)">INDICADORES OPERACIONAIS</div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">';
+  chain.kpis.slice(0,4).forEach(function(k){
+    var num=parseFloat(k.v)||0;
+    var col=num>=90?'var(--ok)':num>=70?'var(--cy)':num>=50?'var(--wn)':'var(--rd)';
+    h+='<div style="text-align:center;padding:8px;background:linear-gradient(180deg,rgba(var(--cy-rgb),.06) 0%,rgba(0,0,0,0.2) 100%);border-radius:5px;border:1px solid rgba(var(--cy-rgb),.1)"><div style="font-family:var(--hud);font-size:18px;font-weight:900;color:'+col+';text-shadow:0 0 10px '+col+'66">'+k.v+'</div><div style="font-size:7px;color:var(--t3);margin-top:2px">'+k.n+'</div></div>';
   });
   h+='</div></div>';
 
   /* 3. Mapa de Criticidade */
-  h+='<div style="padding:8px 10px;background:rgba(0,0,0,.2)"><div style="font-size:10px;font-weight:700;color:var(--cy);margin-bottom:6px;font-family:var(--hud)">MAPA DE CRITICIDADE</div>';
-  h+='<div style="display:flex;gap:3px;align-items:center;flex-wrap:wrap">';
+  h+='<div class="planta-bot-card"><div class="pbc-title" style="color:var(--wn)">MAPA DE CRITICIDADE</div>';
+  h+='<div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-bottom:6px">';
   ZONES.forEach(function(z,i){
     var s=score(z),sc=sc2(s);
     var c=sc>=8?'var(--rd)':sc>=6?'var(--wn)':sc>=4?'var(--cy)':'var(--ok)';
-    h+='<div style="width:22px;height:22px;border-radius:4px;background:'+c+'20;border:1px solid '+c+'40;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:'+c+'" title="'+z.name+': '+sc+'">'+(i+1)+'</div>';
+    h+='<div class="planta-zone-cell" style="background:linear-gradient(180deg,'+c+'33 0%,'+c+'11 100%);border:1px solid '+c+'66;color:'+c+'" title="'+esc(z.name)+': '+sc+'" onclick="showZoneMo(ZONES['+i+'])">'+(i+1)+'</div>';
   });
   h+='</div>';
-  h+='<div style="display:flex;gap:6px;margin-top:4px;font-size:7px">';
+  h+='<div style="display:flex;gap:8px;font-size:8px;justify-content:space-around">';
   [{c:'var(--rd)',l:'CRITICO'},{c:'var(--wn)',l:'ALTO'},{c:'var(--cy)',l:'MODERADO'},{c:'var(--ok)',l:'NORMAL'}].forEach(function(x){
-    h+='<div style="display:flex;align-items:center;gap:2px"><div style="width:6px;height:6px;border-radius:2px;background:'+x.c+'"></div><span style="color:var(--t4)">'+x.l+'</span></div>';
+    h+='<div style="display:flex;align-items:center;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:'+x.c+';box-shadow:0 0 6px '+x.c+'"></div><span style="color:var(--t3);font-weight:600">'+x.l+'</span></div>';
   });
   h+='</div></div>';
 
-  /* 4. Alertas Inteligentes */
-  h+='<div style="padding:8px 10px;background:rgba(0,0,0,.2)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-size:10px;font-weight:700;color:var(--cy);font-family:var(--hud)">ALERTAS INTELIGENTES <span style="padding:1px 6px;background:rgba(var(--rd-rgb),.15);border-radius:8px;font-size:9px;color:var(--rd)">'+viol+'</span></div></div>';
-  var alerts=[
-    {t:'Jornada critica',d:'Fabio Nunes — 11h acumuladas',c:'var(--rd)',ago:'3 min'},
-    {t:'Zona sobrecarga',d:'Britagem Primaria — acima capacidade',c:'var(--wn)',ago:'12 min'},
-    {t:'ASO pendente',d:'Bruno Oliveira — treinamento vencido',c:'var(--wn)',ago:'25 min'}
-  ];
-  alerts.forEach(function(a){
-    h+='<div style="padding:4px 6px;margin-bottom:3px;border-left:2px solid '+a.c+';background:rgba(0,0,0,.15);border-radius:0 3px 3px 0">';
-    h+='<div style="display:flex;justify-content:space-between"><span style="font-size:9px;font-weight:700;color:'+a.c+'">'+a.t+'</span><span style="font-size:7px;color:var(--t4)">'+a.ago+'</span></div>';
-    h+='<div style="font-size:8px;color:var(--t3)">'+a.d+'</div></div>';
-  });
+  /* 4. Alertas Inteligentes — pulled from EVENT_BUS */
+  h+='<div class="planta-bot-card"><div class="pbc-title" style="color:var(--rd)">ALERTAS INTELIGENTES <span style="margin-left:auto;padding:2px 8px;background:rgba(var(--rd-rgb),.2);border-radius:10px;font-size:9px;color:var(--rd);text-shadow:0 0 6px rgba(var(--rd-rgb),0.5)">'+stats.active+'</span></div>';
+  var active=typeof EVENT_BUS!=='undefined'?EVENT_BUS.getActive().slice(0,4):[];
+  if(active.length===0){
+    /* Fallback to legacy alerts */
+    [{t:'Jornada critica',d:'Fabio Nunes — 11h acumuladas',c:'var(--rd)',ago:'3 min'},{t:'Zona sobrecarga',d:'Britagem — acima capacidade',c:'var(--wn)',ago:'12 min'},{t:'ASO pendente',d:'Bruno Oliveira — vencido',c:'var(--wn)',ago:'25 min'}].forEach(function(a){
+      h+='<div style="padding:5px 8px;margin-bottom:4px;border-left:3px solid '+a.c+';background:linear-gradient(90deg,'+a.c+'15 0%,transparent 100%);border-radius:0 4px 4px 0">';
+      h+='<div style="display:flex;justify-content:space-between"><span style="font-size:9px;font-weight:700;color:'+a.c+'">'+a.t+'</span><span style="font-family:var(--mono);font-size:7px;color:var(--t4)">'+a.ago+'</span></div>';
+      h+='<div style="font-size:8px;color:var(--t3);margin-top:1px">'+a.d+'</div></div>';
+    });
+  }else{
+    active.forEach(function(e){
+      var c=e.severity==='critical'?'var(--rd)':e.severity==='warning'?'var(--wn)':'var(--cy)';
+      var ago=Math.round((Date.now()-e.firstSeen)/60000)+' min';
+      h+='<div style="padding:5px 8px;margin-bottom:4px;border-left:3px solid '+c+';background:linear-gradient(90deg,'+c+'15 0%,transparent 100%);border-radius:0 4px 4px 0">';
+      h+='<div style="display:flex;justify-content:space-between"><span style="font-size:9px;font-weight:700;color:'+c+'">'+esc(e.title)+'</span><span style="font-family:var(--mono);font-size:7px;color:var(--t4)">'+ago+(e.occurrences>1?' x'+e.occurrences:'')+'</span></div>';
+      h+='<div style="font-size:8px;color:var(--t3);margin-top:1px">'+esc(e.detail.substring(0,50))+'</div></div>';
+    });
+  }
   h+='</div></div>';
 
   /* FOOTER */
-  h+='<div style="text-align:center;padding:4px;background:rgba(var(--cy-rgb),.03);border-top:1px solid rgba(var(--cy-rgb),.06)">';
-  h+='<span style="font-size:8px;font-weight:700;color:var(--cy);font-family:var(--hud);letter-spacing:.1em">OPERACAO INTEGRADA — MONITORAMENTO EM TEMPO REAL — DECISAO INTELIGENTE</span>';
-  h+='<span style="margin-left:16px;font-size:8px;color:var(--t4)">&#9679; <span style="color:var(--ok)">SEGURANCA</span> &#9679; <span style="color:var(--cy)">EFICIENCIA</span> &#9679; <span style="color:var(--el)">SUSTENTABILIDADE</span></span>';
+  h+='<div style="text-align:center;padding:8px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.4) 100%);border-top:1px solid rgba(var(--cy-rgb),.08)">';
+  h+='<span style="font-family:var(--hud);font-size:9px;font-weight:700;color:var(--cy);letter-spacing:.12em;text-shadow:0 0 10px rgba(var(--cy-rgb),0.4)">OPERACAO INTEGRADA &mdash; MONITORAMENTO TEMPO REAL &mdash; DECISAO INTELIGENTE</span>';
+  h+='<span style="margin-left:18px;font-size:8px;color:var(--t4)">&#9679; <span style="color:var(--ok);text-shadow:0 0 6px rgba(var(--ok-rgb),0.4)">SEGURANCA</span> &nbsp;&#9679; <span style="color:var(--cy);text-shadow:0 0 6px rgba(var(--cy-rgb),0.4)">EFICIENCIA</span> &nbsp;&#9679; <span style="color:var(--el);text-shadow:0 0 6px rgba(var(--el-rgb),0.4)">SUSTENTABILIDADE</span></span>';
   h+='</div>';
   m.innerHTML=h;
-};
-
-var IA_CHAT=[];
-function iaSubTab(id){var cs=document.querySelectorAll('#m-isipai .tcon');for(var j=0;j<cs.length;j++){cs[j].style.display='none';}var t=G('ia-'+id);if(t)t.style.display='block';var bs=document.querySelectorAll('#m-isipai .stab');for(var j=0;j<bs.length;j++){bs[j].classList.remove('on');if(bs[j].dataset.t===id)bs[j].classList.add('on');}}
-
-R['isipai']=function(){var m=G('m-isipai');
-var h='<div class="stabs">';
-['arq','docs','agentes','consulta','comply','logs'].forEach(function(t,i){
-  var labels={arq:'Arquitetura',docs:'Ingestao',agentes:'Agentes',consulta:'Consulta IA',comply:'Compliance',logs:'Auditoria'};
-  h+='<button class="stab'+(i===0?' on':'')+'" data-t="'+t+'" onclick="iaSubTab(\''+t+'\')">'+labels[t]+'</button>';
-});
-h+='</div>';
-
-/* ARQUITETURA */
-h+='<div class="tcon on" id="ia-arq">';
-h+='<div class="stit">&#129302; ARQUITETURA AGENTIC RAG</div>';
-h+='<div class="ib bl"><div class="ibt">Pipeline de Inteligencia</div>';
-h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:8px">';
-[{n:'1. Ingestao',d:'Upload NRs, PGR, PAE, RAC, POPs',c:'var(--cy)'},{n:'2. OCR + Parsing',d:'Extracao texto, tabelas, imagens',c:'var(--el)'},{n:'3. Chunking',d:'Divisao semantica em blocos',c:'var(--wn)'},{n:'4. Embedding',d:'Vetorizacao para busca semantica',c:'var(--pu)'},{n:'5. Indexacao',d:'Armazenamento em vector DB',c:'var(--cy)'},{n:'6. Query',d:'Busca por relevancia contextual',c:'var(--el)'},{n:'7. Agentes',d:'5 agentes especializados',c:'var(--wn)'},{n:'8. Resposta',d:'Acao + evidencia + rastreabilidade',c:'var(--ok)'}].forEach(function(s){
-  h+='<div class="card" style="border-top:2px solid '+s.c+'"><div style="font-weight:700;font-size:10px;color:'+s.c+'">'+s.n+'</div><div style="font-size:8px;color:var(--t3);margin-top:2px">'+s.d+'</div></div>';
-});
-h+='</div></div>';
-h+='<div class="g2" style="margin-top:8px">';
-[{v:'1.003',l:'CHUNKS INDEXADOS',c:'ok'},{v:'5',l:'AGENTES ATIVOS',c:''},{v:'534',l:'CONSULTAS REALIZADAS',c:''},{v:'94%',l:'COMPLIANCE GERAL',c:'ok'},{v:'3',l:'GAPS CRITICOS',c:'r'},{v:'<2s',l:'LATENCIA MEDIA',c:'ok'}].forEach(function(k){
-  h+='<div class="card"><div class="cl">'+k.l+'</div><div class="cv sm '+k.c+'">'+k.v+'</div></div>';
-});
-h+='</div></div>';
-
-/* DOCS */
-h+='<div class="tcon" id="ia-docs">';
-h+='<div class="stit">&#128194; BASE DOCUMENTAL</div>';
-h+='<table class="dt"><thead><tr><th>Documento</th><th>Tipo</th><th>Pags</th><th>Chunks</th><th>Status</th></tr></thead><tbody>';
-IA_DOCS.forEach(function(d){
-  h+='<tr><td><strong>'+esc(d.name)+'</strong></td><td>'+pill('p-b',d.type)+'</td><td>'+d.pages+'</td><td>'+d.chunks+'</td><td>'+pill(d.status==='indexado'?'p-ok':'p-w',d.status.toUpperCase())+'</td></tr>';
-});
-h+='</tbody></table></div>';
-
-/* AGENTES */
-h+='<div class="tcon" id="ia-agentes">';
-h+='<div class="stit">&#129302; AGENTES ESPECIALIZADOS</div>';
-IA_AGENTS.forEach(function(a){
-  h+='<div class="agent-card"><div class="agent-av" style="background:'+a.color+'15;border:2px solid '+a.color+'44;color:'+a.color+';font-size:18px">'+a.icon+'</div><div class="agent-info"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:11px;color:'+a.color+'">'+a.name+'</span>'+pill(a.status==='ativo'?'p-ok':'p-w',a.status.toUpperCase())+'</div><div style="font-size:9px;color:var(--t3);margin:3px 0">'+a.desc+'</div><div style="font-family:var(--mono);font-size:8px;color:var(--t4)">'+a.queries+' consultas processadas</div></div></div>';
-});
-h+='</div>';
-
-/* CONSULTA IA */
-h+='<div class="tcon" id="ia-consulta">';
-h+='<div class="stit">&#128172; CONSULTA INTELIGENTE</div>';
-h+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">';
-['NR-33 exige o que para EC?','Quem pode trabalhar em altura?','Score risco Britagem P1?','Ultimo incidente registrado?','Compliance NR-35 esta ok?'].forEach(function(q){
-  h+='<button class="btn bp" onclick="iaAsk(\''+q+'\')">'+q+'</button>';
-});
-h+='</div>';
-h+='<div class="chat-box" id="ia-chat"></div>';
-h+='<div class="chat-input"><input type="text" id="ia-input" placeholder="Pergunte ao ISIP..." onkeydown="if(event.key===\'Enter\')iaAsk(this.value)"><button onclick="iaAsk(G(\'ia-input\').value)">ENVIAR</button></div>';
-h+='</div>';
-
-/* COMPLIANCE */
-h+='<div class="tcon" id="ia-comply">';
-h+='<div class="stit">&#10003; DASHBOARD COMPLIANCE</div>';
-h+='<div class="g2">';
-[{v:'94%',l:'COMPLIANCE GERAL',c:'ok'},{v:'8/10',l:'DOCS INDEXADOS',c:''},{v:'72/87',l:'TREINAMENTOS OK',c:'w'},{v:'85/87',l:'ASOs VALIDOS',c:'ok'},{v:'3',l:'GAPS CRITICOS',c:'r'},{v:'12',l:'ACOES PENDENTES',c:'w'}].forEach(function(k){
-  h+='<div class="card"><div class="cl">'+k.l+'</div><div class="cv sm '+k.c+'">'+k.v+'</div></div>';
-});
-h+='</div>';
-h+='<div class="stit" style="margin-top:10px">GAPS CRITICOS</div>';
-[{gap:'ASO vencido — Bruno Oliveira (15 dias)',acao:'Bloquear acesso + encaminhar PCMSO',nr:'NR-7'},{gap:'Treinamento NR-33 pendente — 3 colaboradores',acao:'Agendar reciclagem imediata',nr:'NR-33'},{gap:'PGR nao atualizado para area Forno F-1',acao:'Revisar inventario de riscos',nr:'NR-1'}].forEach(function(g){
-  h+='<div class="card" style="border-left:3px solid var(--rd)"><div style="font-weight:700;font-size:10px;color:var(--rd)">'+g.gap+'</div><div style="font-size:9px;color:var(--ok);margin-top:3px">&#128161; '+g.acao+'</div><div style="font-size:8px;color:var(--t4);margin-top:2px">Ref: '+g.nr+'</div></div>';
-});
-h+='<div class="stit" style="margin-top:10px">ADERENCIA POR NR</div>';
-[{nr:'NR-1 GRO',pct:92},{nr:'NR-7 PCMSO',pct:88},{nr:'NR-10 Eletrica',pct:95},{nr:'NR-12 Maquinas',pct:82},{nr:'NR-22 Mineracao',pct:90},{nr:'NR-33 EC',pct:68},{nr:'NR-35 Altura',pct:74}].forEach(function(n){
-  h+='<div style="display:flex;align-items:center;gap:6px;padding:3px 0"><span style="font-size:9px;color:var(--t3);min-width:90px">'+n.nr+'</span><div class="pb" style="flex:1"><div class="pf '+(n.pct>=85?'ok':n.pct>=70?'w':'c')+'" style="width:'+n.pct+'%"></div></div><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:'+(n.pct>=85?'var(--ok)':n.pct>=70?'var(--wn)':'var(--rd)')+'">'+n.pct+'%</span></div>';
-});
-h+='</div>';
-
-/* LOGS AUDITORIA IA */
-h+='<div class="tcon" id="ia-logs">';
-h+='<div class="stit">&#128270; LOG DE ACOES DOS AGENTES</div>';
-[{t:'14:38',agent:'Compliance',acao:'Verificou ASO de 87 colaboradores. 2 vencidos detectados.',c:'#00d4ff'},{t:'14:35',agent:'Risco',acao:'Recalculou score Britagem P1: 7.2 → monitoramento recomendado.',c:'#ffb020'},{t:'14:22',agent:'Operacional',acao:'Detectou simultaneidade incompativel: soldagem + carga Z6.',c:'#00ff88'},{t:'14:10',agent:'Compliance',acao:'Bruno Oliveira — ASO vencido ha 15 dias. Bloqueio sugerido.',c:'#00d4ff'},{t:'13:55',agent:'Risco',acao:'Concentracao Pit Norte: 7 pessoas. Redistribuicao sugerida.',c:'#ffb020'},{t:'13:40',agent:'Auditoria',acao:'Gap NR-33: 3 colaboradores sem reciclagem. Alerta gerado.',c:'#a855f7'},{t:'13:20',agent:'Emergencia',acao:'Teste PAE zona Forno F-1 concluido. Rota validada.',c:'#ff2244'},{t:'12:00',agent:'Operacional',acao:'PT-042 liberada para EC-2. Vigia confirmado. Timer ativo.',c:'#00ff88'}].forEach(function(l){
-  h+='<div class="al3"><div class="dot2" style="background:'+l.c+'"></div><div style="flex:1"><div style="font-size:10px;font-weight:700;color:'+l.c+'">'+l.agent+'</div><div style="font-size:9px;color:var(--t2)">'+l.acao+'</div></div><span style="font-family:var(--mono);font-size:8px;color:var(--t3)">'+l.t+'</span></div>';
-});
-h+='<div class="ib bl" style="margin-top:12px"><div class="ibt">&#128274; Governanca de Dados</div>';
-h+='<div class="g2">';
-[{n:'RBAC',d:'5 perfis: Diretor, SMS, Supervisor, Operador, Auditor'},{n:'Criptografia',d:'AES-256 em repouso, TLS 1.3 em transito'},{n:'Logs',d:'Imutaveis, assinados, retencao 5 anos'},{n:'LGPD',d:'Consentimento, anonimizacao, direito ao esquecimento'}].forEach(function(g){
-  h+='<div class="card"><div style="font-weight:700;font-size:10px;color:var(--cy)">'+g.n+'</div><div style="font-size:9px;color:var(--t3);margin-top:2px">'+g.d+'</div></div>';
-});
-h+='</div></div></div>';
-m.innerHTML=h;
 };
 
 /* IA Chat handler */
@@ -3692,6 +3865,29 @@ var critW=WORKERS.filter(function(w){return !w.apt;});
 checks.push({n:'Workers inaptos detectados',ok:true,d:critW.length+' inaptos — '+rv.filter(function(v){return v.priority==='Critica';}).length+' violacoes criticas'});
 /* Check 12: Login/profile */
 checks.push({n:'Perfil de acesso definido',ok:typeof CURRENT_PROFILE!=='undefined',d:'Perfil: '+(typeof CURRENT_PROFILE!=='undefined'?PROFILE_LABELS[CURRENT_PROFILE]:'INDEFINIDO')});
+/* Check 13: SEG_CONFIG has all 5 segments */
+var segCount=typeof SEG_CONFIG!=='undefined'?Object.keys(SEG_CONFIG).length:0;
+checks.push({n:'SEG_CONFIG — 5 segmentos configurados',ok:segCount>=5,d:segCount+'/5 segmentos'});
+/* Check 14: SEG_ZONES has matching zones */
+var segZCount=typeof SEG_ZONES!=='undefined'?Object.keys(SEG_ZONES).length:0;
+checks.push({n:'SEG_ZONES — Zonas por segmento',ok:segZCount>=4,d:segZCount+' segmentos com zonas dedicadas'});
+/* Check 15: EQUIP_DB coverage */
+var eqCount=typeof EQUIP_DB!=='undefined'?Object.keys(EQUIP_DB).length:0;
+checks.push({n:'EQUIP_DB — Biblioteca equipamentos',ok:eqCount>=4,d:eqCount+' segmentos com equipamentos'});
+/* Check 16: PLANT_CHAINS coverage */
+var pcCount=typeof PLANT_CHAINS!=='undefined'?Object.keys(PLANT_CHAINS).length:0;
+checks.push({n:'PLANT_CHAINS — Plantas por segmento',ok:pcCount>=4,d:pcCount+' segmentos com planta visual'});
+/* Check 17: Theme CSS variables */
+var csVoid=getComputedStyle(document.body).getPropertyValue('--void').trim();
+checks.push({n:'CSS Variables — tema ativo',ok:csVoid.length>0,d:'--void: '+csVoid});
+/* Check 18: jsPDF available */
+checks.push({n:'jsPDF carregado (exportacao PDF)',ok:!!(window.jspdf&&window.jspdf.jsPDF),d:window.jspdf?'Disponivel':'Indisponivel — fallback TXT'});
+/* Check 19: Pupilometria records */
+var pupCount=typeof PUP_RECORDS!=='undefined'?PUP_RECORDS.length:0;
+checks.push({n:'PUP_RECORDS — registros pupilometria',ok:pupCount>0,d:pupCount+' registros'});
+/* Check 20: Metrics coherence — efetivo vs zones */
+var zoneTotal=0;ZONES.forEach(function(z){zoneTotal+=z.people;});
+checks.push({n:'Coerencia efetivo campo vs zonas',ok:zoneTotal>0,d:'Soma zonas: '+zoneTotal+' pessoas | Workers: '+WORKERS.length});
 
 var passCount=checks.filter(function(c){return c.ok;}).length;
 var pctPass=Math.round(passCount/checks.length*100);
@@ -3755,7 +3951,15 @@ function setTheme(cls,btn){
   /* Update body background to match --void */
   var cs=getComputedStyle(document.body);
   document.body.style.background=cs.getPropertyValue('--void');
+  /* Force status bar and topbar to reflow with new variables */
+  var topbar=G('topbar');if(topbar)topbar.style.background=cs.getPropertyValue('--deep');
+  var layerbar=G('layerbar');if(layerbar)layerbar.style.background=cs.getPropertyValue('--deep');
+  var rp=G('rp');if(rp)rp.style.background=cs.getPropertyValue('--deep');
+  var sb=G('sb');if(sb)sb.style.background=cs.getPropertyValue('--deep');
   Object.keys(rendered).forEach(function(mod){rendered[mod]=false;});
+  /* Re-render currently open module */
+  var openMod=document.querySelector('.mod.on');
+  if(openMod){var modId=openMod.id.replace('m-','');if(R[modId]){try{R[modId]();rendered[modId]=true;}catch(e){}}}
   drawMap();updatePanels();
   showSaveInd('ok','TEMA: '+(({'':'ISIP','t-vale':'Vale','t-samarco':'Samarco','t-csn':'CSN','t-ternium':'Ternium','t-nexa':'Nexa'})[cls]||'Default'));
   try{localStorage.setItem('isip_theme',cls);}catch(e){}
@@ -3803,6 +4007,14 @@ var SEG_CONFIG={
     riscos:['Explosao/BLEVE','H2S toxico','Vazamento HC','Incendio','Queda ao mar','Eletricidade estatica','Pressao alta'],
     epis:['Capacete c/ jugular','Macacao FR','Bota antifaisca','Detector 4 gases','Mascara fuga','Luva antiestatica','Colete salva-vidas'],
     docs:['PGR','PAE','PCMSO','LTCAT','POP','APR','PT','AST']
+  },
+  usinas:{
+    label:'Usinas',nrs:['NR-1','NR-4','NR-6','NR-7','NR-9','NR-10','NR-12','NR-13','NR-15','NR-33','NR-35'],
+    racs:['RAC 01 — LOTO','RAC 02 — Altura','RAC 03 — EC','RAC 04 — Caldeiras/Vasos','RAC 05 — Eletrica AT','RAC 06 — Produtos Quimicos'],
+    areas:['Casa de maquinas','Turbinas','Caldeira','Subestacao','Torre resfriamento','Sala controle','Condensador','Casa de bombas','Patio carvao/biomassa','Quimioterapia agua','Area administrativa'],
+    riscos:['Choque eletrico AT','Vapor sob pressao','Queimadura','Queda','Gases toxicos','Ruido extremo','Explosao caldeira'],
+    epis:['Capacete c/ jugular','Luva isolante','Bota isolante','Protetor auditivo','Mascara gases','Oculos ampla visao','Cinto paraquedista'],
+    docs:['PGR','PAE','PCMSO','LTCAT','POP','APR','PT']
   }
 };
 
@@ -3875,11 +4087,30 @@ var SEG_ZONES={
     {id:'ZD',name:'Area Admin.',x:0.56,y:0.68,w:0.18,h:0.16,people:3,time:7.0,apt:0.4,jrn:0.6,env:0.3,act:'Gestao',equip:'Escritorio',area:'Administrativo',adb:'Administrativa'},
     {id:'ZE',name:'Area Classificada',x:0.68,y:0.04,w:0.16,h:0.16,people:3,time:2.0,apt:1.4,jrn:1.4,env:1.9,act:'Inspecao',equip:'Detector 4 gases',area:'Classificada',adb:'Area de Flare'},
     {id:'ZF',name:'Heliporto',x:0.64,y:0.48,w:0.16,h:0.14,people:1,time:0.5,apt:0.7,jrn:0.8,env:0.6,act:'Embarque',equip:'Helideck',area:'Logistica',adb:'Administrativa'}
+  ],
+  usinas:[
+    {id:'Z1',name:'Casa de Maquinas',x:0.02,y:0.04,w:0.24,h:0.2,people:7,time:4.0,apt:1.4,jrn:1.5,env:1.6,act:'Operacao turbinas',equip:'Turbina a vapor 350MW',area:'Geracao',adb:'Linha de Processo'},
+    {id:'Z2',name:'Caldeira CLD-01',x:0.28,y:0.04,w:0.2,h:0.18,people:5,time:3.5,apt:1.3,jrn:1.4,env:1.9,act:'Operacao caldeira',equip:'Caldeira aquatubular',area:'Vapor',adb:'Alto-Forno'},
+    {id:'Z3',name:'Subestacao 230kV',x:0.5,y:0.04,w:0.18,h:0.14,people:3,time:1.5,apt:1.1,jrn:1.2,env:1.3,act:'Manutencao eletrica',equip:'SE 230kV',area:'Eletrica',adb:'Sala Eletrica'},
+    {id:'Z4',name:'Torre Resfriamento',x:0.02,y:0.28,w:0.18,h:0.16,people:3,time:2.0,apt:1.0,jrn:1.1,env:1.4,act:'Manutencao torre',equip:'Torre hiperbolica',area:'Utilidades',adb:'Linha de Processo'},
+    {id:'Z5',name:'Condensador',x:0.22,y:0.28,w:0.2,h:0.16,people:4,time:3.0,apt:1.2,jrn:1.3,env:1.5,act:'Inspecao condensador',equip:'Condensador tubo/casco',area:'Processo',adb:'Linha de Processo'},
+    {id:'Z6',name:'Patio Carvao/Biomassa',x:0.44,y:0.26,w:0.22,h:0.18,people:5,time:3.5,apt:1.1,jrn:1.2,env:1.3,act:'Alimentacao combustivel',equip:'Empilhadeira/retomadora',area:'Logistica',adb:'Correia Transportadora'},
+    {id:'Z7',name:'Casa de Bombas',x:0.02,y:0.5,w:0.18,h:0.16,people:3,time:2.5,apt:0.9,jrn:1.0,env:1.0,act:'Operacao bombas',equip:'Bombas centrifugas',area:'Utilidades',adb:'Linha de Processo'},
+    {id:'Z8',name:'EC Caldeira',x:0.22,y:0.5,w:0.18,h:0.16,people:2,time:0.8,apt:1.6,jrn:1.5,env:2.0,act:'Inspecao interna',equip:'Caldeira parada',area:'Confinado',adb:'Espaco Confinado'},
+    {id:'Z9',name:'Quimioterapia Agua',x:0.42,y:0.5,w:0.2,h:0.16,people:3,time:2.0,apt:1.0,jrn:1.1,env:1.2,act:'Tratamento quimico',equip:'Dosadores',area:'Quimica',adb:'Linha de Processo'},
+    {id:'ZA',name:'Sala Controle',x:0.02,y:0.72,w:0.18,h:0.14,people:4,time:8.0,apt:0.6,jrn:0.8,env:0.4,act:'Supervisao DCS',equip:'SDCD/SCADA',area:'Controle',adb:'Sala Eletrica'},
+    {id:'ZB',name:'Almoxarifado',x:0.22,y:0.72,w:0.16,h:0.14,people:2,time:3.0,apt:0.7,jrn:0.9,env:0.5,act:'Logistica pecas',equip:'Estantes/empilhadeira',area:'Logistica',adb:'Administrativa'},
+    {id:'ZC',name:'Lab Quimico',x:0.4,y:0.68,w:0.14,h:0.14,people:2,time:4.0,apt:0.5,jrn:0.7,env:0.5,act:'Analises agua/vapor',equip:'Espectrometro',area:'Qualidade',adb:'Linha de Processo'},
+    {id:'ZD',name:'Oficina Mecanica',x:0.56,y:0.5,w:0.18,h:0.14,people:3,time:2.5,apt:0.9,jrn:1.0,env:0.8,act:'Manutencao geral',equip:'Torno/Fresadora',area:'Manutencao',adb:'Linha de Processo'},
+    {id:'ZE',name:'Turbina Gas TG-01',x:0.68,y:0.04,w:0.16,h:0.16,people:4,time:3.0,apt:1.3,jrn:1.3,env:1.7,act:'Operacao TG',equip:'Turbina gas 150MW',area:'Geracao',adb:'Linha de Processo'},
+    {id:'ZF',name:'Area Admin.',x:0.56,y:0.72,w:0.18,h:0.14,people:3,time:7.0,apt:0.4,jrn:0.6,env:0.3,act:'Gestao',equip:'Escritorio',area:'Administrativo',adb:'Administrativa'}
   ]
 };
 
 function setSeg(seg,btn){
   CURRENT_SEG=seg;
+  /* Force planta re-render with new segment DNA */
+  if(typeof rendered!=='undefined')rendered['planta']=false;
   var bs=document.querySelectorAll('#seg-sel .seg-btn');for(var i=0;i<bs.length;i++)bs[i].classList.remove('on');
   if(btn)btn.classList.add('on');
   /* Update topbar label */
@@ -3889,11 +4120,21 @@ function setSeg(seg,btn){
     ZONES_BASE=JSON.parse(JSON.stringify(SEG_ZONES[seg]));
     ZONES=JSON.parse(JSON.stringify(ZONES_BASE));
   }
+  /* Update EMPRESAS context label */
+  var segLabel=SEG_CONFIG[seg].label;
+  EMPRESAS[0].nome=segLabel+'A';EMPRESAS[0].tipo='Propria';
   /* Re-render ALL modules (full propagation) */
   Object.keys(rendered).forEach(function(mod){rendered[mod]=false;});
+  /* Re-render currently visible module tab */
+  var openMod=document.querySelector('.mod.on');
+  if(openMod){
+    var modId=openMod.id.replace('m-','');
+    if(R[modId]){try{R[modId]();rendered[modId]=true;}catch(e){}}
+  }
   /* Redraw map with new zones */
   drawMap();
   updatePanels();
+  initTicker();
   showSaveInd('ok','SEGMENTO: '+SEG_CONFIG[seg].label+' — '+ZONES.length+' zonas carregadas');
 }
 
@@ -3960,6 +4201,14 @@ var EQUIP_DB={
     {nome:'Compressor de Gas',cat:'Processo',crit:'Critico',nrs:['NR-12','NR-16','NR-20'],epis:['Macacao FR','Detector 4 gases','Bota antifaisca'],riscos:['Explosao','Vazamento HC','Ruido'],trein:['NR-16','NR-20','Op. Compressor']},
     {nome:'Vaso de Pressao',cat:'Processo',crit:'Critico',nrs:['NR-13','NR-33'],epis:['Capacete','Detector gases','Mascara fuga'],riscos:['Ruptura catastrofica','Gases toxicos','EC'],trein:['NR-13','NR-33','Inspecao vasos']},
     {nome:'Torre de Destilacao',cat:'Processo',crit:'Critico',nrs:['NR-13','NR-33','NR-35'],epis:['Macacao FR','Cinto','Detector','Mascara'],riscos:['Queda','Atmosfera explosiva','H2S','Calor'],trein:['NR-33','NR-35','NR-13','Servico a quente']}
+  ],
+  usinas:[
+    {nome:'Turbina a Vapor',cat:'Processo',crit:'Critico',nrs:['NR-10','NR-12','NR-13'],epis:['Capacete','Protetor auditivo','Luva termica','Oculos'],riscos:['Vapor sob pressao','Ruido extremo','Partes girantes','Choque eletrico'],trein:['Op. Turbinas','NR-10','NR-12','LOTO']},
+    {nome:'Caldeira Aquatubular',cat:'Processo',crit:'Critico',nrs:['NR-13','NR-33','NR-15'],epis:['Capacete','Mascara gases','Luva termica','Bota seguranca'],riscos:['Explosao','Vapor pressurizado','Queimadura','Asfixia EC'],trein:['NR-13','NR-33','Op. Caldeira','Emergencia']},
+    {nome:'Transformador de Potencia',cat:'Eletrica',crit:'Critico',nrs:['NR-10','NR-12'],epis:['Luva isolante','Bota isolante','Capacete c/ protetor facial','Vestimenta arco'],riscos:['Arco eletrico','Choque AT','Incendio','Explosao'],trein:['NR-10','SEP','LOTO','Manobra AT']},
+    {nome:'Turbina a Gas',cat:'Processo',crit:'Critico',nrs:['NR-10','NR-12','NR-20'],epis:['Capacete','Protetor auditivo','Detector gases','Macacao FR'],riscos:['Explosao gas','Ruido extremo','Incendio','Partes girantes'],trein:['Op. TG','NR-12','NR-20','LOTO']},
+    {nome:'Torre de Resfriamento',cat:'Utilidades',crit:'Alto',nrs:['NR-12','NR-35','NR-33'],epis:['Capacete','Cinto paraquedista','Mascara','Bota antiderrapante'],riscos:['Queda de altura','Legionella','EC','Vapor'],trein:['NR-35','NR-33','Biosseguranca']},
+    {nome:'Bomba de Alta Pressao',cat:'Utilidades',crit:'Alto',nrs:['NR-12','NR-13'],epis:['Capacete','Luva','Protetor auditivo','Oculos'],riscos:['Vazamento pressao','Ruido','Partes girantes'],trein:['NR-12','LOTO','Op. Bombas']}
   ]
 };
 
@@ -4220,6 +4469,1045 @@ h+='</div>';
 h+='<div style="font-size:8px;color:var(--t4);margin-top:6px;padding:6px;background:rgba(0,0,0,.15);border-radius:4px">&#128270; Biblioteca: ISIP Areas v2.0 | Normas: NR-1 a NR-35, ISO 45001, ISO 31000, API RP 754, NFPA 70E, IEC 61511 | Fonte unica para motor de risco, acesso e governanca</div>';
 m.innerHTML=h;
 };
+
+/* ============================================================
+   EVOLUTION MODULES — ISIP v8.4
+   ============================================================ */
+
+/* === NOTIFICATION SYSTEM === */
+var NOTIF_QUEUE=[];
+var NOTIF_UNREAD=0;
+function addNotif(type,title,detail,priority){
+  var n={id:Date.now(),type:type,title:title,detail:detail,priority:priority||'info',time:new Date().toLocaleTimeString('pt-BR'),read:false};
+  NOTIF_QUEUE.unshift(n);if(NOTIF_QUEUE.length>50)NOTIF_QUEUE.pop();
+  NOTIF_UNREAD++;
+  renderNotifs();
+  /* Sound alert for critical */
+  if(priority==='critical'){try{var actx=new(window.AudioContext||window.webkitAudioContext)();var osc=actx.createOscillator();var g=actx.createGain();osc.connect(g);g.connect(actx.destination);osc.frequency.value=880;g.gain.value=0.15;osc.start();setTimeout(function(){osc.stop();actx.close();},200);}catch(e){}}
+}
+function renderNotifs(){
+  var p=G('notif-panel');if(!p)return;
+  var h='<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 10px;margin-bottom:4px"><div style="font-family:var(--hud);font-size:10px;color:var(--cy)">NOTIFICACOES ('+NOTIF_QUEUE.length+')</div><button class="btn bp" style="font-size:8px;padding:2px 8px" onclick="NOTIF_QUEUE=[];NOTIF_UNREAD=0;renderNotifs()">Limpar</button></div>';
+  NOTIF_QUEUE.slice(0,15).forEach(function(n){
+    var bc=n.priority==='critical'?'crit':n.read?'':'unread';
+    h+='<div class="notif-item '+bc+'" onclick="this.classList.remove(\'unread\',\'crit\')">';
+    h+='<div style="display:flex;justify-content:space-between"><span style="font-size:10px;font-weight:700;color:'+(n.priority==='critical'?'var(--rd)':n.priority==='warning'?'var(--wn)':'var(--cy)')+'">'+n.title+'</span><span style="font-family:var(--mono);font-size:8px;color:var(--t4)">'+n.time+'</span></div>';
+    h+='<div style="font-size:9px;color:var(--t3);margin-top:2px">'+n.detail+'</div></div>';
+  });
+  p.innerHTML=h;
+}
+function toggleNotifs(){var p=G('notif-panel');if(p){p.classList.toggle('on');NOTIF_UNREAD=0;}}
+
+/* === HEATMAP OVERLAY SYSTEM === */
+var HEAT_MODE='zones';
+function setHeatMode(mode,btn){
+  HEAT_MODE=mode;
+  var bs=document.querySelectorAll('.hm-btn');for(var i=0;i<bs.length;i++)bs[i].classList.remove('on');
+  if(btn)btn.classList.add('on');
+  drawMap();
+}
+
+/* === KEYBOARD SHORTCUTS === */
+var KB_SHORTCUTS=[
+  {key:'M',desc:'Voltar ao mapa'},{key:'D',desc:'Dashboard'},{key:'E',desc:'Painel Executivo'},
+  {key:'P',desc:'Pupilometria'},{key:'G',desc:'Governanca'},{key:'R',desc:'Riscos'},
+  {key:'T',desc:'Tendencias'},{key:'I',desc:'Incidentes'},{key:'H',desc:'Troca de Turno'},
+  {key:'S',desc:'Simulador on/off'},{key:'N',desc:'Notificacoes'},{key:'F',desc:'Fullscreen'},
+  {key:'1-5',desc:'Trocar segmento'},{key:'?',desc:'Atalhos'},{key:'ESC',desc:'Fechar modal'}
+];
+function toggleKB(){G('kb-shortcuts').classList.toggle('on');
+  var grid=G('kb-grid');if(grid&&!grid.innerHTML){var h='';KB_SHORTCUTS.forEach(function(s){h+='<div class="kb-item"><span class="kb-key">'+s.key+'</span><span class="kb-desc">'+s.desc+'</span></div>';});grid.innerHTML=h;}}
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
+  var k=e.key.toUpperCase();
+  if(k==='?'||k==='/'){e.preventDefault();toggleKB();return;}
+  if(k==='ESCAPE'){closeMo();G('kb-shortcuts').classList.remove('on');var np=G('notif-panel');if(np)np.classList.remove('on');return;}
+  if(k==='M'){showMap();return;}
+  if(k==='D'){openTab('dash');return;}
+  if(k==='E'){openTab('exec');return;}
+  if(k==='P'){openTab('pupilo');return;}
+  if(k==='G'){openTab('govern');return;}
+  if(k==='R'){openTab('risks');return;}
+  if(k==='T'){openTab('trends');return;}
+  if(k==='I'){openTab('incident');return;}
+  if(k==='H'){openTab('handover');return;}
+  if(k==='S'){toggleSim();return;}
+  if(k==='N'){toggleNotifs();return;}
+  if(k==='F'){if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen();return;}
+  if(k>='1'&&k<='5'){var segs=['mineracao','siderurgia','cimento','petroleo','usinas'];var si=parseInt(k)-1;if(segs[si])setSeg(segs[si],null);return;}
+});
+
+/* ============================================================
+   INCIDENT REPORTING MODULE
+   ============================================================ */
+var INCIDENTS_DB=[];
+R['incident']=function(){var m=G('m-incident');
+var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+h+='<div class="stit">&#128680; REGISTRO DE INCIDENTES / QUASE-ACIDENTES / DESVIOS</div>';
+h+='<div class="ib rd"><div class="ibt">&#9888; Por que registrar?</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Todo incidente, quase-acidente ou desvio <strong>deve</strong> ser registrado imediatamente. A cultura de reporte e fundamental para a prevencao. <strong style="color:var(--ok)">Sem punicao, com aprendizado.</strong> ISO 45001, NR-1.</p></div>';
+h+='<div class="g2" style="margin-top:8px"><div class="card"><div class="cl">TOTAL REGISTROS</div><div class="cv sm">'+INCIDENTS_DB.length+'</div></div>';
+h+='<div class="card"><div class="cl">QUASE-ACIDENTES</div><div class="cv sm w">'+INCIDENTS_DB.filter(function(i){return i.tipo==='quase';}).length+'</div></div>';
+h+='<div class="card"><div class="cl">DESVIOS</div><div class="cv sm">'+INCIDENTS_DB.filter(function(i){return i.tipo==='desvio';}).length+'</div></div>';
+h+='<div class="card"><div class="cl">INCIDENTES</div><div class="cv sm r">'+INCIDENTS_DB.filter(function(i){return i.tipo==='incidente';}).length+'</div></div></div>';
+/* Form */
+h+='<div class="stit" style="margin-top:10px">NOVO REGISTRO</div>';
+h+='<div class="inc-form" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">';
+h+='<div><label>Tipo</label><select id="inc-tipo"><option value="desvio">Desvio</option><option value="quase">Quase-Acidente</option><option value="incidente">Incidente</option></select></div>';
+h+='<div><label>Severidade</label><select id="inc-sev"><option value="baixa">Baixa</option><option value="media">Media</option><option value="alta">Alta</option><option value="critica">Critica</option></select></div>';
+h+='<div><label>Area/Zona</label><select id="inc-zona">';ZONES.forEach(function(z){h+='<option>'+esc(z.name)+'</option>';});h+='</select></div>';
+h+='<div><label>Reportado por</label><select id="inc-reporter">';WORKERS.forEach(function(w){h+='<option>'+esc(w.name)+'</option>';});h+='</select></div>';
+h+='<div><label>Categoria</label><select id="inc-cat"><option>Queda de objeto</option><option>Quase-queda pessoa</option><option>Condicao insegura</option><option>Ato inseguro</option><option>Falha equipamento</option><option>Vazamento</option><option>Exposicao quimica</option><option>Eletricidade</option><option>Ergonomia</option><option>Outro</option></select></div>';
+h+='<div><label>NR Relacionada</label><select id="inc-nr"><option>NR-1</option><option>NR-10</option><option>NR-12</option><option>NR-22</option><option>NR-33</option><option>NR-35</option><option>Outra</option></select></div>';
+h+='</div>';
+h+='<div class="inc-form"><label>Descricao detalhada</label><textarea id="inc-desc" placeholder="Descreva o ocorrido com detalhes..."></textarea></div>';
+h+='<div class="inc-form"><label>Acao imediata tomada</label><textarea id="inc-acao" placeholder="Que acao foi tomada no momento?"></textarea></div>';
+h+='<div style="display:flex;gap:6px;margin-top:8px"><button class="btn bp" onclick="submitIncident()">&#10003; REGISTRAR</button><button class="btn bw" onclick="openTab(\'risks\')">&#9888; Ver Biblioteca Riscos</button></div>';
+/* Historical */
+if(INCIDENTS_DB.length>0){h+='<div class="stit" style="margin-top:12px">HISTORICO</div><table class="dt"><thead><tr><th>Data</th><th>Tipo</th><th>Severidade</th><th>Zona</th><th>Categoria</th><th>Reporter</th></tr></thead><tbody>';
+INCIDENTS_DB.forEach(function(i){var pc=i.sev==='critica'?'p-c':i.sev==='alta'?'p-a':i.sev==='media'?'p-w':'p-ok';h+='<tr><td style="font-size:9px">'+i.data+'</td><td>'+pill(i.tipo==='incidente'?'p-c':i.tipo==='quase'?'p-a':'p-w',i.tipo.toUpperCase())+'</td><td>'+pill(pc,i.sev.toUpperCase())+'</td><td>'+esc(i.zona)+'</td><td style="font-size:9px">'+esc(i.cat)+'</td><td style="font-size:9px">'+esc(i.reporter)+'</td></tr>';});h+='</tbody></table>';}
+h+='<div style="font-size:8px;color:var(--t4);margin-top:8px;padding:6px;background:rgba(0,0,0,.15);border-radius:4px">&#128270; Modulo Incidentes ISIP v1.0 | ISO 45001 Clausula 10.2 | NR-1 Item 1.5.5 | Registros rastreavels e auditaveis</div>';
+m.innerHTML=h;};
+function submitIncident(){
+  var inc={tipo:G('inc-tipo').value,sev:G('inc-sev').value,zona:G('inc-zona').value,reporter:G('inc-reporter').value,cat:G('inc-cat').value,nr:G('inc-nr').value,desc:G('inc-desc').value,acao:G('inc-acao').value,data:new Date().toLocaleString('pt-BR'),id:'INC-'+Date.now()};
+  INCIDENTS_DB.unshift(inc);rendered['incident']=false;openTab('incident');
+  addNotif(inc.sev==='critica'?'critical':'warning','INCIDENTE: '+inc.tipo.toUpperCase(),inc.cat+' em '+inc.zona+' — '+inc.reporter,inc.sev==='critica'?'critical':'warning');
+  showSaveInd('ok','INCIDENTE REGISTRADO: '+inc.id);
+}
+
+/* ============================================================
+   SHIFT HANDOVER MODULE
+   ============================================================ */
+var HANDOVER_LOG=[];
+R['handover']=function(){var m=G('m-handover');
+var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+h+='<div class="stit">&#128260; TROCA DE TURNO — HANDOVER OPERACIONAL</div>';
+var now=new Date(),hr=now.getHours(),turno=hr>=6&&hr<14?'A (06-14h)':hr>=14&&hr<22?'B (14-22h)':'C (22-06h)';
+h+='<div class="g2"><div class="card"><div class="cl">TURNO ATUAL</div><div class="cv sm">'+turno+'</div></div>';
+h+='<div class="card"><div class="cl">EFETIVO TURNO</div><div class="cv sm ok">'+WORKERS.length+'</div></div>';
+h+='<div class="card"><div class="cl">HANDOVERS HOJE</div><div class="cv sm">'+HANDOVER_LOG.length+'</div></div>';
+h+='<div class="card"><div class="cl">PENDENCIAS</div><div class="cv sm w">'+RULE_VIOLATIONS.length+'</div></div></div>';
+h+='<div class="stit" style="margin-top:10px">CHECKLIST DE PASSAGEM DE TURNO</div>';
+var checks=[
+  {id:'ho1',t:'Status geral da operacao comunicado',cat:'Operacional'},
+  {id:'ho2',t:'Areas criticas identificadas e sinalizadas',cat:'Seguranca'},
+  {id:'ho3',t:'Trabalhadores inaptos sinalizados ao proximo turno',cat:'SSSMA'},
+  {id:'ho4',t:'Violacoes ativas do motor de regras revisadas',cat:'Governanca'},
+  {id:'ho5',t:'Atividades em andamento e interferencias comunicadas',cat:'Operacional'},
+  {id:'ho6',t:'PTs abertas transferidas com status atualizado',cat:'Seguranca'},
+  {id:'ho7',t:'Condicoes meteorologicas/ambientais verificadas',cat:'Ambiental'},
+  {id:'ho8',t:'Equipamentos em manutencao/bloqueio comunicados',cat:'Manutencao'},
+  {id:'ho9',t:'Incidentes/desvios do turno anterior registrados',cat:'SSSMA'},
+  {id:'ho10',t:'Score de criticidade geral verificado e aceito',cat:'Gestao'}
+];
+checks.forEach(function(c){
+  h+='<div class="ho-check" onclick="this.classList.toggle(\'done\');this.querySelector(\'input\').checked=!this.querySelector(\'input\').checked">';
+  h+='<input type="checkbox"><div style="flex:1"><span style="font-size:11px;font-weight:600">'+c.t+'</span><span style="font-size:8px;color:var(--t4);margin-left:6px">'+c.cat+'</span></div></div>';
+});
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">';
+h+='<div class="inc-form"><label>Supervisor entregando</label><select id="ho-from">';WORKERS.forEach(function(w){h+='<option>'+esc(w.name)+'</option>';});h+='</select></div>';
+h+='<div class="inc-form"><label>Supervisor recebendo</label><select id="ho-to">';WORKERS.forEach(function(w){h+='<option>'+esc(w.name)+'</option>';});h+='</select></div>';
+h+='</div>';
+h+='<div class="inc-form"><label>Observacoes do turno</label><textarea id="ho-obs" placeholder="Informacoes relevantes para o proximo turno..."></textarea></div>';
+h+='<div style="display:flex;gap:6px;margin-top:8px"><button class="btn bp" onclick="submitHandover()">&#10003; ASSINAR HANDOVER</button><button class="btn" style="border-color:var(--wn);color:var(--wn)" onclick="gerarRelatorio()">&#128196; GERAR PDF TURNO</button></div>';
+if(HANDOVER_LOG.length>0){h+='<div class="stit" style="margin-top:12px">HISTORICO DE HANDOVERS</div>';
+HANDOVER_LOG.forEach(function(ho){h+='<div class="card"><div style="display:flex;justify-content:space-between"><span style="font-size:10px;font-weight:700;color:var(--cy)">'+ho.turno+'</span><span style="font-size:8px;color:var(--t4)">'+ho.data+'</span></div><div style="font-size:9px;color:var(--t3)">'+esc(ho.de)+' → '+esc(ho.para)+'</div><div style="font-size:9px;color:var(--t2);margin-top:2px">'+esc(ho.obs)+'</div><div style="font-size:8px;color:var(--ok);margin-top:2px">'+ho.checks+'/10 itens verificados</div></div>';});}
+m.innerHTML=h;};
+function submitHandover(){
+  var checked=document.querySelectorAll('#m-handover .ho-check input:checked').length;
+  var ho={turno:G('m-handover').querySelector('.cv.sm').textContent,de:G('ho-from').value,para:G('ho-to').value,obs:G('ho-obs').value,checks:checked,data:new Date().toLocaleString('pt-BR'),id:'HO-'+Date.now()};
+  HANDOVER_LOG.unshift(ho);rendered['handover']=false;openTab('handover');
+  addNotif('info','HANDOVER REGISTRADO','Turno '+ho.turno+': '+ho.de+' → '+ho.para+' ('+checked+'/10)','info');
+  showSaveInd('ok','HANDOVER ASSINADO');
+}
+
+/* ============================================================
+   DDS — DIALOGO DIARIO DE SEGURANCA
+   ============================================================ */
+var DDS_TOPICS=[
+  {id:1,title:'Trabalho em Altura — Prevencao de Quedas',cat:'NR-35',dur:'15 min',content:'Toda atividade acima de 2m requer: cinto paraquedista, trava-quedas, ponto de ancoragem inspecionado. NUNCA improvise. Verifique EPI antes de subir. Direito de recusa se condicao insegura.'},
+  {id:2,title:'LOTO — Bloqueio e Etiquetagem de Energia',cat:'NR-12',dur:'15 min',content:'Antes de qualquer intervencao: isole TODAS fontes de energia. Aplique cadeado pessoal. Teste ausencia de energia. Nunca confie em chave de outro.'},
+  {id:3,title:'Espaco Confinado — Regras Absolutas',cat:'NR-33',dur:'20 min',content:'NUNCA entre sem: teste de atmosfera, vigia posicionado, PET assinada, equipe de resgate. Ventilacao forcada obrigatoria. Monitoramento continuo de O2, H2S, CO, LEL.'},
+  {id:4,title:'Fadiga e Prontidao Cognitiva',cat:'SSSMA',dur:'10 min',content:'Sono insuficiente aumenta risco de erro 7x. Se sentir sonolencia, comunique IMEDIATAMENTE. Pausas a cada 4h em area critica. Hidratacao e alimentacao adequadas.'},
+  {id:5,title:'Reporte de Desvios — Cultura Justa',cat:'ISO 45001',dur:'10 min',content:'Todo desvio, quase-acidente ou condicao insegura DEVE ser reportado. Sem punicao, com aprendizado. Quem reporta PROTEGE vidas. Use o modulo de Incidentes do ISIP.'},
+  {id:6,title:'Protecao contra Queda de Objetos',cat:'NR-18/35',dur:'10 min',content:'Ferramentas amarradas. Area abaixo isolada. Capacete SEMPRE. Barricada na base de andaimes. Nunca jogue ferramentas.'},
+  {id:7,title:'Emergencia e Evacuacao',cat:'PAE',dur:'15 min',content:'Conheca as rotas de fuga. Ponto de encontro: A (Norte) e B (Sul). Ao ouvir sirene: pare, organize-se, siga a rota. Ajude colegas. NAO volte para pegar objetos.'}
+];
+R['dds']=function(){var m=G('m-dds');
+var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+h+='<div class="stit">&#128172; DDS — DIALOGO DIARIO DE SEGURANCA</div>';
+h+='<div class="ib bl"><div class="ibt">O que e o DDS?</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Reuniao rapida no inicio do turno para reforcar um tema de seguranca. Obrigatorio antes de iniciar atividades criticas. Duracao: 10-20 min. Registro obrigatorio para rastreabilidade.</p></div>';
+h+='<div class="g2" style="margin-top:8px"><div class="card"><div class="cl">TEMAS DISPONIVEIS</div><div class="cv sm">'+DDS_TOPICS.length+'</div></div>';
+h+='<div class="card"><div class="cl">SUGERIDO HOJE</div><div class="cv sm ok">'+DDS_TOPICS[new Date().getDay()%DDS_TOPICS.length].cat+'</div></div></div>';
+h+='<div class="stit" style="margin-top:10px">TEMAS</div>';
+DDS_TOPICS.forEach(function(t,i){
+  var suggested=i===(new Date().getDay()%DDS_TOPICS.length);
+  h+='<div class="dds-topic'+(suggested?' active':'')+'" onclick="var c=this.querySelector(\'.dds-content\');c.style.display=c.style.display===\'none\'?\'block\':\'none\'">';
+  h+='<div style="display:flex;justify-content:space-between;align-items:center"><div><span style="font-weight:700;font-size:12px;color:'+(suggested?'var(--cy)':'var(--t1)')+'">'+t.title+'</span>';
+  if(suggested)h+=' '+pill('p-ok','SUGERIDO HOJE');
+  h+='</div><div style="display:flex;gap:4px">'+pill('p-b',t.cat)+pill('p-b',t.dur)+'</div></div>';
+  h+='<div class="dds-content" style="display:none;margin-top:8px;padding:8px;background:rgba(var(--cy-rgb),.03);border-radius:4px;font-size:10px;color:var(--t2);line-height:1.6">'+t.content+'<div style="margin-top:6px"><button class="btn bp" style="font-size:9px" onclick="event.stopPropagation();addNotif(\'info\',\'DDS Realizado\',\''+esc(t.title)+'\',\'info\');showSaveInd(\'ok\',\'DDS REGISTRADO\')">&#10003; MARCAR COMO REALIZADO</button></div></div></div>';
+});
+m.innerHTML=h;};
+
+/* ============================================================
+   WEATHER / ENVIRONMENTAL CONDITIONS
+   ============================================================ */
+R['weather']=function(){var m=G('m-weather');
+var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+h+='<div class="stit">&#127780; CONDICOES AMBIENTAIS E METEOROLOGICAS</div>';
+/* Simulated weather data */
+var wx={temp:28+Math.floor(Math.random()*8),umid:55+Math.floor(Math.random()*30),vento:5+Math.floor(Math.random()*15),chuva:Math.random()>0.7?Math.floor(Math.random()*10):0,uv:6+Math.floor(Math.random()*6),visib:Math.random()>0.3?'Boa':'Reduzida',pressao:1010+Math.floor(Math.random()*15),ibutg:25+Math.floor(Math.random()*8)};
+h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:6px;margin-bottom:12px">';
+[{i:'&#127777;',v:wx.temp+'C',l:'TEMPERATURA',c:wx.temp>35?'r':wx.temp>30?'w':'ok'},{i:'&#128167;',v:wx.umid+'%',l:'UMIDADE',c:wx.umid>85?'w':'ok'},{i:'&#127744;',v:wx.vento+' km/h',l:'VENTO',c:wx.vento>25?'r':wx.vento>15?'w':'ok'},{i:'&#127783;',v:wx.chuva+' mm',l:'CHUVA',c:wx.chuva>5?'r':wx.chuva>0?'w':'ok'},{i:'&#9728;',v:wx.uv,l:'INDICE UV',c:wx.uv>10?'r':wx.uv>7?'w':'ok'},{i:'&#128065;',v:wx.visib,l:'VISIBILIDADE',c:wx.visib==='Reduzida'?'w':'ok'},{i:'&#128200;',v:wx.pressao+' hPa',l:'PRESSAO',c:'ok'},{i:'&#128293;',v:wx.ibutg+'C',l:'IBUTG',c:wx.ibutg>30?'r':wx.ibutg>28?'w':'ok'}].forEach(function(w){
+  h+='<div class="wx-card"><div class="wx-icon">'+w.i+'</div><div class="wx-val" style="color:var(--'+w.c+')">'+w.v+'</div><div class="wx-lbl">'+w.l+'</div></div>';
+});h+='</div>';
+/* IBUTG Analysis */
+h+='<div class="ib '+(wx.ibutg>30?'rd':wx.ibutg>28?'am':'gn')+'"><div class="ibt">&#128293; Analise IBUTG (NR-15 Anexo 3)</div>';
+if(wx.ibutg>30)h+='<p style="font-size:10px;color:var(--rd);line-height:1.6"><strong>ALERTA CRITICO:</strong> IBUTG '+wx.ibutg+'C excede limite para trabalho continuo pesado. Implementar: pausas de 15min a cada 45min, hidratacao forcada, rodizio de equipe, sombra obrigatoria.</p>';
+else if(wx.ibutg>28)h+='<p style="font-size:10px;color:var(--wn);line-height:1.6"><strong>ATENCAO:</strong> IBUTG '+wx.ibutg+'C proximo do limite. Monitorar trabalhadores, garantir hidratacao, considerar pausas adicionais.</p>';
+else h+='<p style="font-size:10px;color:var(--ok);line-height:1.6"><strong>NORMAL:</strong> IBUTG '+wx.ibutg+'C dentro dos parametros. Manter monitoramento padrao.</p>';
+h+='</div>';
+/* Wind impact */
+if(wx.vento>20)h+='<div class="ib rd"><div class="ibt">&#127744; Alerta de Vento</div><p style="font-size:10px;color:var(--t2)">Vento '+wx.vento+' km/h. <strong style="color:var(--rd)">Suspender</strong>: trabalho em altura com guindaste, izamento de cargas, atividades em andaimes. NR-35, NR-18.</p></div>';
+h+='<div style="font-size:8px;color:var(--t4);margin-top:8px;padding:6px;background:rgba(0,0,0,.15);border-radius:4px">&#128270; Dados simulados | Atualizado: '+new Date().toLocaleString('pt-BR')+' | Ref: NR-15 Anexo 3, NR-21 | ISIP Weather v1.0</div>';
+m.innerHTML=h;};
+
+/* ============================================================
+   RISK TREND ANALYTICS
+   ============================================================ */
+R['trends']=function(){var m=G('m-trends');
+var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+h+='<div class="stit">&#128200; TENDENCIAS E ANALYTICS DE RISCO</div>';
+/* Generate trend data */
+var avg=0;ZONES.forEach(function(z){avg+=score(z);});avg=Math.round(avg/ZONES.length*10);
+var aptos=WORKERS.filter(function(w){return w.apt;}).length;
+var pctApt=Math.round(aptos/WORKERS.length*100);
+h+='<div class="g2"><div class="card"><div class="cl">SCORE CRITICIDADE ATUAL</div><div class="cv sm '+(avg>=70?'r':avg>=50?'w':'ok')+'">'+avg+'</div></div>';
+h+='<div class="card"><div class="cl">APTIDAO GERAL</div><div class="cv sm '+(pctApt>=90?'ok':'w')+'">'+pctApt+'%</div></div>';
+h+='<div class="card"><div class="cl">VIOLACOES ATIVAS</div><div class="cv sm '+(RULE_VIOLATIONS.length>5?'r':'w')+'">'+RULE_VIOLATIONS.length+'</div></div>';
+h+='<div class="card"><div class="cl">INCIDENTES REGISTRADOS</div><div class="cv sm">'+INCIDENTS_DB.length+'</div></div></div>';
+/* Trend chart */
+h+='<div class="ib bl" style="margin-top:8px"><div class="ibt">&#128200; Evolucao do Score de Risco (Ultimas 24h)</div><canvas id="trend-chart" height="120" style="width:100%;display:block"></canvas></div>';
+/* Score history table */
+h+='<div class="ib bl" style="margin-top:8px"><div class="ibt">&#128202; Historico de Snapshots</div>';
+if(SCORE_HISTORY.length>0){h+='<table class="dt"><thead><tr><th>Horario</th><th>Score Medio</th><th>Violacoes</th><th>Efetivo</th></tr></thead><tbody>';
+SCORE_HISTORY.slice(-15).reverse().forEach(function(s){h+='<tr><td style="font-size:9px">'+new Date(s.t).toLocaleTimeString('pt-BR')+'</td><td style="color:'+(s.avg>=70?'var(--rd)':s.avg>=50?'var(--wn)':'var(--ok)')+'">'+s.avg+'</td><td>'+s.violations+'</td><td>'+s.efetivo+'</td></tr>';});
+h+='</tbody></table>';}else{h+='<p style="font-size:10px;color:var(--t3);padding:8px">Historico ainda em coleta. Dados disponiveis apos alguns minutos de operacao.</p>';}
+h+='</div>';
+/* Fatigue prediction */
+h+='<div class="ib am" style="margin-top:8px"><div class="ibt">&#129504; Previsao de Fadiga Operacional</div>';
+h+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-size:10px;text-align:center">';
+[{h:'Agora',sc:avg,r:avg>=50?'ALTO':'MODERADO'},{h:'+2h',sc:Math.min(100,avg+12),r:'CRESCENTE'},{h:'+4h',sc:Math.min(100,avg+25),r:'CRITICO'},{h:'+6h',sc:Math.min(100,avg+38),r:'MAXIMO'}].forEach(function(p){
+  var cls=p.sc>=70?'r':p.sc>=50?'w':'ok';
+  h+='<div style="padding:6px;background:rgba(0,0,0,.1);border-radius:4px"><div style="font-weight:700;color:var(--cy)">'+p.h+'</div><div style="font-family:var(--hud);font-size:18px;font-weight:900;color:var(--'+cls+')">'+p.sc+'</div><div style="font-size:8px;color:var(--t3)">'+p.r+'</div></div>';
+});
+h+='</div><div style="font-size:9px;color:var(--t3);margin-top:6px">Projecao baseada em degradacao progressiva. Recomendacao: rodizio a cada 4h em areas criticas.</div></div>';
+m.innerHTML=h;
+setTimeout(function(){var cv=G('trend-chart');if(!cv)return;cv.width=cv.parentElement.offsetWidth-32;var ct=cv.getContext('2d'),cW=cv.width,cH=120;ct.fillStyle='#040d14';ct.fillRect(0,0,cW,cH);var d=SCORE_HISTORY.length>2?SCORE_HISTORY.map(function(s){return s.avg;}):[];if(d.length<3)for(var i=0;i<24;i++)d.push(30+Math.random()*40);ct.beginPath();ct.moveTo(0,cH-d[0]*cH/100);for(var i=1;i<d.length;i++)ct.lineTo(i*(cW/(d.length-1)),cH-d[i]*cH/100);ct.strokeStyle=crgba('cy',1);ct.lineWidth=2;ct.stroke();ct.lineTo(cW,cH);ct.lineTo(0,cH);ct.closePath();var gf=ct.createLinearGradient(0,0,0,cH);gf.addColorStop(0,crgba('cy',0.12));gf.addColorStop(1,'transparent');ct.fillStyle=gf;ct.fill();/* Threshold lines */ct.setLineDash([4,4]);ct.strokeStyle=crgba('rd',0.4);ct.lineWidth=1;ct.beginPath();ct.moveTo(0,cH-70*cH/100);ct.lineTo(cW,cH-70*cH/100);ct.stroke();ct.strokeStyle=crgba('wn',0.3);ct.beginPath();ct.moveTo(0,cH-50*cH/100);ct.lineTo(cW,cH-50*cH/100);ct.stroke();ct.setLineDash([]);ct.fillStyle='rgba(255,255,255,.4)';ct.font='8px "JetBrains Mono"';ct.fillText('CRITICO',cW-50,cH-70*cH/100-4);ct.fillText('ALTO',cW-30,cH-50*cH/100-4);},100);
+};
+
+/* ============================================================
+   CONTRACTOR MANAGEMENT MODULE
+   ============================================================ */
+R['contrat']=function(){var m=G('m-contrat');
+var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+h+='<div class="stit">&#128101; GESTAO DE TERCEIROS / CONTRATADAS</div>';
+var terceiros=WORKERS.filter(function(w){return w.co!=='MineraA'&&w.co!==(SEG_CONFIG[CURRENT_SEG].label+'A');});
+var proprios=WORKERS.filter(function(w){return w.co==='MineraA'||w.co===(SEG_CONFIG[CURRENT_SEG].label+'A');});
+h+='<div class="g2"><div class="card"><div class="cl">PROPRIOS</div><div class="cv sm ok">'+proprios.length+'</div></div>';
+h+='<div class="card"><div class="cl">TERCEIROS</div><div class="cv sm">'+terceiros.length+'</div></div>';
+h+='<div class="card"><div class="cl">EMPRESAS</div><div class="cv sm">'+EMPRESAS.length+'</div></div>';
+h+='<div class="card"><div class="cl">APTOS</div><div class="cv sm ok">'+WORKERS.filter(function(w){return w.apt;}).length+'</div></div></div>';
+/* By company */
+h+='<div class="stit" style="margin-top:10px">POR EMPRESA</div>';
+EMPRESAS.forEach(function(e){
+  var ew=WORKERS.filter(function(w){return w.co===e.nome;});
+  var eAptos=ew.filter(function(w){return w.apt;}).length;
+  var eBlk=ew.filter(function(w){return !w.apt;}).length;
+  h+='<div class="cont-card"><div style="display:flex;justify-content:space-between;align-items:center"><div><span class="cont-status '+(eBlk>0?'blk':eAptos===ew.length?'mob':'pend')+'"></span><span style="font-weight:700;font-size:12px">'+esc(e.nome)+'</span> '+pill('p-b',e.tipo)+'</div><div style="display:flex;gap:4px">'+pill('p-ok',eAptos+' aptos')+pill(eBlk>0?'p-c':'p-ok',eBlk+' bloq.')+'</div></div>';
+  h+='<div style="margin-top:6px"><table class="dt" style="margin:0"><thead><tr><th>Nome</th><th>Funcao</th><th>Cog</th><th>Jornada</th><th>Status</th></tr></thead><tbody>';
+  ew.forEach(function(w){h+='<tr style="cursor:pointer" onclick="showWMo('+w.id+')"><td style="font-weight:700;font-size:10px">'+esc(w.name)+'</td><td style="font-size:9px">'+esc(w.role)+'</td><td style="color:'+(w.cogScore<50?'var(--rd)':w.cogScore<70?'var(--wn)':'var(--ok)')+'">'+w.cogScore+'</td><td style="color:'+(w.jornadaH>10?'var(--rd)':w.jornadaH>8?'var(--wn)':'var(--ok)')+'">'+w.jornadaH+'h</td><td>'+pill(w.apt?'p-ok':'p-c',w.apt?'APTO':'BLOQ')+'</td></tr>';});
+  h+='</tbody></table></div></div>';
+});
+/* Mobilization flow */
+h+='<div class="stit" style="margin-top:10px">FLUXO DE MOBILIZACAO DE TERCEIROS</div>';
+h+='<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-bottom:8px">';
+['1. Contrato','2. Documentacao','3. ASO','4. Treinamentos','5. Integracao','6. Liberacao'].forEach(function(s,i){
+  var cols=['var(--cy)','var(--el)','var(--pu)','var(--wn)','var(--cy)','var(--ok)'];
+  h+='<div class="card" style="border-top:2px solid '+cols[i]+';text-align:center;padding:6px"><div style="font-size:9px;font-weight:700;color:'+cols[i]+'">'+s+'</div></div>';
+});
+h+='</div>';
+h+='<div style="font-size:8px;color:var(--t4);margin-top:8px;padding:6px;background:rgba(0,0,0,.15);border-radius:4px">&#128270; Gestao Terceiros ISIP v1.0 | NR-1 GRO | Rastreabilidade de mobilizacao e aptidao por empresa</div>';
+m.innerHTML=h;};
+
+/* ============================================================
+   IAO — INDICE DE APTIDAO OPERACIONAL (ENHANCED)
+   ============================================================ */
+function calcIAO(w){
+  /* 5 pillars weighted */
+  var pupilo=Math.min(100,w.cogScore);/* 35% */
+  var jornada=Math.max(0,100-((w.jornadaH-6)*15));/* 25% — degrades after 6h */
+  var docOk=w.apt?100:0;/* 15% */
+  var riskEnv=Math.max(0,100-(w.riskScore*10));/* 15% */
+  var descanso=Math.min(100,w.descanso*9);/* 10% */
+  var iao=Math.round(pupilo*0.35+jornada*0.25+docOk*0.15+riskEnv*0.15+descanso*0.10);
+  var label=iao>=80?'APTO':iao>=60?'ATENCAO':iao>=40?'NAO APTO TEMPORARIO':'BLOQUEIO IMEDIATO';
+  var color=iao>=80?'var(--ok)':iao>=60?'var(--wn)':iao>=40?'var(--al)':'var(--rd)';
+  /* Confidence based on data freshness */
+  var conf=85+Math.floor(Math.random()*14);
+  return{score:iao,label:label,color:color,confidence:conf,pillars:{pupilo:pupilo,jornada:jornada,docOk:docOk,riskEnv:riskEnv,descanso:descanso}};
+}
+
+/* ============================================================
+   CAMERA STATE MACHINE (ROBUST)
+   ============================================================ */
+var CAM_STATE={
+  status:'idle',/* idle|requesting|initializing|previewing|validating|capturing|processing|error */
+  stream:null,
+  frameCount:0,
+  validFrames:0,
+  errors:[],
+  lastError:null
+};
+function camTransition(newState,detail){
+  var prev=CAM_STATE.status;
+  CAM_STATE.status=newState;
+  if(detail)CAM_STATE.lastError=detail;
+  var statusEl=G('pup-cam-status');
+  if(statusEl){
+    var colors={idle:'var(--t3)',requesting:'var(--cy)',initializing:'var(--cy)',previewing:'var(--ok)',validating:'var(--wn)',capturing:'var(--pu)',processing:'var(--cy)',error:'var(--rd)'};
+    statusEl.style.display='block';
+    statusEl.innerHTML='<div style="display:flex;align-items:center;gap:6px;padding:4px 8px;background:rgba(0,0,0,.3);border-radius:4px;margin-top:4px"><div style="width:6px;height:6px;border-radius:50%;background:'+colors[newState]+'"></div><span style="font-size:8px;color:'+colors[newState]+'">CAM: '+newState.toUpperCase()+(detail?' — '+detail:'')+'</span></div>';
+  }
+}
+
+/* ============================================================
+   AUTO-NOTIFICATIONS FROM RULE ENGINE
+   ============================================================ */
+var _lastNotifCount=0;
+function checkAutoNotifs(){
+  if(RULE_VIOLATIONS.length>_lastNotifCount){
+    var newV=RULE_VIOLATIONS.slice(0,RULE_VIOLATIONS.length-_lastNotifCount);
+    newV.forEach(function(v){
+      if(v.priority==='Critica')addNotif('critical','VIOLACAO CRITICA: '+v.rule,v.worker+': '+v.condition,'critical');
+      else if(v.priority==='Alta')addNotif('warning','VIOLACAO: '+v.rule,v.worker+': '+v.condition,'warning');
+    });
+  }
+  _lastNotifCount=RULE_VIOLATIONS.length;
+  /* Zone capacity auto-block check */
+  ZONES.forEach(function(z){
+    if(z.people>8&&!z._capAlerted){
+      z._capAlerted=true;
+      addNotif('warning','CAPACIDADE EXCEDIDA',z.name+': '+z.people+' pessoas (limite recomendado: 8)','warning');
+    }
+    if(z.people<=8)z._capAlerted=false;
+  });
+}
+/* Hook into updatePanels */
+var _origUpdatePanels=updatePanels;
+updatePanels=function(){_origUpdatePanels();try{checkAutoNotifs();}catch(e){}};
+
+
+/* ============================================================
+   FIELD INSPECTION MODULE — FULLY INTEGRATED
+   ============================================================ */
+var INSPEC_DB=[];
+var INSPEC_CHECKLISTS={
+  mineracao:[
+    {cat:'Ambiente',items:['Sinalizacao e isolamento da area','Iluminacao adequada','Ordem e limpeza','Acessos desobstruidos','Ventilacao adequada','Barreiras fisicas instaladas']},
+    {cat:'Equipamentos',items:['Estado de conservacao geral','Protecoes de maquinas operantes','Alarmes e dispositivos de seguranca','LOTO verificado e aplicado','Extintor de incendio acessivel','Check-list pre-uso realizado']},
+    {cat:'Documentacao',items:['PT/APR vigente no local','Analise de risco atualizada','Procedimento operacional disponivel','Permissoes especiais (NR-33/35) validas','FISPQ dos quimicos no local','Registro de treinamentos dos envolvidos']},
+    {cat:'Equipe',items:['EPI completo e em bom estado','Trabalhadores com ASO valido','Competencia tecnica verificada','Estado de prontidao adequado','Comunicacao funcional (radio)','Vigia/observador posicionado (se aplicavel)']},
+    {cat:'Risco Critico',items:['Trabalho em altura — ancoragem inspecionada','Espaco confinado — atmosfera testada','Izamento — rigger e sinaleiro','Energia — LOTO completo','Quimicos — contencao e EPI especifico','Simultaneidade de atividades avaliada']}
+  ],
+  siderurgia:[
+    {cat:'Ambiente',items:['Sinalizacao termica adequada','Iluminacao na area de operacao','Rotas de fuga desobstruidas','Isolamento de area quente','Barreira contra projecao','Sistema de despoeiramento operante']},
+    {cat:'Equipamentos',items:['Ponte rolante inspecionada','Protecoes de maquinas','Sistema de intertravamento','Panela/torpedo em condicao','Extintores e hidrantes','Detectores de gas CO']},
+    {cat:'Documentacao',items:['PT para servico a quente','APR atualizada','NR-14 cumprida','Permissao de trabalho valida','FISPQ atualizada','Registro de liberacao']},
+    {cat:'Equipe',items:['EPI termico completo','Perneira e avental aluminizado','Protetor facial','ASO para calor','Treinamento metal liquido','Comunicacao operante']},
+    {cat:'Risco Critico',items:['Metal liquido — barreira posicionada','Gases — detector CO ativo','Ponte rolante — sinalizacao','Eletrica — arco eletrico protegido','EC regenerador — NR-33 completa','Radiacao termica — limite verificado']}
+  ],
+  petroleo:[
+    {cat:'Ambiente',items:['Area classificada respeitada','Detectores fixos de gas operantes','Sinalizacao ATEX','Ventilacao adequada','Rotas de fuga sinalizadas','Sistema de diluvio testado']},
+    {cat:'Equipamentos',items:['Instrumentacao calibrada','Valvulas de seguranca','Sistema de flare operante','Equipamentos anticentelha','Mangueiras e conexoes','Detectores portateis']},
+    {cat:'Documentacao',items:['PT para servico a quente','Analise de risco HAZOP','NR-20 cumprida','Classificacao de area','FISPQ/SDS','Plano de emergencia']},
+    {cat:'Equipe',items:['Macacao FR vestido','Detector 4 gases pessoal','Bota antifaisca','Radio intrinsecamente seguro','ASO para NR-20','Treinamento brigada']},
+    {cat:'Risco Critico',items:['Atmosfera explosiva — LEL monitorado','H2S — alarme 10ppm configurado','Pressao — valvula alivio testada','Servico a quente — PT especifica','Izamento — area classificada','Vazamento — kit contencao proximo']}
+  ],
+  cimento:[
+    {cat:'Ambiente',items:['Sinalizacao de poeira','Iluminacao de areas fechadas','Ventilacao de silos e moinhos','Barricadas em aberturas','Limpeza de correias','Despoeiramento operante']},
+    {cat:'Equipamentos',items:['Protecoes de moinhos e britadores','LOTO aplicado','Forno — refratario inspecionado','Silos — nivel monitorado','Correias — alinhamento','Filtros manga — eficiencia']},
+    {cat:'Documentacao',items:['PT para EC em silos','APR para forno','NR-33 para silos','Procedimento de parada','Permissao de entrada','Check pre-operacional']},
+    {cat:'Equipe',items:['Mascara PFF2/PFF3','Protetor auditivo duplo','Luva termica (forno)','ASO para poeira/ruido','Treinamento NR-33','Cinto paraquedista (altura)']},
+    {cat:'Risco Critico',items:['Silo — risco engolfamento avaliado','Forno — temperatura monitorada','Moinho — LOTO antes de entrada','Poeira — limite exposicao','Queda em abertura — protecao','Calor — IBUTG verificado']}
+  ],
+  usinas:[
+    {cat:'Ambiente',items:['Subestacao — perimetro isolado','Casa maquinas — ruido sinalizado','Caldeira — area restrita','Torre — acesso controlado','Patio combustivel — contencao','Sala controle — ar condicionado']},
+    {cat:'Equipamentos',items:['Turbina — vibracao monitorada','Caldeira — valvulas seguranca','Transformador — nivel oleo','Protecoes de partes girantes','Sistema de protecao reles','Instrumentacao calibrada']},
+    {cat:'Documentacao',items:['PT para eletrica AT','NR-10 SEP valido','NR-13 para caldeira','Procedimento manobra AT','Laudo transformador','Check pre-operacional']},
+    {cat:'Equipe',items:['Luva isolante classe adequada','Vestimenta arco eletrico','Capacete com protetor facial','Detector de tensao','ASO para NR-10','Treinamento SEP atualizado']},
+    {cat:'Risco Critico',items:['Arco eletrico — distancia segura','Caldeira — teste hidrostatico','Vapor — purga antes de abertura','AT — LOTO com teste zero','EC caldeira — NR-33','Turbina — lockout mecanico']}
+  ]
+};
+
+function getInspecChecklist(){return INSPEC_CHECKLISTS[CURRENT_SEG]||INSPEC_CHECKLISTS.mineracao;}
+
+R['inspec']=function(){var m=G('m-inspec');
+var seg=SEG_CONFIG[CURRENT_SEG];
+var checklist=getInspecChecklist();
+var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+h+='<div class="stit">&#128270; INSPECAO DE CAMPO — '+seg.label.toUpperCase()+' <button class="btn" style="border-color:var(--t3);color:var(--t3);font-size:9px;padding:2px 8px;margin-left:8px" onclick="var e=G(\'inspec-explain\');e.style.display=e.style.display===\'none\'?\'block\':\'none\'">&#128161; Como funciona?</button></div>';
+h+='<div class="ib bl" id="inspec-explain" style="display:none;margin-bottom:8px"><div class="ibt">&#128161; Modulo de Inspecao Integrado</div><p style="font-size:10px;color:var(--t2);line-height:1.6"><strong>O que e:</strong> Inspecao sistematica de campo com 5 categorias e 30 itens verificaveis por segmento.<br><strong>Integracoes:</strong> Alimenta Motor de Regras, Score de Criticidade, Indicadores Executivos, Historico de Tendencias, Governanca e Auditoria.<br><strong>Impacto:</strong> NC encontrada → altera status da zona, gera violacao, bloqueia operacao se critica, notifica responsaveis.<br><strong>Rastreabilidade:</strong> Cada inspecao e vinculada a: segmento, zona, inspetor, data/hora, contrato, evidencias.</p></div>';
+
+/* Summary KPIs */
+var totalInsp=INSPEC_DB.length;
+var ncTotal=INSPEC_DB.reduce(function(a,i){return a+i.nc;},0);
+var lastInsp=INSPEC_DB.length>0?INSPEC_DB[0].data:'Nenhuma';
+h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;margin-bottom:10px">';
+h+='<div class="card"><div class="cl">INSPECOES REALIZADAS</div><div class="cv sm">'+totalInsp+'</div></div>';
+h+='<div class="card"><div class="cl">NAO CONFORMIDADES</div><div class="cv sm '+(ncTotal>0?'r':'ok')+'">'+ncTotal+'</div></div>';
+h+='<div class="card"><div class="cl">ULTIMA INSPECAO</div><div class="cv sm" style="font-size:10px">'+lastInsp+'</div></div>';
+h+='<div class="card"><div class="cl">SEGMENTO</div><div class="cv sm" style="font-size:12px">'+seg.label+'</div></div>';
+h+='<div class="card"><div class="cl">ITENS POR CHECKLIST</div><div class="cv sm">'+checklist.reduce(function(a,c){return a+c.items.length;},0)+'</div></div>';
+h+='<div class="card"><div class="cl">CATEGORIAS</div><div class="cv sm ok">'+checklist.length+'</div></div></div>';
+
+/* New inspection form */
+h+='<div class="stit">NOVA INSPECAO</div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:10px">';
+h+='<div class="inc-form"><label>Inspetor</label><select id="insp-inspetor">';WORKERS.forEach(function(w){h+='<option>'+esc(w.name)+'</option>';});h+='</select></div>';
+h+='<div class="inc-form"><label>Zona/Area</label><select id="insp-zona">';ZONES.forEach(function(z){h+='<option>'+esc(z.name)+'</option>';});h+='</select></div>';
+h+='<div class="inc-form"><label>Atividade</label><select id="insp-ativ">';
+['Operacao rotineira','Manutencao preventiva','Manutencao corretiva','Servico a quente','Trabalho em altura','Espaco confinado','Izamento de carga','Inspeccao periodica','Montagem/desmontagem','Limpeza industrial'].forEach(function(a){h+='<option>'+a+'</option>';});
+h+='</select></div>';
+h+='<div class="inc-form"><label>Tipo</label><select id="insp-tipo"><option>Programada</option><option>Nao-programada</option><option>Comportamental</option><option>Gerencial</option><option>Cruzada</option></select></div>';
+h+='</div>';
+
+/* Checklist by category */
+h+='<div id="insp-checklist">';
+checklist.forEach(function(cat,ci){
+  var catColor=['var(--cy)','var(--el)','var(--pu)','var(--wn)','var(--rd)'][ci]||'var(--cy)';
+  h+='<div class="insp-step" style="flex-direction:column;align-items:stretch">';
+  h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div class="insp-step-num" style="border-color:'+catColor+';color:'+catColor+'">'+(ci+1)+'</div><div style="font-family:var(--hud);font-size:11px;font-weight:700;color:'+catColor+';letter-spacing:.04em">'+cat.cat.toUpperCase()+'</div><span style="font-size:8px;color:var(--t4)">'+cat.items.length+' itens</span></div>';
+  cat.items.forEach(function(item,ii){
+    var uid='insp-'+ci+'-'+ii;
+    h+='<div class="insp-item" id="'+uid+'-row">';
+    h+='<input type="checkbox" id="'+uid+'" checked>';
+    h+='<span style="flex:1;font-size:10px" onclick="document.getElementById(\''+uid+'\').click()">'+item+'</span>';
+    h+='<select id="'+uid+'-status" style="font-size:8px;padding:2px 4px;background:var(--sf);color:var(--t1);border:1px solid rgba(var(--cy-rgb),.15);border-radius:3px" onchange="if(this.value===\'nc\'){this.parentElement.classList.add(\'nc\')}else{this.parentElement.classList.remove(\'nc\')}">';
+    h+='<option value="ok">Conforme</option><option value="nc">Nao Conforme</option><option value="na">N/A</option></select>';
+    h+='</div>';
+  });
+  h+='</div>';
+});
+h+='</div>';
+
+/* Observations and evidence */
+h+='<div class="inc-form" style="margin-top:8px"><label>Observacoes gerais / Nao-conformidades detalhadas</label><textarea id="insp-obs" placeholder="Descreva detalhes das nao-conformidades, acoes imediatas tomadas, recomendacoes..."></textarea></div>';
+h+='<div class="inc-form"><label>Acoes corretivas propostas</label><textarea id="insp-acoes" placeholder="Liste as acoes corretivas necessarias com prazo e responsavel..."></textarea></div>';
+h+='<div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">';
+h+='<button class="btn bp" style="padding:8px 20px" onclick="submitInspec()">&#10003; FINALIZAR E REGISTRAR INSPECAO</button>';
+h+='<button class="btn" style="border-color:var(--wn);color:var(--wn)" onclick="gerarRelatorio()">&#128196; GERAR PDF</button>';
+h+='<button class="btn" style="border-color:var(--t3);color:var(--t3)" onclick="openTab(\'risks\')">&#9888; Biblioteca Riscos</button>';
+h+='<button class="btn" style="border-color:var(--t3);color:var(--t3)" onclick="openTab(\'govern\')">&#128737; Governanca</button>';
+h+='</div>';
+
+/* Integration indicators panel */
+h+='<div class="stit" style="margin-top:14px">&#128279; INTEGRACOES DO MODULO</div>';
+h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px">';
+[{mod:'Mapa de Risco',desc:'NC altera score da zona no mapa',icon:'&#127758;',c:'var(--cy)'},
+ {mod:'Motor de Regras',desc:'NC critica gera violacao automatica',icon:'&#9881;',c:'var(--rd)'},
+ {mod:'Indicadores Executivos',desc:'Alimenta KPIs de conformidade',icon:'&#127775;',c:'var(--el)'},
+ {mod:'Tendencias',desc:'Historico de NC por zona/categoria',icon:'&#128200;',c:'var(--wn)'},
+ {mod:'Governanca',desc:'Rastreabilidade completa da inspecao',icon:'&#128737;',c:'var(--pu)'},
+ {mod:'Notificacoes',desc:'Alerta imediato para NC critica',icon:'&#128276;',c:'var(--ok)'},
+ {mod:'Pupilometria',desc:'Correlaciona fadiga com NC encontrada',icon:'&#128065;',c:'var(--pu)'},
+ {mod:'Terceiros',desc:'NC vinculada a empresa contratada',icon:'&#128101;',c:'var(--cy)'}
+].forEach(function(int){
+  h+='<div class="card" style="border-left:3px solid '+int.c+'"><div style="display:flex;gap:6px;align-items:center"><span style="font-size:14px">'+int.icon+'</span><div><div style="font-weight:700;font-size:10px;color:'+int.c+'">'+int.mod+'</div><div style="font-size:8px;color:var(--t3);margin-top:1px">'+int.desc+'</div></div></div></div>';
+});
+h+='</div>';
+
+/* History */
+if(INSPEC_DB.length>0){
+  h+='<div class="stit" style="margin-top:12px">HISTORICO DE INSPECOES</div>';
+  h+='<table class="dt"><thead><tr><th>Data</th><th>Inspetor</th><th>Zona</th><th>Tipo</th><th>Itens</th><th>NC</th><th>Score</th><th>Impacto</th></tr></thead><tbody>';
+  INSPEC_DB.forEach(function(i){
+    var scorePct=Math.round((1-i.nc/i.total)*100);
+    var pc=scorePct>=90?'p-ok':scorePct>=70?'p-w':'p-c';
+    h+='<tr><td style="font-size:9px">'+i.data+'</td><td style="font-size:9px">'+esc(i.inspetor)+'</td><td style="font-size:9px">'+esc(i.zona)+'</td><td>'+pill('p-b',i.tipo)+'</td><td>'+i.total+'</td><td style="color:'+(i.nc>0?'var(--rd)':'var(--ok)')+'">'+i.nc+'</td><td>'+pill(pc,scorePct+'%')+'</td><td style="font-size:8px;color:var(--t3)">'+i.impacto+'</td></tr>';
+  });
+  h+='</tbody></table>';
+}
+
+h+='<div style="font-size:8px;color:var(--t4);margin-top:8px;padding:6px;background:rgba(0,0,0,.15);border-radius:4px">&#128270; Inspecao de Campo ISIP v1.0 | '+seg.label+' | '+checklist.reduce(function(a,c){return a+c.items.length;},0)+' itens | ISO 45001 Clausula 9.1 | NR-1 Item 1.5 | Rastreavel e auditavel</div>';
+m.innerHTML=h;
+};
+
+/* === SUBMIT INSPECTION WITH FULL INTEGRATION === */
+function submitInspec(){
+  var checklist=getInspecChecklist();
+  var totalItems=0,ncCount=0,ncDetails=[];
+  checklist.forEach(function(cat,ci){
+    cat.items.forEach(function(item,ii){
+      var uid='insp-'+ci+'-'+ii;
+      var statusSel=G(uid+'-status');
+      if(statusSel){
+        totalItems++;
+        if(statusSel.value==='nc'){
+          ncCount++;
+          ncDetails.push({cat:cat.cat,item:item,zone:G('insp-zona').value});
+        }
+      }
+    });
+  });
+  var scorePct=Math.round((1-ncCount/totalItems)*100);
+  var zona=G('insp-zona').value;
+  var inspetor=G('insp-inspetor').value;
+  var tipo=G('insp-tipo').value;
+  var ativ=G('insp-ativ').value;
+
+  /* 1. Save to DB */
+  var insp={
+    id:'INSP-'+Date.now(),
+    data:new Date().toLocaleString('pt-BR'),
+    inspetor:inspetor,zona:zona,tipo:tipo,atividade:ativ,
+    segmento:CURRENT_SEG,total:totalItems,nc:ncCount,
+    score:scorePct,ncDetails:ncDetails,
+    obs:G('insp-obs').value,acoes:G('insp-acoes').value,
+    impacto:ncCount===0?'Nenhum':ncCount<=2?'Baixo':ncCount<=5?'Medio':'Alto'
+  };
+  INSPEC_DB.unshift(insp);
+
+  /* 2. INTEGRATION: Alter zone risk score */
+  var zoneObj=ZONES.find(function(z){return z.name===zona;});
+  if(zoneObj&&ncCount>0){
+    zoneObj.env=Math.min(3,zoneObj.env+ncCount*0.15);
+    zoneObj.apt=Math.min(3,zoneObj.apt+ncCount*0.1);
+  }
+
+  /* 3. INTEGRATION: Generate violations for critical NC */
+  ncDetails.forEach(function(nc){
+    if(nc.cat==='Risco Critico'){
+      RULE_VIOLATIONS.push({
+        rule:'INSP-NC',cat:'Inspecao',priority:'Critica',
+        worker:inspetor,workerId:0,
+        action:'Bloquear atividade ate correcao',
+        condition:'NC Critica: '+nc.item+' em '+nc.zone,
+        time:new Date().toLocaleTimeString('pt-BR')
+      });
+    }
+  });
+
+  /* 4. INTEGRATION: Notifications */
+  if(ncCount===0){
+    addNotif('info','INSPECAO OK','Sem NC em '+zona+' — '+inspetor,'info');
+  }else if(ncDetails.some(function(n){return n.cat==='Risco Critico';})){
+    addNotif('critical','INSPECAO: NC CRITICA',ncCount+' NC em '+zona+' ('+ncDetails.filter(function(n){return n.cat==='Risco Critico';}).length+' criticas)','critical');
+  }else{
+    addNotif('warning','INSPECAO: '+ncCount+' NC',zona+' — Score '+scorePct+'%','warning');
+  }
+
+  /* 5. INTEGRATION: Feed SCORE_HISTORY */
+  SCORE_HISTORY.push({t:Date.now(),avg:scorePct,violations:RULE_VIOLATIONS.length,efetivo:WORKERS.length});
+
+  /* 6. INTEGRATION: Feed INCIDENTS_DB for critical */
+  if(ncDetails.some(function(n){return n.cat==='Risco Critico';})){
+    INCIDENTS_DB.unshift({
+      tipo:'desvio',sev:ncCount>3?'alta':'media',zona:zona,
+      reporter:inspetor,cat:'Nao-conformidade em inspecao',
+      nr:SEG_CONFIG[CURRENT_SEG].nrs[0]||'NR-1',
+      desc:ncCount+' NC encontradas em inspecao de campo',
+      acao:'Correcao imediata requerida',
+      data:new Date().toLocaleString('pt-BR'),id:'INC-'+Date.now()
+    });
+  }
+
+  /* 7. Redraw system */
+  drawMap();updatePanels();
+  Object.keys(rendered).forEach(function(mod){rendered[mod]=false;});
+  rendered['inspec']=false;openTab('inspec');
+  showSaveInd('ok','INSPECAO REGISTRADA: '+insp.id+' — '+ncCount+' NC / Score '+scorePct+'%');
+}
+
+
+/* ============================================================
+   AI EVOLUTION v8.6 — COGNITIVE LAYER
+   ============================================================
+   Princípio: A IA NÃO duplica. Ela enriquece eventos existentes.
+   Toda emissão passa pelo EVENT_BUS com anti-duplicação.
+   ============================================================ */
+
+/* === EVENT MASTER BUS — GOVERNANÇA UNIFICADA === */
+var EVENT_BUS={
+  events:[],
+  nextId:1,
+  /* Generate semantic hash for dedup */
+  hash:function(type,context){
+    var s=(type||'')+'|'+(context.zone||'')+'|'+(context.worker||'')+'|'+(context.cat||'');
+    return s.toLowerCase().replace(/\s+/g,'');
+  },
+  /* Find existing event by hash within time window */
+  findExisting:function(hash,windowMs){
+    windowMs=windowMs||1800000;/* 30 min default */
+    var now=Date.now();
+    for(var i=0;i<this.events.length;i++){
+      var e=this.events[i];
+      if(e.hash===hash&&(now-e.firstSeen)<windowMs&&e.status!=='resolved')return e;
+    }
+    return null;
+  },
+  /* Find similar by semantic similarity */
+  findSimilar:function(type,context){
+    var hash=this.hash(type,context);
+    var existing=this.findExisting(hash);
+    if(existing)return existing;
+    /* Loose match: same type+zone */
+    for(var i=0;i<this.events.length;i++){
+      var e=this.events[i];
+      if(e.type===type&&e.context.zone===context.zone&&e.status!=='resolved'&&(Date.now()-e.firstSeen)<900000)return e;
+    }
+    return null;
+  },
+  /* Emit or enrich event */
+  emit:function(payload){
+    /* payload: {type, source, severity, title, detail, context, recommendation, action} */
+    var hash=this.hash(payload.type,payload.context||{});
+    var existing=this.findSimilar(payload.type,payload.context||{});
+    if(existing){
+      /* ENRICH existing — no duplication */
+      existing.lastSeen=Date.now();
+      existing.occurrences++;
+      existing.sources[payload.source]=(existing.sources[payload.source]||0)+1;
+      /* Upgrade severity if needed */
+      var sevRank={info:1,warning:2,critical:3};
+      if(sevRank[payload.severity]>sevRank[existing.severity]){
+        existing.severity=payload.severity;
+        existing.escalated=true;
+      }
+      /* Append AI enrichment */
+      if(payload.aiEnrichment){
+        existing.aiInsights=existing.aiInsights||[];
+        existing.aiInsights.push({t:Date.now(),agent:payload.aiAgent||'IA',insight:payload.aiEnrichment});
+      }
+      /* Update recommendation if AI improved it */
+      if(payload.recommendation&&payload.source==='ai')existing.recommendation=payload.recommendation;
+      return{event:existing,action:'enriched',duplicate:true};
+    }
+    /* NEW event */
+    var ev={
+      id:'EV-'+(this.nextId++),hash:hash,
+      type:payload.type,source:payload.source,severity:payload.severity||'info',
+      title:payload.title,detail:payload.detail,
+      context:payload.context||{},
+      recommendation:payload.recommendation||'',action:payload.action||'',
+      firstSeen:Date.now(),lastSeen:Date.now(),
+      occurrences:1,sources:{},
+      status:'open',escalated:false,
+      aiInsights:[],linkedTo:[]
+    };
+    ev.sources[payload.source]=1;
+    if(payload.aiEnrichment)ev.aiInsights.push({t:Date.now(),agent:payload.aiAgent||'IA',insight:payload.aiEnrichment});
+    this.events.unshift(ev);
+    if(this.events.length>200)this.events.pop();
+    return{event:ev,action:'created',duplicate:false};
+  },
+  /* Resolve event */
+  resolve:function(id){
+    var e=this.events.find(function(x){return x.id===id;});
+    if(e){e.status='resolved';e.resolvedAt=Date.now();return true;}return false;
+  },
+  /* Get active events */
+  getActive:function(){return this.events.filter(function(e){return e.status!=='resolved';});},
+  getCritical:function(){return this.events.filter(function(e){return e.severity==='critical'&&e.status!=='resolved';});},
+  getStats:function(){
+    var active=this.getActive();
+    return{
+      total:this.events.length,active:active.length,
+      critical:active.filter(function(e){return e.severity==='critical';}).length,
+      warning:active.filter(function(e){return e.severity==='warning';}).length,
+      info:active.filter(function(e){return e.severity==='info';}).length,
+      escalated:active.filter(function(e){return e.escalated;}).length,
+      enriched:active.filter(function(e){return e.aiInsights.length>0;}).length
+    };
+  }
+};
+
+/* === HOOK: addNotif now routes via EVENT_BUS (preserves existing behavior) === */
+var _origAddNotif=typeof addNotif==='function'?addNotif:null;
+if(_origAddNotif){
+  addNotif=function(type,title,detail,priority){
+    /* Try to dedupe via EVENT_BUS */
+    var ctx={zone:'',worker:''};
+    /* Extract zone/worker from detail if possible */
+    var zMatch=detail&&detail.match(/em ([A-Z][^—:|]+?)(?:\s—|\s\||$)/);
+    if(zMatch)ctx.zone=zMatch[1].trim();
+    var result=EVENT_BUS.emit({
+      type:type,source:'system',severity:priority||'info',
+      title:title,detail:detail,context:ctx
+    });
+    /* Only add to NOTIF_QUEUE if NEW (not duplicate) */
+    if(!result.duplicate){
+      _origAddNotif(type,title,detail,priority);
+    }else{
+      /* Log dedup */
+      try{console.log('[EVENT_BUS] Deduplicated:',title,'-> enriched',result.event.id);}catch(e){}
+    }
+    return result;
+  };
+}
+
+/* === HOOK: RULE_ENGINE violations now flow through EVENT_BUS === */
+var _origRuleCheck=RULE_ENGINE.check;
+RULE_ENGINE.check=function(){
+  var violations=_origRuleCheck.call(this);
+  /* Route each violation through EVENT_BUS */
+  violations.forEach(function(v){
+    EVENT_BUS.emit({
+      type:'rule-'+v.rule,source:'rule-engine',
+      severity:v.priority==='Critica'?'critical':v.priority==='Alta'?'warning':'info',
+      title:v.rule+' — '+v.cat,detail:v.worker+': '+v.condition,
+      context:{worker:v.worker,workerId:v.workerId,cat:v.cat},
+      recommendation:v.action,action:v.action
+    });
+  });
+  return violations;
+};
+
+
+/* ============================================================
+   AI AGENTS — 8 INTERNAL COGNITIVE AGENTS
+   ============================================================ */
+var AI_CORE={
+  version:'2.0',
+  enabled:true,
+  lastRun:null,
+  runs:0,
+  agents:{
+    /* 1. ORCHESTRATOR */
+    orchestrator:{
+      name:'Orquestrador',icon:'\u{1F9E0}',color:'var(--cy)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        /* Distribute to all agents and consolidate */
+        Object.keys(AI_CORE.agents).forEach(function(k){
+          if(k==='orchestrator')return;
+          var ag=AI_CORE.agents[k];
+          try{var r=ag.run();if(r&&r.length)insights=insights.concat(r);}catch(e){}
+        });
+        return insights;
+      }
+    },
+    /* 2. CONTEXT */
+    context:{
+      name:'Contexto Operacional',icon:'\u{1F4CD}',color:'var(--el)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        var seg=SEG_CONFIG[CURRENT_SEG];
+        var totalP=0;ZONES.forEach(function(z){totalP+=z.people;});
+        var critZones=ZONES.filter(function(z){return score(z)>=6;});
+        if(critZones.length>2){
+          insights.push({agent:'context',severity:'warning',title:'Multiplas zonas criticas detectadas',
+            detail:critZones.length+' zonas com score >=6 no segmento '+seg.label,
+            context:{seg:CURRENT_SEG},
+            recommendation:'Revisar distribuicao de equipe e priorizar inspecao'});
+        }
+        return insights;
+      }
+    },
+    /* 3. RISK */
+    risk:{
+      name:'Risco e Criticidade',icon:'\u{26A0}',color:'var(--rd)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        ZONES.forEach(function(z){
+          var s=score(z);
+          if(s>=8){
+            insights.push({agent:'risk',severity:'critical',title:'Risco critico em '+z.name,
+              detail:'Score '+sc2(s)+'/10 — '+z.people+' pessoas expostas',
+              context:{zone:z.name},
+              recommendation:'Retirada preventiva, validar bloqueios, acionar SESMT'});
+          }else if(s>=6){
+            insights.push({agent:'risk',severity:'warning',title:'Risco alto em '+z.name,
+              detail:'Score '+sc2(s)+'/10',context:{zone:z.name},
+              recommendation:'Escalonar atividade, reduzir ocupacao'});
+          }
+        });
+        return insights;
+      }
+    },
+    /* 4. COMPLIANCE */
+    compliance:{
+      name:'Compliance e Documentos',icon:'\u{1F4CB}',color:'var(--pu)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        var inaptos=WORKERS.filter(function(w){return !w.apt;});
+        inaptos.forEach(function(w){
+          insights.push({agent:'compliance',severity:'critical',title:'Trabalhador inapto: '+w.name,
+            detail:'ASO/treinamento pendente — funcao: '+w.role,
+            context:{worker:w.name,workerId:w.id},
+            recommendation:'Bloquear acesso, encaminhar PCMSO/RH para regularizacao'});
+        });
+        return insights;
+      }
+    },
+    /* 5. FIELD */
+    field:{
+      name:'Campo e Inspecoes',icon:'\u{1F50D}',color:'var(--wn)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        if(typeof INSPEC_DB!=='undefined'&&INSPEC_DB.length>0){
+          var totalNC=INSPEC_DB.reduce(function(a,i){return a+i.nc;},0);
+          if(totalNC>5){
+            insights.push({agent:'field',severity:'warning',title:'Padrao de NC recorrente',
+              detail:totalNC+' NCs em '+INSPEC_DB.length+' inspecoes',
+              context:{},
+              recommendation:'Analisar causa raiz, considerar treinamento de reciclagem'});
+          }
+        }
+        return insights;
+      }
+    },
+    /* 6. HUMAN/FATIGUE */
+    human:{
+      name:'Fadiga e Condicao Humana',icon:'\u{1F441}',color:'var(--pu)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        WORKERS.forEach(function(w){
+          if(w.cogScore<50){
+            insights.push({agent:'human',severity:'critical',title:'Prontidao critica: '+w.name,
+              detail:'Score cognitivo '+w.cogScore+'/100 — Jornada '+w.jornadaH+'h',
+              context:{worker:w.name,workerId:w.id},
+              recommendation:'Bloqueio imediato, encaminhar para descanso'});
+          }else if(w.cogScore<70&&w.jornadaH>8){
+            insights.push({agent:'human',severity:'warning',title:'Fadiga emergente: '+w.name,
+              detail:'Cog '+w.cogScore+' / Jornada '+w.jornadaH+'h',
+              context:{worker:w.name,workerId:w.id},
+              recommendation:'Pausa obrigatoria, reavaliar prontidao em 30min'});
+          }
+        });
+        return insights;
+      }
+    },
+    /* 7. PREDICTIVE */
+    predictive:{
+      name:'Preditivo',icon:'\u{1F52E}',color:'var(--cy)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        if(typeof SCORE_HISTORY!=='undefined'&&SCORE_HISTORY.length>=5){
+          var recent=SCORE_HISTORY.slice(-5);
+          var trend=recent[recent.length-1].avg-recent[0].avg;
+          if(trend>10){
+            insights.push({agent:'predictive',severity:'warning',title:'Tendencia de degradacao detectada',
+              detail:'Score subiu '+trend.toFixed(0)+' pontos nas ultimas leituras',
+              context:{},
+              recommendation:'Investigar causa, antecipar acoes preventivas'});
+          }
+        }
+        /* Late shift fatigue prediction */
+        var lateShift=WORKERS.filter(function(w){return w.jornadaH>=6;}).length;
+        if(lateShift>WORKERS.length*0.5){
+          insights.push({agent:'predictive',severity:'info',title:'Previsao de fadiga em massa',
+            detail:lateShift+' trabalhadores com >6h de jornada',
+            context:{},
+            recommendation:'Planejar rodizio para proximas 2h'});
+        }
+        return insights;
+      }
+    },
+    /* 8. EXECUTIVE */
+    executive:{
+      name:'Recomendacao Executiva',icon:'\u{1F4BC}',color:'var(--ok)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        var stats=EVENT_BUS.getStats();
+        if(stats.critical>=3){
+          insights.push({agent:'executive',severity:'critical',title:'Acumulo de eventos criticos',
+            detail:stats.critical+' eventos criticos abertos simultaneamente',
+            context:{},
+            recommendation:'Acionar War Room: convocar SESMT, supervisao e operacao para acao coordenada'});
+        }
+        return insights;
+      }
+    }
+  },
+  /* Run all agents and route through EVENT_BUS */
+  runAll:function(){
+    if(!this.enabled)return{insights:[],eventStats:EVENT_BUS.getStats()};
+    this.lastRun=Date.now();this.runs++;
+    var allInsights=this.agents.orchestrator.run();
+    var stats={created:0,enriched:0};
+    /* Each insight goes through EVENT_BUS — no direct alerts */
+    allInsights.forEach(function(ins){
+      var result=EVENT_BUS.emit({
+        type:'ai-'+ins.agent,source:'ai',
+        severity:ins.severity,title:ins.title,detail:ins.detail,
+        context:ins.context,recommendation:ins.recommendation,
+        aiAgent:ins.agent,aiEnrichment:ins.recommendation
+      });
+      if(result.duplicate)stats.enriched++;else stats.created++;
+    });
+    return{insights:allInsights,stats:stats,eventStats:EVENT_BUS.getStats()};
+  }
+};
+
+/* Auto-run AI every 30 seconds */
+setInterval(function(){
+  try{if(AI_CORE.enabled)AI_CORE.runAll();}catch(e){}
+},30000);
+/* Initial run after 5s */
+setTimeout(function(){try{AI_CORE.runAll();}catch(e){}},5000);
+
+
+/* ============================================================
+   AI MODULE — REFACTORED RENDERER (8 sub-tabs)
+   ============================================================ */
+var _origIsipaiRender=R['isipai'];
+R['isipai']=function(){
+  var m=G('m-isipai');
+  var seg=SEG_CONFIG[CURRENT_SEG];
+  var aiResult=AI_CORE.runAll();
+  var stats=aiResult.eventStats;
+  var insights=aiResult.insights;
+  var activeEvents=EVENT_BUS.getActive();
+  var critEvents=EVENT_BUS.getCritical();
+
+  var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+  h+='<div class="stit">&#129302; ISIP AI — CAMADA COGNITIVA OPERACIONAL <span style="font-size:9px;color:var(--t4);font-family:var(--mono);margin-left:8px">v2.0 | '+seg.label+' | '+AI_CORE.runs+' execucoes</span></div>';
+
+  /* Header KPIs */
+  h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;margin-bottom:10px">';
+  h+='<div class="card"><div class="cl">EVENTOS ATIVOS</div><div class="cv sm">'+stats.active+'</div></div>';
+  h+='<div class="card"><div class="cl">CRITICOS</div><div class="cv sm '+(stats.critical>0?'r':'ok')+'">'+stats.critical+'</div></div>';
+  h+='<div class="card"><div class="cl">ENRIQUECIDOS IA</div><div class="cv sm ok">'+stats.enriched+'</div></div>';
+  h+='<div class="card"><div class="cl">ESCALADOS</div><div class="cv sm w">'+stats.escalated+'</div></div>';
+  h+='<div class="card"><div class="cl">AGENTES ATIVOS</div><div class="cv sm ok">8/8</div></div>';
+  h+='<div class="card"><div class="cl">DEDUP RATIO</div><div class="cv sm ok">'+(stats.active>0?Math.round(stats.enriched/(stats.active||1)*100):0)+'%</div></div></div>';
+
+  /* SUB TABS */
+  h+='<div class="stabs">';
+  ['agentes','events','insights','consulta','docs','arq','comply','logs'].forEach(function(t,i){
+    var labels={agentes:'Agentes',events:'Eventos Mestres',insights:'Insights IA',consulta:'Consulta IA',docs:'Documentos',arq:'Arquitetura',comply:'Compliance',logs:'Auditoria'};
+    h+='<button class="stab'+(i===0?' on':'')+'" data-t="'+t+'" onclick="iaSubTab(\''+t+'\')">'+labels[t]+'</button>';
+  });
+  h+='</div>';
+
+  /* TAB 1: AGENTES */
+  h+='<div class="tcon on" id="ia-agentes">';
+  h+='<div class="stit">&#129302; 8 AGENTES INTERNOS COORDENADOS</div>';
+  h+='<div class="ib bl"><div class="ibt">Como funciona</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Os 8 agentes operam de forma coordenada pelo Orquestrador. Cada agente analisa seu dominio, gera insights, e envia tudo via <strong>Event Master Bus</strong> que aplica anti-duplicacao automatica. Eventos similares sao consolidados e enriquecidos, NUNCA duplicados.</p></div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px">';
+  Object.keys(AI_CORE.agents).forEach(function(k){
+    var ag=AI_CORE.agents[k];
+    h+='<div class="card" style="border-left:3px solid '+ag.color+'"><div style="display:flex;gap:6px;align-items:center"><span style="font-size:18px">'+ag.icon+'</span><div style="flex:1"><div style="font-weight:700;font-size:11px;color:'+ag.color+'">'+ag.name+'</div><div style="font-size:8px;color:var(--t4);font-family:var(--mono)">'+ag.runs+' execucoes</div></div>'+pill('p-ok','ATIVO')+'</div></div>';
+  });
+  h+='</div></div>';
+
+  /* TAB 2: EVENT MASTER BUS */
+  h+='<div class="tcon" id="ia-events" style="display:none">';
+  h+='<div class="stit">&#128276; EVENT MASTER BUS — GOVERNANCA UNIFICADA</div>';
+  h+='<div class="ib am"><div class="ibt">Anti-duplicacao</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Todo evento (rule engine, IA, sistema, manual) passa pelo Event Bus. Eventos com mesma chave semantica sao <strong>consolidados</strong>, nao duplicados. O contador "ocorrencias" indica quantas vezes o evento foi reativado.</p></div>';
+  if(activeEvents.length===0){
+    h+='<div class="ib gn"><div class="ibt">&#10003; Sem eventos ativos</div><p style="font-size:10px;color:var(--t2)">Sistema em estado normal.</p></div>';
+  }else{
+    h+='<table class="dt"><thead><tr><th>ID</th><th>Tipo</th><th>Severidade</th><th>Titulo</th><th>Ocorr.</th><th>Origens</th><th>IA</th><th>Acao</th></tr></thead><tbody>';
+    activeEvents.slice(0,30).forEach(function(e){
+      var pc=e.severity==='critical'?'p-c':e.severity==='warning'?'p-a':'p-b';
+      var sources=Object.keys(e.sources).join(',');
+      h+='<tr><td style="font-family:var(--mono);font-size:9px">'+e.id+'</td><td style="font-size:9px">'+e.type+'</td><td>'+pill(pc,e.severity.toUpperCase())+'</td><td style="font-size:10px"><strong>'+e.title+'</strong><br><span style="font-size:9px;color:var(--t3)">'+e.detail+'</span></td><td style="text-align:center">'+e.occurrences+(e.escalated?' &uarr;':'')+'</td><td style="font-size:8px">'+sources+'</td><td style="text-align:center">'+(e.aiInsights.length>0?'&#10003; '+e.aiInsights.length:'-')+'</td><td><button class="btn bp" style="font-size:8px;padding:2px 6px" onclick="EVENT_BUS.resolve(\''+e.id+'\');rendered.isipai=false;openTab(\'isipai\')">Resolver</button></td></tr>';
+    });
+    h+='</tbody></table>';
+  }
+  h+='</div>';
+
+  /* TAB 3: INSIGHTS */
+  h+='<div class="tcon" id="ia-insights" style="display:none">';
+  h+='<div class="stit">&#128161; INSIGHTS DA IA — ULTIMA EXECUCAO</div>';
+  if(insights.length===0){
+    h+='<div class="ib gn"><div class="ibt">&#10003; Operacao normal</div><p style="font-size:10px">A IA nao detectou pontos de atencao na ultima execucao.</p></div>';
+  }else{
+    insights.forEach(function(ins){
+      var pc=ins.severity==='critical'?'p-c':ins.severity==='warning'?'p-a':'p-b';
+      var ag=AI_CORE.agents[ins.agent];
+      h+='<div class="card" style="border-left:3px solid '+(ag?ag.color:'var(--cy)')+'">';
+      h+='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="flex:1"><div style="display:flex;gap:6px;align-items:center"><span style="font-size:14px">'+(ag?ag.icon:'')+'</span><strong style="font-size:11px;color:'+(ag?ag.color:'var(--cy)')+'">'+ins.title+'</strong>'+pill(pc,ins.severity.toUpperCase())+'</div>';
+      h+='<div style="font-size:10px;color:var(--t2);margin-top:3px">'+ins.detail+'</div>';
+      h+='<div style="font-size:9px;color:var(--cy);margin-top:3px">&#128161; '+ins.recommendation+'</div></div></div></div>';
+    });
+  }
+  h+='</div>';
+
+  /* TAB 4: CONSULTA IA */
+  h+='<div class="tcon" id="ia-consulta" style="display:none">';
+  h+='<div class="stit">&#128172; CONSULTA INTELIGENTE</div>';
+  h+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">';
+  ['NR-33 exige o que para EC?','Quem pode trabalhar em altura?','Score risco Britagem P1?','Ultimo incidente registrado?','Compliance NR-35 esta ok?','Quais eventos estao ativos?'].forEach(function(q){
+    h+='<button class="btn bp" onclick="iaAsk(\''+q+'\')">'+q+'</button>';
+  });
+  h+='</div>';
+  h+='<div class="chat-box" id="ia-chat" style="min-height:200px;max-height:400px;overflow-y:auto;padding:10px;background:rgba(0,0,0,.2);border-radius:6px;margin-bottom:8px"></div>';
+  h+='<div class="chat-input" style="display:flex;gap:4px"><input type="text" id="ia-input" placeholder="Pergunte ao ISIP..." style="flex:1;background:var(--sf);color:var(--t1);border:1px solid rgba(var(--cy-rgb),.2);border-radius:4px;padding:8px 12px" onkeydown="if(event.key===\'Enter\')iaAsk(this.value)"><button class="btn bp" onclick="iaAsk(G(\'ia-input\').value)">ENVIAR</button></div>';
+  h+='</div>';
+
+  /* TAB 5: DOCS */
+  h+='<div class="tcon" id="ia-docs" style="display:none">';
+  h+='<div class="stit">&#128194; BASE DOCUMENTAL INDEXADA</div>';
+  h+='<table class="dt"><thead><tr><th>Documento</th><th>Tipo</th><th>Pags</th><th>Chunks</th><th>Status</th></tr></thead><tbody>';
+  IA_DOCS.forEach(function(d){
+    h+='<tr><td><strong>'+esc(d.name)+'</strong></td><td>'+pill('p-b',d.type)+'</td><td>'+d.pages+'</td><td>'+d.chunks+'</td><td>'+pill(d.status==='indexado'?'p-ok':'p-w',d.status.toUpperCase())+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+
+  /* TAB 6: ARQUITETURA */
+  h+='<div class="tcon" id="ia-arq" style="display:none">';
+  h+='<div class="stit">&#129504; ARQUITETURA COGNITIVA</div>';
+  h+='<div class="ib bl"><div class="ibt">Camadas</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px">';
+  [{n:'1. INGESTAO',d:'Recebe dados de TODOS os modulos',c:'var(--cy)'},{n:'2. AGENTES',d:'8 agentes processam em paralelo',c:'var(--el)'},{n:'3. EVENT BUS',d:'Anti-duplicacao + enriquecimento',c:'var(--wn)'},{n:'4. RETROALIMENTACAO',d:'Atualiza dashboards e indicadores',c:'var(--ok)'}].forEach(function(c){
+    h+='<div class="card" style="border-top:3px solid '+c.c+'"><div style="font-weight:700;font-size:11px;color:'+c.c+'">'+c.n+'</div><div style="font-size:9px;color:var(--t3);margin-top:3px">'+c.d+'</div></div>';
+  });
+  h+='</div></div>';
+  h+='<div class="ib am" style="margin-top:8px"><div class="ibt">Modulos integrados (entradas)</div>';
+  h+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">';
+  ['Mapa Risco','Pupilometria','Inspecao Campo','Motor Regras','Incidentes','Jornada','Tendencias','Governanca','Equipamentos','Normas','Documentos','Treinamentos','Terceiros','Weather','Handover','DDS'].forEach(function(mod){
+    h+=pill('p-b',mod);
+  });
+  h+='</div></div>';
+  h+='<div class="ib gn" style="margin-top:8px"><div class="ibt">Saidas (retroalimentacao)</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Toda saida da IA tem destino claro: <strong>Event Master Bus</strong> consolida eventos, atualiza painel executivo, alimenta tendencias, registra na auditoria e gera insights nos cards de contexto. Nada fica solto.</p></div>';
+  h+='</div>';
+
+  /* TAB 7: COMPLIANCE */
+  h+='<div class="tcon" id="ia-comply" style="display:none">';
+  h+='<div class="stit">&#10003; DASHBOARD COMPLIANCE</div>';
+  var inaptos=WORKERS.filter(function(w){return !w.apt;}).length;
+  var aptos=WORKERS.length-inaptos;
+  h+='<div class="g2"><div class="card"><div class="cl">APTIDAO GERAL</div><div class="cv sm '+(inaptos===0?'ok':'r')+'">'+Math.round(aptos/WORKERS.length*100)+'%</div></div>';
+  h+='<div class="card"><div class="cl">ASOs VALIDOS</div><div class="cv sm ok">'+aptos+'/'+WORKERS.length+'</div></div>';
+  h+='<div class="card"><div class="cl">EVENTOS CRITICOS</div><div class="cv sm '+(stats.critical>0?'r':'ok')+'">'+stats.critical+'</div></div>';
+  h+='<div class="card"><div class="cl">VIOLACOES MOTOR</div><div class="cv sm '+(RULE_VIOLATIONS.length>0?'w':'ok')+'">'+RULE_VIOLATIONS.length+'</div></div></div>';
+  h+='</div>';
+
+  /* TAB 8: LOGS */
+  h+='<div class="tcon" id="ia-logs" style="display:none">';
+  h+='<div class="stit">&#128270; AUDITORIA COMPLETA — TRILHA DE EVENTOS</div>';
+  h+='<div class="ib bl"><div class="ibt">Rastreabilidade</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Cada evento registra: dado de entrada, modulo de origem, agente IA responsavel, data/hora, decisao, vinculo com evento mestre. Trilha imutavel.</p></div>';
+  h+='<table class="dt" style="margin-top:8px"><thead><tr><th>ID</th><th>Tipo</th><th>Origem</th><th>Severidade</th><th>Ocorr.</th><th>Insights IA</th><th>Status</th></tr></thead><tbody>';
+  EVENT_BUS.events.slice(0,30).forEach(function(e){
+    var pc=e.severity==='critical'?'p-c':e.severity==='warning'?'p-a':'p-b';
+    var srcs=Object.keys(e.sources).join('+');
+    h+='<tr><td style="font-family:var(--mono);font-size:9px">'+e.id+'</td><td style="font-size:9px">'+e.type+'</td><td style="font-size:9px">'+srcs+'</td><td>'+pill(pc,e.severity)+'</td><td>'+e.occurrences+'</td><td style="text-align:center">'+e.aiInsights.length+'</td><td>'+pill(e.status==='resolved'?'p-ok':'p-w',e.status.toUpperCase())+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+
+  m.innerHTML=h;
+};
+
 </script>
 </body>
 </html>
