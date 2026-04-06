@@ -3916,8 +3916,16 @@ R['planta']=function(){
   h+='<div class="seg-watermark">'+dna.label+'</div>';
   h+='<div class="seg-signature" style="color:'+dna.palette.primary+'">'+dna.icon+'</div>';
 
-  /* REAL PLANT ILLUSTRATION — SVG digital twin per segment */
-  h+='<div class="planta-illustration no-photo">';
+  /* REAL PLANT ILLUSTRATION — SVG digital twin + gradiente tematico por setor */
+  var SEG_BG={
+    mineracao:'radial-gradient(ellipse at 30% 20%,rgba(180,90,40,0.35) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(120,60,30,0.4) 0%,transparent 60%),linear-gradient(180deg,#1a0f08 0%,#2a1810 40%,#140904 100%)',
+    siderurgia:'radial-gradient(ellipse at 50% 30%,rgba(255,120,30,0.45) 0%,transparent 50%),radial-gradient(ellipse at 30% 75%,rgba(220,60,20,0.35) 0%,transparent 55%),linear-gradient(180deg,#1c0a04 0%,#2a0f06 40%,#0c0402 100%)',
+    cimento:'radial-gradient(ellipse at 40% 30%,rgba(200,180,140,0.25) 0%,transparent 55%),radial-gradient(ellipse at 65% 70%,rgba(140,120,90,0.3) 0%,transparent 60%),linear-gradient(180deg,#1a1810 0%,#24201a 45%,#0e0c08 100%)',
+    petroleo:'radial-gradient(ellipse at 25% 25%,rgba(255,140,30,0.4) 0%,transparent 50%),radial-gradient(ellipse at 75% 70%,rgba(255,80,20,0.3) 0%,transparent 55%),linear-gradient(180deg,#0a0a14 0%,#14100a 40%,#050508 100%)',
+    usinas:'radial-gradient(ellipse at 50% 25%,rgba(255,180,60,0.35) 0%,transparent 55%),radial-gradient(ellipse at 30% 75%,rgba(220,120,40,0.3) 0%,transparent 55%),linear-gradient(180deg,#0e0a04 0%,#1c1408 45%,#08050a 100%)'
+  };
+  var bgStyle = SEG_BG[seg] || SEG_BG.mineracao;
+  h+='<div class="planta-illustration no-photo" style="background:'+bgStyle+'">';
   h+='<div class="plant-svg-fallback" style="display:block">'+getSegPlantSVG(seg,dna)+'</div>';
   h+=getSegPlantHUD(seg,dna,chain);
   h+='</div>';
