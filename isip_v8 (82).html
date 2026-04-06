@@ -481,9 +481,7 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 .planta-illustration{position:relative;margin:14px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.2) 100%);border:1px solid rgba(var(--cy-rgb),0.25);box-shadow:0 8px 32px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.08);height:340px;z-index:5}
 .planta-illustration .plant-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.55) contrast(1.15) saturate(1.25);transition:filter .4s}
 .planta-illustration:hover .plant-photo{filter:brightness(0.7) contrast(1.2) saturate(1.4)}
-.planta-illustration .plant-svg-fallback{position:absolute;inset:0;width:100%;height:100%;display:none}
-.planta-illustration .plant-photo.failed{display:none}
-.planta-illustration .plant-photo.failed ~ .plant-svg-fallback{display:block}
+.planta-illustration .plant-svg-fallback{position:absolute;inset:0;width:100%;height:100%;display:block}
 .planta-illustration .plant-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.5) 100%),linear-gradient(180deg,rgba(0,8,16,0.4) 0%,transparent 30%,transparent 70%,rgba(0,8,16,0.7) 100%);pointer-events:none}
 .planta-illustration .plant-hud{position:absolute;inset:0;pointer-events:none;z-index:10}
 .planta-illustration .hud-corner{position:absolute;width:30px;height:30px;border:2px solid var(--cy);box-shadow:0 0 12px rgba(var(--cy-rgb),0.6)}
