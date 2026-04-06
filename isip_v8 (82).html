@@ -455,6 +455,29 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 .insp-evidence{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
 .insp-evidence .ev-btn{font-size:8px;padding:2px 8px;border-radius:3px;cursor:pointer;border:1px solid rgba(var(--cy-rgb),.2);background:rgba(var(--cy-rgb),.04);color:var(--t2);transition:all .2s}
 .insp-evidence .ev-btn:hover{background:rgba(var(--cy-rgb),.12)}
+
+/* CINEMATIC PLANTA MODULE */
+#m-planta{background:radial-gradient(ellipse 100% 60% at 50% 30%,rgba(60,30,0,0.25),transparent 70%),radial-gradient(ellipse 80% 50% at 50% 100%,rgba(0,40,60,0.3),transparent 70%),linear-gradient(180deg,#020810 0%,#040d18 50%,#020608 100%)}
+#m-planta::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px);pointer-events:none;opacity:0.4;z-index:1}
+#m-planta>*{position:relative;z-index:2}
+.planta-bg{position:absolute;inset:0;background-image:radial-gradient(circle at 20% 40%,rgba(255,140,40,0.08) 0%,transparent 25%),radial-gradient(circle at 50% 60%,rgba(255,80,20,0.12) 0%,transparent 30%),radial-gradient(circle at 80% 50%,rgba(0,180,255,0.08) 0%,transparent 25%);pointer-events:none;z-index:0}
+.planta-topbar{background:linear-gradient(180deg,rgba(2,8,16,0.95) 0%,rgba(4,16,28,0.85) 100%);backdrop-filter:blur(10px);border-bottom:1px solid rgba(var(--cy-rgb),.18);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.planta-stage{background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.35) 100%);backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04);border-radius:8px;overflow:hidden;transition:all .25s}
+.planta-stage:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06)}
+.planta-stage-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--hud);font-size:13px;font-weight:900;color:#000;box-shadow:0 0 12px currentColor,inset 0 -2px 4px rgba(0,0,0,0.3)}
+.planta-kpi{background:linear-gradient(180deg,rgba(0,20,40,0.6) 0%,rgba(0,10,20,0.4) 100%);border:1px solid rgba(var(--cy-rgb),.18);border-radius:6px;padding:6px 12px;backdrop-filter:blur(6px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.05),0 2px 8px rgba(0,0,0,0.3)}
+.planta-kpi .pkv{font-family:var(--hud);font-size:18px;font-weight:900;color:var(--cy);text-shadow:0 0 12px rgba(var(--cy-rgb),0.5);line-height:1}
+.planta-bot-card{background:linear-gradient(180deg,rgba(2,10,20,0.92) 0%,rgba(0,5,12,0.95) 100%);border:1px solid rgba(var(--cy-rgb),.1);border-radius:8px;padding:10px 12px;backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04)}
+.planta-bot-card .pbc-title{font-family:var(--hud);font-size:10px;font-weight:900;letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.planta-bot-card .pbc-title::before{content:'';width:3px;height:14px;background:var(--cy);border-radius:2px;box-shadow:0 0 8px rgba(var(--cy-rgb),0.6)}
+.planta-zone-cell{width:26px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--hud);font-size:9px;font-weight:900;box-shadow:0 0 8px currentColor,inset 0 1px 0 rgba(255,255,255,0.1);transition:all .2s;cursor:pointer}
+.planta-zone-cell:hover{transform:scale(1.15)}
+.planta-step-card{background:linear-gradient(180deg,rgba(var(--cy-rgb),0.06) 0%,rgba(0,0,0,0.2) 100%);border-left:3px solid;border-radius:4px;padding:6px 8px;margin-bottom:4px;transition:all .2s}
+.planta-step-card:hover{background:linear-gradient(180deg,rgba(var(--cy-rgb),0.12) 0%,rgba(0,0,0,0.25) 100%)}
+.planta-arrow{display:flex;align-items:center;justify-content:center;padding-top:30px;font-size:18px;color:rgba(var(--cy-rgb),0.5);text-shadow:0 0 8px rgba(var(--cy-rgb),0.4);animation:pulse 2.5s infinite}
+.planta-status-badge{padding:6px 14px;border-radius:6px;background:linear-gradient(180deg,rgba(var(--ok-rgb),0.2) 0%,rgba(var(--ok-rgb),0.08) 100%);border:1px solid rgba(var(--ok-rgb),0.4);text-align:center;box-shadow:0 0 16px rgba(var(--ok-rgb),0.2),inset 0 1px 0 rgba(255,255,255,0.06)}
+@keyframes plantaScan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.planta-scan-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(var(--cy-rgb),0.6),transparent);animation:plantaScan 4s linear infinite;pointer-events:none}
 </style>
 </head>
 <body>
@@ -3531,196 +3554,124 @@ R['planta']=function(){
   var chain=PLANT_CHAINS[seg]||PLANT_CHAINS.mineracao;
   var viol=RULE_VIOLATIONS.length;
   var critZ=ZONES.filter(function(z){return sc2(score(z))>=6;}).length;
+  var stats=typeof EVENT_BUS!=='undefined'?EVENT_BUS.getStats():{active:0,critical:0};
+  var totalP=0;ZONES.forEach(function(z){totalP+=z.people;});
+  var aptos=WORKERS.filter(function(w){return w.apt;}).length;
+  var pctApt=Math.round(aptos/WORKERS.length*100);
   var h='';
-  /* TOP BAR */
-  h+='<div style="padding:8px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(var(--cy-rgb),.1);background:rgba(0,0,0,.3)">';
-  h+='<div><div style="font-family:var(--hud);font-size:15px;font-weight:900;color:var(--cy);letter-spacing:.08em">'+chain.title+'</div>';
-  h+='<div style="font-size:9px;color:var(--t3)">'+chain.sub+'</div></div>';
-  h+='<div style="display:flex;gap:12px;align-items:center">';
+  /* Background layer */
+  h+='<div class="planta-bg"></div>';
+  h+='<div class="planta-scan-line"></div>';
+
+  /* TOP BAR — cinematic */
+  h+='<div class="planta-topbar" style="padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">';
+  h+='<div style="flex:1;min-width:280px"><div style="font-family:var(--hud);font-size:18px;font-weight:900;color:var(--cy);letter-spacing:.1em;text-shadow:0 0 16px rgba(var(--cy-rgb),0.4)">'+chain.title+'</div>';
+  h+='<div style="font-size:10px;color:var(--t3);font-style:italic;margin-top:2px">'+chain.sub+'</div></div>';
+  h+='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">';
   chain.kpis.forEach(function(k){
-    h+='<div style="text-align:center;padding:2px 8px"><div style="font-size:8px;color:var(--t3);font-family:var(--hud);letter-spacing:.05em">'+k.n+'</div>';
-    h+='<div style="font-size:16px;font-weight:900;color:var(--cy);font-family:var(--hud)">'+k.v+'<span style="font-size:9px;color:var(--t3)"> '+k.u+'</span></div>';
-    if(k.m)h+='<div style="font-size:7px;color:var(--t4)">'+k.m+'</div>';
+    h+='<div class="planta-kpi"><div style="font-size:8px;color:var(--t3);font-family:var(--hud);letter-spacing:.05em">'+k.n+'</div>';
+    h+='<div class="pkv">'+k.v+'<span style="font-size:10px;color:var(--t3);font-weight:400"> '+k.u+'</span></div>';
+    if(k.m)h+='<div style="font-size:7px;color:var(--t4);margin-top:1px">'+k.m+'</div>';
     h+='</div>';
   });
-  h+='<div style="padding:4px 10px;border-radius:4px;background:rgba(var(--ok-rgb),.1);border:1px solid rgba(var(--ok-rgb),.2);text-align:center"><div style="font-size:7px;color:var(--ok)">OPERACAO</div><div style="font-size:10px;font-weight:900;color:var(--ok)">NORMAL</div></div>';
-  h+='<button class="btn" style="border-color:var(--cy);color:var(--cy);font-size:9px;padding:4px 10px" onclick="showMap()">&#9664; MAPA</button>';
+  h+='<div class="planta-status-badge"><div style="font-size:8px;color:var(--ok);letter-spacing:.05em">OPERACAO</div><div style="font-size:11px;font-weight:900;color:var(--ok);text-shadow:0 0 10px rgba(var(--ok-rgb),0.6)">NORMAL</div></div>';
+  h+='<button class="btn" style="border-color:var(--cy);color:var(--cy);font-size:9px;padding:6px 12px" onclick="showMap()">&#9664; MAPA</button>';
   h+='</div></div>';
 
-  /* PROCESS CHAIN — MAIN AREA */
-  h+='<div style="padding:10px;overflow-x:auto">';
-  h+='<div style="display:flex;gap:6px;align-items:flex-start;min-width:'+Math.max(chain.stages.length*160,900)+'px">';
+  /* PROCESS CHAIN — cinematic stages */
+  h+='<div style="padding:18px 14px;overflow-x:auto">';
+  h+='<div style="display:flex;gap:8px;align-items:flex-start;min-width:'+Math.max(chain.stages.length*180,900)+'px">';
   chain.stages.forEach(function(st,idx){
-    h+='<div style="flex:1;min-width:140px">';
+    h+='<div class="planta-stage" style="flex:1;min-width:160px;border:1px solid '+st.color+'44;border-bottom:3px solid '+st.color+'">';
     /* Stage header */
-    h+='<div style="padding:6px 8px;background:rgba(0,0,0,.25);border-radius:6px 6px 0 0;border:1px solid '+st.color+';border-bottom:3px solid '+st.color+'">';
-    h+='<div style="display:flex;align-items:center;gap:4px"><div style="width:20px;height:20px;border-radius:50%;background:'+st.color+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#000">'+(idx+1)+'</div>';
-    h+='<div><div style="font-size:11px;font-weight:900;color:var(--t1);font-family:var(--hud)">'+st.n+'</div>';
+    h+='<div style="padding:10px 12px;background:linear-gradient(135deg,'+st.color+'18 0%,transparent 100%);border-bottom:1px solid '+st.color+'33">';
+    h+='<div style="display:flex;align-items:center;gap:8px"><div class="planta-stage-num" style="background:'+st.color+'">'+(idx+1)+'</div>';
+    h+='<div style="flex:1"><div style="font-size:12px;font-weight:900;color:var(--t1);font-family:var(--hud);letter-spacing:.04em">'+st.n+'</div>';
     h+='<div style="font-size:8px;color:var(--t3)">'+st.sub+'</div></div></div></div>';
     /* Steps */
-    h+='<div style="border:1px solid rgba(var(--cy-rgb),.06);border-top:none;border-radius:0 0 6px 6px;background:rgba(0,0,0,.12);padding:4px">';
+    h+='<div style="padding:6px 8px">';
     st.steps.forEach(function(step){
-      h+='<div style="padding:5px 6px;margin-bottom:3px;background:rgba(var(--cy-rgb),.03);border-radius:3px;border-left:2px solid '+st.color+'">';
-      h+='<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:9px;font-weight:700;color:'+st.color+'">'+step.id+'</span></div>';
-      h+='<div style="font-size:10px;font-weight:700;color:var(--t1)">'+step.n+'</div>';
-      h+='<div style="font-size:8px;color:var(--cy)">'+step.eq+'</div>';
-      if(step.detail)h+='<div style="font-size:7px;color:var(--t4)">'+step.detail+'</div>';
+      h+='<div class="planta-step-card" style="border-left-color:'+st.color+'">';
+      h+='<div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:'+st.color+'">'+step.id+'</span></div>';
+      h+='<div style="font-size:11px;font-weight:700;color:var(--t1);margin-top:2px">'+step.n+'</div>';
+      h+='<div style="font-size:9px;color:'+st.color+';font-weight:600">'+step.eq+'</div>';
+      if(step.detail)h+='<div style="font-size:8px;color:var(--t4);font-style:italic">'+step.detail+'</div>';
       h+='</div>';
     });
     h+='</div></div>';
-    /* Connector arrow */
-    if(idx<chain.stages.length-1)h+='<div style="display:flex;align-items:center;padding-top:20px;color:var(--t4);font-size:16px;flex-shrink:0">&#9654;</div>';
+    if(idx<chain.stages.length-1)h+='<div class="planta-arrow">&#9654;</div>';
   });
   h+='</div></div>';
 
-  /* BOTTOM PANEL — 4 SECTIONS */
-  h+='<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:1px;background:rgba(var(--cy-rgb),.04);border-top:1px solid rgba(var(--cy-rgb),.1)">';
+  /* BOTTOM PANEL — 4 cinematic cards */
+  h+='<div style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:8px;padding:0 14px 14px">';
 
-  /* 1. Visão Geral do Processo */
-  h+='<div style="padding:8px 10px;background:rgba(0,0,0,.2)"><div style="font-size:10px;font-weight:700;color:var(--cy);margin-bottom:6px;font-family:var(--hud)">VISAO GERAL DO PROCESSO</div>';
-  h+='<div style="display:flex;gap:3px;align-items:center;margin-bottom:6px;flex-wrap:wrap">';
+  /* 1. Visao Geral */
+  h+='<div class="planta-bot-card"><div class="pbc-title" style="color:var(--cy)">VISAO GERAL DO PROCESSO</div>';
+  h+='<div style="display:flex;gap:3px;align-items:center;margin-bottom:8px;flex-wrap:wrap">';
   chain.stages.forEach(function(st,i){
-    h+='<div style="padding:2px 6px;background:'+st.color+'20;border:1px solid '+st.color+'40;border-radius:3px;font-size:7px;font-weight:700;color:'+st.color+'">'+st.n+'</div>';
-    if(i<chain.stages.length-1)h+='<span style="color:var(--t4);font-size:8px">→</span>';
+    h+='<div style="padding:3px 8px;background:linear-gradient(180deg,'+st.color+'25 0%,'+st.color+'12 100%);border:1px solid '+st.color+'55;border-radius:4px;font-size:8px;font-weight:700;color:'+st.color+';text-shadow:0 0 6px '+st.color+'44">'+st.n+'</div>';
+    if(i<chain.stages.length-1)h+='<span style="color:rgba(var(--cy-rgb),.4);font-size:10px;font-weight:900">&rsaquo;</span>';
   });
   h+='</div>';
-  h+='<div style="display:flex;gap:8px;font-size:8px">';
-  h+='<div><span style="color:var(--t3)">EFETIVO:</span> <span style="color:var(--t1);font-weight:700">'+WORKERS.length+'</span></div>';
-  h+='<div><span style="color:var(--t3)">ZONAS:</span> <span style="color:var(--t1);font-weight:700">'+ZONES.length+'</span></div>';
-  h+='<div><span style="color:var(--t3)">ETAPAS:</span> <span style="color:var(--t1);font-weight:700">'+chain.stages.length+'</span></div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;font-size:9px">';
+  h+='<div style="padding:4px 6px;background:rgba(var(--cy-rgb),.06);border-radius:4px;text-align:center"><div style="color:var(--t3);font-size:8px">EFETIVO</div><div style="font-family:var(--hud);font-size:14px;font-weight:900;color:var(--cy)">'+totalP+'</div></div>';
+  h+='<div style="padding:4px 6px;background:rgba(var(--cy-rgb),.06);border-radius:4px;text-align:center"><div style="color:var(--t3);font-size:8px">ZONAS</div><div style="font-family:var(--hud);font-size:14px;font-weight:900;color:var(--cy)">'+ZONES.length+'</div></div>';
+  h+='<div style="padding:4px 6px;background:rgba(var(--cy-rgb),.06);border-radius:4px;text-align:center"><div style="color:var(--t3);font-size:8px">ETAPAS</div><div style="font-family:var(--hud);font-size:14px;font-weight:900;color:var(--cy)">'+chain.stages.length+'</div></div>';
   h+='</div></div>';
 
   /* 2. Indicadores Operacionais */
-  h+='<div style="padding:8px 10px;background:rgba(0,0,0,.2)"><div style="font-size:10px;font-weight:700;color:var(--cy);margin-bottom:6px;font-family:var(--hud)">INDICADORES OPERACIONAIS</div>';
-  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px">';
-  chain.kpis.slice(0,3).forEach(function(k){
-    h+='<div style="text-align:center;padding:4px;background:rgba(var(--cy-rgb),.04);border-radius:3px"><div style="font-size:14px;font-weight:900;color:var(--cy);font-family:var(--hud)">'+k.v+'</div><div style="font-size:7px;color:var(--t3)">'+k.n+'</div></div>';
+  h+='<div class="planta-bot-card"><div class="pbc-title" style="color:var(--el)">INDICADORES OPERACIONAIS</div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px">';
+  chain.kpis.slice(0,4).forEach(function(k){
+    var num=parseFloat(k.v)||0;
+    var col=num>=90?'var(--ok)':num>=70?'var(--cy)':num>=50?'var(--wn)':'var(--rd)';
+    h+='<div style="text-align:center;padding:8px;background:linear-gradient(180deg,rgba(var(--cy-rgb),.06) 0%,rgba(0,0,0,0.2) 100%);border-radius:5px;border:1px solid rgba(var(--cy-rgb),.1)"><div style="font-family:var(--hud);font-size:18px;font-weight:900;color:'+col+';text-shadow:0 0 10px '+col+'66">'+k.v+'</div><div style="font-size:7px;color:var(--t3);margin-top:2px">'+k.n+'</div></div>';
   });
   h+='</div></div>';
 
   /* 3. Mapa de Criticidade */
-  h+='<div style="padding:8px 10px;background:rgba(0,0,0,.2)"><div style="font-size:10px;font-weight:700;color:var(--cy);margin-bottom:6px;font-family:var(--hud)">MAPA DE CRITICIDADE</div>';
-  h+='<div style="display:flex;gap:3px;align-items:center;flex-wrap:wrap">';
+  h+='<div class="planta-bot-card"><div class="pbc-title" style="color:var(--wn)">MAPA DE CRITICIDADE</div>';
+  h+='<div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-bottom:6px">';
   ZONES.forEach(function(z,i){
     var s=score(z),sc=sc2(s);
     var c=sc>=8?'var(--rd)':sc>=6?'var(--wn)':sc>=4?'var(--cy)':'var(--ok)';
-    h+='<div style="width:22px;height:22px;border-radius:4px;background:'+c+'20;border:1px solid '+c+'40;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:'+c+'" title="'+z.name+': '+sc+'">'+(i+1)+'</div>';
+    h+='<div class="planta-zone-cell" style="background:linear-gradient(180deg,'+c+'33 0%,'+c+'11 100%);border:1px solid '+c+'66;color:'+c+'" title="'+esc(z.name)+': '+sc+'" onclick="showZoneMo(ZONES['+i+'])">'+(i+1)+'</div>';
   });
   h+='</div>';
-  h+='<div style="display:flex;gap:6px;margin-top:4px;font-size:7px">';
+  h+='<div style="display:flex;gap:8px;font-size:8px;justify-content:space-around">';
   [{c:'var(--rd)',l:'CRITICO'},{c:'var(--wn)',l:'ALTO'},{c:'var(--cy)',l:'MODERADO'},{c:'var(--ok)',l:'NORMAL'}].forEach(function(x){
-    h+='<div style="display:flex;align-items:center;gap:2px"><div style="width:6px;height:6px;border-radius:2px;background:'+x.c+'"></div><span style="color:var(--t4)">'+x.l+'</span></div>';
+    h+='<div style="display:flex;align-items:center;gap:3px"><div style="width:8px;height:8px;border-radius:50%;background:'+x.c+';box-shadow:0 0 6px '+x.c+'"></div><span style="color:var(--t3);font-weight:600">'+x.l+'</span></div>';
   });
   h+='</div></div>';
 
-  /* 4. Alertas Inteligentes */
-  h+='<div style="padding:8px 10px;background:rgba(0,0,0,.2)"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-size:10px;font-weight:700;color:var(--cy);font-family:var(--hud)">ALERTAS INTELIGENTES <span style="padding:1px 6px;background:rgba(var(--rd-rgb),.15);border-radius:8px;font-size:9px;color:var(--rd)">'+viol+'</span></div></div>';
-  var alerts=[
-    {t:'Jornada critica',d:'Fabio Nunes — 11h acumuladas',c:'var(--rd)',ago:'3 min'},
-    {t:'Zona sobrecarga',d:'Britagem Primaria — acima capacidade',c:'var(--wn)',ago:'12 min'},
-    {t:'ASO pendente',d:'Bruno Oliveira — treinamento vencido',c:'var(--wn)',ago:'25 min'}
-  ];
-  alerts.forEach(function(a){
-    h+='<div style="padding:4px 6px;margin-bottom:3px;border-left:2px solid '+a.c+';background:rgba(0,0,0,.15);border-radius:0 3px 3px 0">';
-    h+='<div style="display:flex;justify-content:space-between"><span style="font-size:9px;font-weight:700;color:'+a.c+'">'+a.t+'</span><span style="font-size:7px;color:var(--t4)">'+a.ago+'</span></div>';
-    h+='<div style="font-size:8px;color:var(--t3)">'+a.d+'</div></div>';
-  });
+  /* 4. Alertas Inteligentes — pulled from EVENT_BUS */
+  h+='<div class="planta-bot-card"><div class="pbc-title" style="color:var(--rd)">ALERTAS INTELIGENTES <span style="margin-left:auto;padding:2px 8px;background:rgba(var(--rd-rgb),.2);border-radius:10px;font-size:9px;color:var(--rd);text-shadow:0 0 6px rgba(var(--rd-rgb),0.5)">'+stats.active+'</span></div>';
+  var active=typeof EVENT_BUS!=='undefined'?EVENT_BUS.getActive().slice(0,4):[];
+  if(active.length===0){
+    /* Fallback to legacy alerts */
+    [{t:'Jornada critica',d:'Fabio Nunes — 11h acumuladas',c:'var(--rd)',ago:'3 min'},{t:'Zona sobrecarga',d:'Britagem — acima capacidade',c:'var(--wn)',ago:'12 min'},{t:'ASO pendente',d:'Bruno Oliveira — vencido',c:'var(--wn)',ago:'25 min'}].forEach(function(a){
+      h+='<div style="padding:5px 8px;margin-bottom:4px;border-left:3px solid '+a.c+';background:linear-gradient(90deg,'+a.c+'15 0%,transparent 100%);border-radius:0 4px 4px 0">';
+      h+='<div style="display:flex;justify-content:space-between"><span style="font-size:9px;font-weight:700;color:'+a.c+'">'+a.t+'</span><span style="font-family:var(--mono);font-size:7px;color:var(--t4)">'+a.ago+'</span></div>';
+      h+='<div style="font-size:8px;color:var(--t3);margin-top:1px">'+a.d+'</div></div>';
+    });
+  }else{
+    active.forEach(function(e){
+      var c=e.severity==='critical'?'var(--rd)':e.severity==='warning'?'var(--wn)':'var(--cy)';
+      var ago=Math.round((Date.now()-e.firstSeen)/60000)+' min';
+      h+='<div style="padding:5px 8px;margin-bottom:4px;border-left:3px solid '+c+';background:linear-gradient(90deg,'+c+'15 0%,transparent 100%);border-radius:0 4px 4px 0">';
+      h+='<div style="display:flex;justify-content:space-between"><span style="font-size:9px;font-weight:700;color:'+c+'">'+esc(e.title)+'</span><span style="font-family:var(--mono);font-size:7px;color:var(--t4)">'+ago+(e.occurrences>1?' x'+e.occurrences:'')+'</span></div>';
+      h+='<div style="font-size:8px;color:var(--t3);margin-top:1px">'+esc(e.detail.substring(0,50))+'</div></div>';
+    });
+  }
   h+='</div></div>';
 
   /* FOOTER */
-  h+='<div style="text-align:center;padding:4px;background:rgba(var(--cy-rgb),.03);border-top:1px solid rgba(var(--cy-rgb),.06)">';
-  h+='<span style="font-size:8px;font-weight:700;color:var(--cy);font-family:var(--hud);letter-spacing:.1em">OPERACAO INTEGRADA — MONITORAMENTO EM TEMPO REAL — DECISAO INTELIGENTE</span>';
-  h+='<span style="margin-left:16px;font-size:8px;color:var(--t4)">&#9679; <span style="color:var(--ok)">SEGURANCA</span> &#9679; <span style="color:var(--cy)">EFICIENCIA</span> &#9679; <span style="color:var(--el)">SUSTENTABILIDADE</span></span>';
+  h+='<div style="text-align:center;padding:8px;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.4) 100%);border-top:1px solid rgba(var(--cy-rgb),.08)">';
+  h+='<span style="font-family:var(--hud);font-size:9px;font-weight:700;color:var(--cy);letter-spacing:.12em;text-shadow:0 0 10px rgba(var(--cy-rgb),0.4)">OPERACAO INTEGRADA &mdash; MONITORAMENTO TEMPO REAL &mdash; DECISAO INTELIGENTE</span>';
+  h+='<span style="margin-left:18px;font-size:8px;color:var(--t4)">&#9679; <span style="color:var(--ok);text-shadow:0 0 6px rgba(var(--ok-rgb),0.4)">SEGURANCA</span> &nbsp;&#9679; <span style="color:var(--cy);text-shadow:0 0 6px rgba(var(--cy-rgb),0.4)">EFICIENCIA</span> &nbsp;&#9679; <span style="color:var(--el);text-shadow:0 0 6px rgba(var(--el-rgb),0.4)">SUSTENTABILIDADE</span></span>';
   h+='</div>';
   m.innerHTML=h;
-};
-
-var IA_CHAT=[];
-function iaSubTab(id){var cs=document.querySelectorAll('#m-isipai .tcon');for(var j=0;j<cs.length;j++){cs[j].style.display='none';}var t=G('ia-'+id);if(t)t.style.display='block';var bs=document.querySelectorAll('#m-isipai .stab');for(var j=0;j<bs.length;j++){bs[j].classList.remove('on');if(bs[j].dataset.t===id)bs[j].classList.add('on');}}
-
-R['isipai']=function(){var m=G('m-isipai');
-var h='<div class="stabs">';
-['arq','docs','agentes','consulta','comply','logs'].forEach(function(t,i){
-  var labels={arq:'Arquitetura',docs:'Ingestao',agentes:'Agentes',consulta:'Consulta IA',comply:'Compliance',logs:'Auditoria'};
-  h+='<button class="stab'+(i===0?' on':'')+'" data-t="'+t+'" onclick="iaSubTab(\''+t+'\')">'+labels[t]+'</button>';
-});
-h+='</div>';
-
-/* ARQUITETURA */
-h+='<div class="tcon on" id="ia-arq">';
-h+='<div class="stit">&#129302; ARQUITETURA AGENTIC RAG</div>';
-h+='<div class="ib bl"><div class="ibt">Pipeline de Inteligencia</div>';
-h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:8px">';
-[{n:'1. Ingestao',d:'Upload NRs, PGR, PAE, RAC, POPs',c:'var(--cy)'},{n:'2. OCR + Parsing',d:'Extracao texto, tabelas, imagens',c:'var(--el)'},{n:'3. Chunking',d:'Divisao semantica em blocos',c:'var(--wn)'},{n:'4. Embedding',d:'Vetorizacao para busca semantica',c:'var(--pu)'},{n:'5. Indexacao',d:'Armazenamento em vector DB',c:'var(--cy)'},{n:'6. Query',d:'Busca por relevancia contextual',c:'var(--el)'},{n:'7. Agentes',d:'5 agentes especializados',c:'var(--wn)'},{n:'8. Resposta',d:'Acao + evidencia + rastreabilidade',c:'var(--ok)'}].forEach(function(s){
-  h+='<div class="card" style="border-top:2px solid '+s.c+'"><div style="font-weight:700;font-size:10px;color:'+s.c+'">'+s.n+'</div><div style="font-size:8px;color:var(--t3);margin-top:2px">'+s.d+'</div></div>';
-});
-h+='</div></div>';
-h+='<div class="g2" style="margin-top:8px">';
-[{v:'1.003',l:'CHUNKS INDEXADOS',c:'ok'},{v:'5',l:'AGENTES ATIVOS',c:''},{v:'534',l:'CONSULTAS REALIZADAS',c:''},{v:'94%',l:'COMPLIANCE GERAL',c:'ok'},{v:'3',l:'GAPS CRITICOS',c:'r'},{v:'<2s',l:'LATENCIA MEDIA',c:'ok'}].forEach(function(k){
-  h+='<div class="card"><div class="cl">'+k.l+'</div><div class="cv sm '+k.c+'">'+k.v+'</div></div>';
-});
-h+='</div></div>';
-
-/* DOCS */
-h+='<div class="tcon" id="ia-docs">';
-h+='<div class="stit">&#128194; BASE DOCUMENTAL</div>';
-h+='<table class="dt"><thead><tr><th>Documento</th><th>Tipo</th><th>Pags</th><th>Chunks</th><th>Status</th></tr></thead><tbody>';
-IA_DOCS.forEach(function(d){
-  h+='<tr><td><strong>'+esc(d.name)+'</strong></td><td>'+pill('p-b',d.type)+'</td><td>'+d.pages+'</td><td>'+d.chunks+'</td><td>'+pill(d.status==='indexado'?'p-ok':'p-w',d.status.toUpperCase())+'</td></tr>';
-});
-h+='</tbody></table></div>';
-
-/* AGENTES */
-h+='<div class="tcon" id="ia-agentes">';
-h+='<div class="stit">&#129302; AGENTES ESPECIALIZADOS</div>';
-IA_AGENTS.forEach(function(a){
-  h+='<div class="agent-card"><div class="agent-av" style="background:'+a.color+'15;border:2px solid '+a.color+'44;color:'+a.color+';font-size:18px">'+a.icon+'</div><div class="agent-info"><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:11px;color:'+a.color+'">'+a.name+'</span>'+pill(a.status==='ativo'?'p-ok':'p-w',a.status.toUpperCase())+'</div><div style="font-size:9px;color:var(--t3);margin:3px 0">'+a.desc+'</div><div style="font-family:var(--mono);font-size:8px;color:var(--t4)">'+a.queries+' consultas processadas</div></div></div>';
-});
-h+='</div>';
-
-/* CONSULTA IA */
-h+='<div class="tcon" id="ia-consulta">';
-h+='<div class="stit">&#128172; CONSULTA INTELIGENTE</div>';
-h+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">';
-['NR-33 exige o que para EC?','Quem pode trabalhar em altura?','Score risco Britagem P1?','Ultimo incidente registrado?','Compliance NR-35 esta ok?'].forEach(function(q){
-  h+='<button class="btn bp" onclick="iaAsk(\''+q+'\')">'+q+'</button>';
-});
-h+='</div>';
-h+='<div class="chat-box" id="ia-chat"></div>';
-h+='<div class="chat-input"><input type="text" id="ia-input" placeholder="Pergunte ao ISIP..." onkeydown="if(event.key===\'Enter\')iaAsk(this.value)"><button onclick="iaAsk(G(\'ia-input\').value)">ENVIAR</button></div>';
-h+='</div>';
-
-/* COMPLIANCE */
-h+='<div class="tcon" id="ia-comply">';
-h+='<div class="stit">&#10003; DASHBOARD COMPLIANCE</div>';
-h+='<div class="g2">';
-[{v:'94%',l:'COMPLIANCE GERAL',c:'ok'},{v:'8/10',l:'DOCS INDEXADOS',c:''},{v:'72/87',l:'TREINAMENTOS OK',c:'w'},{v:'85/87',l:'ASOs VALIDOS',c:'ok'},{v:'3',l:'GAPS CRITICOS',c:'r'},{v:'12',l:'ACOES PENDENTES',c:'w'}].forEach(function(k){
-  h+='<div class="card"><div class="cl">'+k.l+'</div><div class="cv sm '+k.c+'">'+k.v+'</div></div>';
-});
-h+='</div>';
-h+='<div class="stit" style="margin-top:10px">GAPS CRITICOS</div>';
-[{gap:'ASO vencido — Bruno Oliveira (15 dias)',acao:'Bloquear acesso + encaminhar PCMSO',nr:'NR-7'},{gap:'Treinamento NR-33 pendente — 3 colaboradores',acao:'Agendar reciclagem imediata',nr:'NR-33'},{gap:'PGR nao atualizado para area Forno F-1',acao:'Revisar inventario de riscos',nr:'NR-1'}].forEach(function(g){
-  h+='<div class="card" style="border-left:3px solid var(--rd)"><div style="font-weight:700;font-size:10px;color:var(--rd)">'+g.gap+'</div><div style="font-size:9px;color:var(--ok);margin-top:3px">&#128161; '+g.acao+'</div><div style="font-size:8px;color:var(--t4);margin-top:2px">Ref: '+g.nr+'</div></div>';
-});
-h+='<div class="stit" style="margin-top:10px">ADERENCIA POR NR</div>';
-[{nr:'NR-1 GRO',pct:92},{nr:'NR-7 PCMSO',pct:88},{nr:'NR-10 Eletrica',pct:95},{nr:'NR-12 Maquinas',pct:82},{nr:'NR-22 Mineracao',pct:90},{nr:'NR-33 EC',pct:68},{nr:'NR-35 Altura',pct:74}].forEach(function(n){
-  h+='<div style="display:flex;align-items:center;gap:6px;padding:3px 0"><span style="font-size:9px;color:var(--t3);min-width:90px">'+n.nr+'</span><div class="pb" style="flex:1"><div class="pf '+(n.pct>=85?'ok':n.pct>=70?'w':'c')+'" style="width:'+n.pct+'%"></div></div><span style="font-family:var(--mono);font-size:9px;font-weight:700;color:'+(n.pct>=85?'var(--ok)':n.pct>=70?'var(--wn)':'var(--rd)')+'">'+n.pct+'%</span></div>';
-});
-h+='</div>';
-
-/* LOGS AUDITORIA IA */
-h+='<div class="tcon" id="ia-logs">';
-h+='<div class="stit">&#128270; LOG DE ACOES DOS AGENTES</div>';
-[{t:'14:38',agent:'Compliance',acao:'Verificou ASO de 87 colaboradores. 2 vencidos detectados.',c:'#00d4ff'},{t:'14:35',agent:'Risco',acao:'Recalculou score Britagem P1: 7.2 → monitoramento recomendado.',c:'#ffb020'},{t:'14:22',agent:'Operacional',acao:'Detectou simultaneidade incompativel: soldagem + carga Z6.',c:'#00ff88'},{t:'14:10',agent:'Compliance',acao:'Bruno Oliveira — ASO vencido ha 15 dias. Bloqueio sugerido.',c:'#00d4ff'},{t:'13:55',agent:'Risco',acao:'Concentracao Pit Norte: 7 pessoas. Redistribuicao sugerida.',c:'#ffb020'},{t:'13:40',agent:'Auditoria',acao:'Gap NR-33: 3 colaboradores sem reciclagem. Alerta gerado.',c:'#a855f7'},{t:'13:20',agent:'Emergencia',acao:'Teste PAE zona Forno F-1 concluido. Rota validada.',c:'#ff2244'},{t:'12:00',agent:'Operacional',acao:'PT-042 liberada para EC-2. Vigia confirmado. Timer ativo.',c:'#00ff88'}].forEach(function(l){
-  h+='<div class="al3"><div class="dot2" style="background:'+l.c+'"></div><div style="flex:1"><div style="font-size:10px;font-weight:700;color:'+l.c+'">'+l.agent+'</div><div style="font-size:9px;color:var(--t2)">'+l.acao+'</div></div><span style="font-family:var(--mono);font-size:8px;color:var(--t3)">'+l.t+'</span></div>';
-});
-h+='<div class="ib bl" style="margin-top:12px"><div class="ibt">&#128274; Governanca de Dados</div>';
-h+='<div class="g2">';
-[{n:'RBAC',d:'5 perfis: Diretor, SMS, Supervisor, Operador, Auditor'},{n:'Criptografia',d:'AES-256 em repouso, TLS 1.3 em transito'},{n:'Logs',d:'Imutaveis, assinados, retencao 5 anos'},{n:'LGPD',d:'Consentimento, anonimizacao, direito ao esquecimento'}].forEach(function(g){
-  h+='<div class="card"><div style="font-weight:700;font-size:10px;color:var(--cy)">'+g.n+'</div><div style="font-size:9px;color:var(--t3);margin-top:2px">'+g.d+'</div></div>';
-});
-h+='</div></div></div>';
-m.innerHTML=h;
 };
 
 /* IA Chat handler */
