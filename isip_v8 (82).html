@@ -457,9 +457,9 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 .insp-evidence .ev-btn:hover{background:rgba(var(--cy-rgb),.12)}
 
 /* CINEMATIC PLANTA MODULE */
-#m-planta{background:radial-gradient(ellipse 100% 60% at 50% 30%,rgba(60,30,0,0.25),transparent 70%),radial-gradient(ellipse 80% 50% at 50% 100%,rgba(0,40,60,0.3),transparent 70%),linear-gradient(180deg,#020810 0%,#040d18 50%,#020608 100%)}
+#m-planta{position:relative!important;padding:0!important;background:radial-gradient(ellipse 100% 60% at 50% 30%,rgba(60,30,0,0.25),transparent 70%),radial-gradient(ellipse 80% 50% at 50% 100%,rgba(0,40,60,0.3),transparent 70%),linear-gradient(180deg,#020810 0%,#040d18 50%,#020608 100%)}
 #m-planta::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px);pointer-events:none;opacity:0.4;z-index:1}
-#m-planta>*{position:relative;z-index:2}
+#m-planta>*:not(.planta-bg):not(.seg-watermark):not(.seg-signature):not(.planta-scan-line){position:relative;z-index:2}
 .planta-bg{position:absolute;inset:0;background-image:radial-gradient(circle at 20% 40%,rgba(255,140,40,0.08) 0%,transparent 25%),radial-gradient(circle at 50% 60%,rgba(255,80,20,0.12) 0%,transparent 30%),radial-gradient(circle at 80% 50%,rgba(0,180,255,0.08) 0%,transparent 25%);pointer-events:none;z-index:0}
 .planta-topbar{background:linear-gradient(180deg,rgba(2,8,16,0.95) 0%,rgba(4,16,28,0.85) 100%);backdrop-filter:blur(10px);border-bottom:1px solid rgba(var(--cy-rgb),.18);box-shadow:0 4px 20px rgba(0,0,0,0.5)}
 .planta-stage{background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.35) 100%);backdrop-filter:blur(8px);box-shadow:0 4px 16px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04);border-radius:8px;overflow:hidden;transition:all .25s}
@@ -485,15 +485,15 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 #m-planta.seg-cimento{background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(160,160,160,0.25) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 30% 70%,rgba(245,222,179,0.2) 0%,transparent 50%),linear-gradient(180deg,#080808,#0c0c0c,#060606)!important}
 #m-planta.seg-petroleo{background:radial-gradient(ellipse 50% 40% at 30% 30%,rgba(0,180,216,0.3) 0%,transparent 55%),radial-gradient(ellipse 60% 40% at 70% 60%,rgba(0,40,80,0.5) 0%,transparent 60%),linear-gradient(180deg,#020610,#040a18,#020408)!important}
 #m-planta.seg-usinas{background:radial-gradient(ellipse 60% 40% at 50% 30%,rgba(255,215,0,0.25) 0%,transparent 55%),radial-gradient(ellipse 50% 40% at 30% 70%,rgba(30,144,255,0.3) 0%,transparent 60%),linear-gradient(180deg,#020410,#040818,#020408)!important}
-.planta-element-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0;padding:0 14px}
+.planta-element-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:14px;padding:0;position:relative;z-index:5}
 .planta-element{background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.3) 100%);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 8px;text-align:center;backdrop-filter:blur(8px);transition:all .25s;cursor:pointer;position:relative;overflow:hidden}
 .planta-element::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:currentColor;box-shadow:0 0 12px currentColor}
 .planta-element:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.6)}
 .planta-element-icon{font-size:32px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 0 12px currentColor)}
 .planta-element-name{font-family:var(--hud);font-size:9px;font-weight:700;letter-spacing:.04em;color:#fff}
 .planta-element-stat{font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.6);margin-top:3px}
-.seg-signature{position:absolute;top:14px;right:14px;font-size:48px;opacity:0.08;pointer-events:none;z-index:1;text-shadow:0 0 40px currentColor}
-.seg-watermark{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);font-family:var(--hud);font-size:90px;font-weight:900;opacity:0.025;letter-spacing:.15em;pointer-events:none;white-space:nowrap;color:#fff}
+.seg-signature{position:absolute!important;top:80px;right:24px;font-size:120px;opacity:0.12;pointer-events:none;z-index:3;text-shadow:0 0 60px currentColor;line-height:1}
+.seg-watermark{position:absolute!important;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--hud);font-size:80px;font-weight:900;opacity:0.04;letter-spacing:.15em;pointer-events:none;white-space:nowrap;color:#fff;z-index:1}
 
 </style>
 </head>
@@ -4109,6 +4109,8 @@ var SEG_ZONES={
 
 function setSeg(seg,btn){
   CURRENT_SEG=seg;
+  /* Force planta re-render with new segment DNA */
+  if(typeof rendered!=='undefined')rendered['planta']=false;
   var bs=document.querySelectorAll('#seg-sel .seg-btn');for(var i=0;i<bs.length;i++)bs[i].classList.remove('on');
   if(btn)btn.classList.add('on');
   /* Update topbar label */
