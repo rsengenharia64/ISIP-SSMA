@@ -3660,31 +3660,34 @@ function getSegDNA(){return SEGMENT_VISUAL_DNA[CURRENT_SEG]||SEGMENT_VISUAL_DNA.
 
 
 /* PHOTO-BASED PLANT VIEW — Real industrial photos per segment */
+/* Fotos reais por segmento — usando source.unsplash.com com palavras-chave
+   garante que a imagem retornada corresponde ao contexto industrial do segmento,
+   eliminando o problema de IDs hardcoded que traziam imagens aleatorias. */
 var SEG_PLANT_PHOTOS={
   mineracao:[
-    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1600&q=80',
-    'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1600&q=80',
-    'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=1600&q=80'
+    'https://source.unsplash.com/1600x900/?iron-ore,mine,excavator',
+    'https://source.unsplash.com/1600x900/?open-pit,mining,truck',
+    'https://source.unsplash.com/1600x900/?mining,haul-truck'
   ],
   siderurgia:[
-    'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=1600&q=80',
-    'https://images.unsplash.com/photo-1611288875785-f0a06ab4f5cd?w=1600&q=80',
-    'https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?w=1600&q=80'
+    'https://source.unsplash.com/1600x900/?steel-mill,blast-furnace',
+    'https://source.unsplash.com/1600x900/?molten-steel,foundry',
+    'https://source.unsplash.com/1600x900/?steelworks,industry'
   ],
   cimento:[
-    'https://images.unsplash.com/photo-1581093458791-9d09c7ed8b18?w=1600&q=80',
-    'https://images.unsplash.com/photo-1565728744382-61accd4aa148?w=1600&q=80',
-    'https://images.unsplash.com/photo-1597166555285-7a48eb5b1b65?w=1600&q=80'
+    'https://source.unsplash.com/1600x900/?cement-factory,kiln',
+    'https://source.unsplash.com/1600x900/?cement-plant,silo',
+    'https://source.unsplash.com/1600x900/?cement,industry'
   ],
   petroleo:[
-    'https://images.unsplash.com/photo-1518604666860-9ed391f76460?w=1600&q=80',
-    'https://images.unsplash.com/photo-1605649461784-edc01e1d40e1?w=1600&q=80',
-    'https://images.unsplash.com/photo-1582486225644-b9d4ac24f02f?w=1600&q=80'
+    'https://source.unsplash.com/1600x900/?oil-refinery,petrochemical',
+    'https://source.unsplash.com/1600x900/?offshore,oil-rig',
+    'https://source.unsplash.com/1600x900/?refinery,pipeline'
   ],
   usinas:[
-    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1600&q=80',
-    'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1600&q=80',
-    'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1600&q=80'
+    'https://source.unsplash.com/1600x900/?power-plant,turbine',
+    'https://source.unsplash.com/1600x900/?thermal,power-station',
+    'https://source.unsplash.com/1600x900/?cooling-tower,powerplant'
   ]
 };
 function getSegPlantPhoto(seg){
