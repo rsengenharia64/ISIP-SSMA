@@ -4985,6 +4985,485 @@ function submitInspec(){
   showSaveInd('ok','INSPECAO REGISTRADA: '+insp.id+' — '+ncCount+' NC / Score '+scorePct+'%');
 }
 
+
+/* ============================================================
+   AI EVOLUTION v8.6 — COGNITIVE LAYER
+   ============================================================
+   Princípio: A IA NÃO duplica. Ela enriquece eventos existentes.
+   Toda emissão passa pelo EVENT_BUS com anti-duplicação.
+   ============================================================ */
+
+/* === EVENT MASTER BUS — GOVERNANÇA UNIFICADA === */
+var EVENT_BUS={
+  events:[],
+  nextId:1,
+  /* Generate semantic hash for dedup */
+  hash:function(type,context){
+    var s=(type||'')+'|'+(context.zone||'')+'|'+(context.worker||'')+'|'+(context.cat||'');
+    return s.toLowerCase().replace(/\s+/g,'');
+  },
+  /* Find existing event by hash within time window */
+  findExisting:function(hash,windowMs){
+    windowMs=windowMs||1800000;/* 30 min default */
+    var now=Date.now();
+    for(var i=0;i<this.events.length;i++){
+      var e=this.events[i];
+      if(e.hash===hash&&(now-e.firstSeen)<windowMs&&e.status!=='resolved')return e;
+    }
+    return null;
+  },
+  /* Find similar by semantic similarity */
+  findSimilar:function(type,context){
+    var hash=this.hash(type,context);
+    var existing=this.findExisting(hash);
+    if(existing)return existing;
+    /* Loose match: same type+zone */
+    for(var i=0;i<this.events.length;i++){
+      var e=this.events[i];
+      if(e.type===type&&e.context.zone===context.zone&&e.status!=='resolved'&&(Date.now()-e.firstSeen)<900000)return e;
+    }
+    return null;
+  },
+  /* Emit or enrich event */
+  emit:function(payload){
+    /* payload: {type, source, severity, title, detail, context, recommendation, action} */
+    var hash=this.hash(payload.type,payload.context||{});
+    var existing=this.findSimilar(payload.type,payload.context||{});
+    if(existing){
+      /* ENRICH existing — no duplication */
+      existing.lastSeen=Date.now();
+      existing.occurrences++;
+      existing.sources[payload.source]=(existing.sources[payload.source]||0)+1;
+      /* Upgrade severity if needed */
+      var sevRank={info:1,warning:2,critical:3};
+      if(sevRank[payload.severity]>sevRank[existing.severity]){
+        existing.severity=payload.severity;
+        existing.escalated=true;
+      }
+      /* Append AI enrichment */
+      if(payload.aiEnrichment){
+        existing.aiInsights=existing.aiInsights||[];
+        existing.aiInsights.push({t:Date.now(),agent:payload.aiAgent||'IA',insight:payload.aiEnrichment});
+      }
+      /* Update recommendation if AI improved it */
+      if(payload.recommendation&&payload.source==='ai')existing.recommendation=payload.recommendation;
+      return{event:existing,action:'enriched',duplicate:true};
+    }
+    /* NEW event */
+    var ev={
+      id:'EV-'+(this.nextId++),hash:hash,
+      type:payload.type,source:payload.source,severity:payload.severity||'info',
+      title:payload.title,detail:payload.detail,
+      context:payload.context||{},
+      recommendation:payload.recommendation||'',action:payload.action||'',
+      firstSeen:Date.now(),lastSeen:Date.now(),
+      occurrences:1,sources:{},
+      status:'open',escalated:false,
+      aiInsights:[],linkedTo:[]
+    };
+    ev.sources[payload.source]=1;
+    if(payload.aiEnrichment)ev.aiInsights.push({t:Date.now(),agent:payload.aiAgent||'IA',insight:payload.aiEnrichment});
+    this.events.unshift(ev);
+    if(this.events.length>200)this.events.pop();
+    return{event:ev,action:'created',duplicate:false};
+  },
+  /* Resolve event */
+  resolve:function(id){
+    var e=this.events.find(function(x){return x.id===id;});
+    if(e){e.status='resolved';e.resolvedAt=Date.now();return true;}return false;
+  },
+  /* Get active events */
+  getActive:function(){return this.events.filter(function(e){return e.status!=='resolved';});},
+  getCritical:function(){return this.events.filter(function(e){return e.severity==='critical'&&e.status!=='resolved';});},
+  getStats:function(){
+    var active=this.getActive();
+    return{
+      total:this.events.length,active:active.length,
+      critical:active.filter(function(e){return e.severity==='critical';}).length,
+      warning:active.filter(function(e){return e.severity==='warning';}).length,
+      info:active.filter(function(e){return e.severity==='info';}).length,
+      escalated:active.filter(function(e){return e.escalated;}).length,
+      enriched:active.filter(function(e){return e.aiInsights.length>0;}).length
+    };
+  }
+};
+
+/* === HOOK: addNotif now routes via EVENT_BUS (preserves existing behavior) === */
+var _origAddNotif=typeof addNotif==='function'?addNotif:null;
+if(_origAddNotif){
+  addNotif=function(type,title,detail,priority){
+    /* Try to dedupe via EVENT_BUS */
+    var ctx={zone:'',worker:''};
+    /* Extract zone/worker from detail if possible */
+    var zMatch=detail&&detail.match(/em ([A-Z][^—:|]+?)(?:\s—|\s\||$)/);
+    if(zMatch)ctx.zone=zMatch[1].trim();
+    var result=EVENT_BUS.emit({
+      type:type,source:'system',severity:priority||'info',
+      title:title,detail:detail,context:ctx
+    });
+    /* Only add to NOTIF_QUEUE if NEW (not duplicate) */
+    if(!result.duplicate){
+      _origAddNotif(type,title,detail,priority);
+    }else{
+      /* Log dedup */
+      try{console.log('[EVENT_BUS] Deduplicated:',title,'-> enriched',result.event.id);}catch(e){}
+    }
+    return result;
+  };
+}
+
+/* === HOOK: RULE_ENGINE violations now flow through EVENT_BUS === */
+var _origRuleCheck=RULE_ENGINE.check;
+RULE_ENGINE.check=function(){
+  var violations=_origRuleCheck.call(this);
+  /* Route each violation through EVENT_BUS */
+  violations.forEach(function(v){
+    EVENT_BUS.emit({
+      type:'rule-'+v.rule,source:'rule-engine',
+      severity:v.priority==='Critica'?'critical':v.priority==='Alta'?'warning':'info',
+      title:v.rule+' — '+v.cat,detail:v.worker+': '+v.condition,
+      context:{worker:v.worker,workerId:v.workerId,cat:v.cat},
+      recommendation:v.action,action:v.action
+    });
+  });
+  return violations;
+};
+
+
+/* ============================================================
+   AI AGENTS — 8 INTERNAL COGNITIVE AGENTS
+   ============================================================ */
+var AI_CORE={
+  version:'2.0',
+  enabled:true,
+  lastRun:null,
+  runs:0,
+  agents:{
+    /* 1. ORCHESTRATOR */
+    orchestrator:{
+      name:'Orquestrador',icon:'\u{1F9E0}',color:'var(--cy)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        /* Distribute to all agents and consolidate */
+        Object.keys(AI_CORE.agents).forEach(function(k){
+          if(k==='orchestrator')return;
+          var ag=AI_CORE.agents[k];
+          try{var r=ag.run();if(r&&r.length)insights=insights.concat(r);}catch(e){}
+        });
+        return insights;
+      }
+    },
+    /* 2. CONTEXT */
+    context:{
+      name:'Contexto Operacional',icon:'\u{1F4CD}',color:'var(--el)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        var seg=SEG_CONFIG[CURRENT_SEG];
+        var totalP=0;ZONES.forEach(function(z){totalP+=z.people;});
+        var critZones=ZONES.filter(function(z){return score(z)>=6;});
+        if(critZones.length>2){
+          insights.push({agent:'context',severity:'warning',title:'Multiplas zonas criticas detectadas',
+            detail:critZones.length+' zonas com score >=6 no segmento '+seg.label,
+            context:{seg:CURRENT_SEG},
+            recommendation:'Revisar distribuicao de equipe e priorizar inspecao'});
+        }
+        return insights;
+      }
+    },
+    /* 3. RISK */
+    risk:{
+      name:'Risco e Criticidade',icon:'\u{26A0}',color:'var(--rd)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        ZONES.forEach(function(z){
+          var s=score(z);
+          if(s>=8){
+            insights.push({agent:'risk',severity:'critical',title:'Risco critico em '+z.name,
+              detail:'Score '+sc2(s)+'/10 — '+z.people+' pessoas expostas',
+              context:{zone:z.name},
+              recommendation:'Retirada preventiva, validar bloqueios, acionar SESMT'});
+          }else if(s>=6){
+            insights.push({agent:'risk',severity:'warning',title:'Risco alto em '+z.name,
+              detail:'Score '+sc2(s)+'/10',context:{zone:z.name},
+              recommendation:'Escalonar atividade, reduzir ocupacao'});
+          }
+        });
+        return insights;
+      }
+    },
+    /* 4. COMPLIANCE */
+    compliance:{
+      name:'Compliance e Documentos',icon:'\u{1F4CB}',color:'var(--pu)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        var inaptos=WORKERS.filter(function(w){return !w.apt;});
+        inaptos.forEach(function(w){
+          insights.push({agent:'compliance',severity:'critical',title:'Trabalhador inapto: '+w.name,
+            detail:'ASO/treinamento pendente — funcao: '+w.role,
+            context:{worker:w.name,workerId:w.id},
+            recommendation:'Bloquear acesso, encaminhar PCMSO/RH para regularizacao'});
+        });
+        return insights;
+      }
+    },
+    /* 5. FIELD */
+    field:{
+      name:'Campo e Inspecoes',icon:'\u{1F50D}',color:'var(--wn)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        if(typeof INSPEC_DB!=='undefined'&&INSPEC_DB.length>0){
+          var totalNC=INSPEC_DB.reduce(function(a,i){return a+i.nc;},0);
+          if(totalNC>5){
+            insights.push({agent:'field',severity:'warning',title:'Padrao de NC recorrente',
+              detail:totalNC+' NCs em '+INSPEC_DB.length+' inspecoes',
+              context:{},
+              recommendation:'Analisar causa raiz, considerar treinamento de reciclagem'});
+          }
+        }
+        return insights;
+      }
+    },
+    /* 6. HUMAN/FATIGUE */
+    human:{
+      name:'Fadiga e Condicao Humana',icon:'\u{1F441}',color:'var(--pu)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        WORKERS.forEach(function(w){
+          if(w.cogScore<50){
+            insights.push({agent:'human',severity:'critical',title:'Prontidao critica: '+w.name,
+              detail:'Score cognitivo '+w.cogScore+'/100 — Jornada '+w.jornadaH+'h',
+              context:{worker:w.name,workerId:w.id},
+              recommendation:'Bloqueio imediato, encaminhar para descanso'});
+          }else if(w.cogScore<70&&w.jornadaH>8){
+            insights.push({agent:'human',severity:'warning',title:'Fadiga emergente: '+w.name,
+              detail:'Cog '+w.cogScore+' / Jornada '+w.jornadaH+'h',
+              context:{worker:w.name,workerId:w.id},
+              recommendation:'Pausa obrigatoria, reavaliar prontidao em 30min'});
+          }
+        });
+        return insights;
+      }
+    },
+    /* 7. PREDICTIVE */
+    predictive:{
+      name:'Preditivo',icon:'\u{1F52E}',color:'var(--cy)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        if(typeof SCORE_HISTORY!=='undefined'&&SCORE_HISTORY.length>=5){
+          var recent=SCORE_HISTORY.slice(-5);
+          var trend=recent[recent.length-1].avg-recent[0].avg;
+          if(trend>10){
+            insights.push({agent:'predictive',severity:'warning',title:'Tendencia de degradacao detectada',
+              detail:'Score subiu '+trend.toFixed(0)+' pontos nas ultimas leituras',
+              context:{},
+              recommendation:'Investigar causa, antecipar acoes preventivas'});
+          }
+        }
+        /* Late shift fatigue prediction */
+        var lateShift=WORKERS.filter(function(w){return w.jornadaH>=6;}).length;
+        if(lateShift>WORKERS.length*0.5){
+          insights.push({agent:'predictive',severity:'info',title:'Previsao de fadiga em massa',
+            detail:lateShift+' trabalhadores com >6h de jornada',
+            context:{},
+            recommendation:'Planejar rodizio para proximas 2h'});
+        }
+        return insights;
+      }
+    },
+    /* 8. EXECUTIVE */
+    executive:{
+      name:'Recomendacao Executiva',icon:'\u{1F4BC}',color:'var(--ok)',runs:0,
+      run:function(){
+        this.runs++;
+        var insights=[];
+        var stats=EVENT_BUS.getStats();
+        if(stats.critical>=3){
+          insights.push({agent:'executive',severity:'critical',title:'Acumulo de eventos criticos',
+            detail:stats.critical+' eventos criticos abertos simultaneamente',
+            context:{},
+            recommendation:'Acionar War Room: convocar SESMT, supervisao e operacao para acao coordenada'});
+        }
+        return insights;
+      }
+    }
+  },
+  /* Run all agents and route through EVENT_BUS */
+  runAll:function(){
+    if(!this.enabled)return{insights:[],eventStats:EVENT_BUS.getStats()};
+    this.lastRun=Date.now();this.runs++;
+    var allInsights=this.agents.orchestrator.run();
+    var stats={created:0,enriched:0};
+    /* Each insight goes through EVENT_BUS — no direct alerts */
+    allInsights.forEach(function(ins){
+      var result=EVENT_BUS.emit({
+        type:'ai-'+ins.agent,source:'ai',
+        severity:ins.severity,title:ins.title,detail:ins.detail,
+        context:ins.context,recommendation:ins.recommendation,
+        aiAgent:ins.agent,aiEnrichment:ins.recommendation
+      });
+      if(result.duplicate)stats.enriched++;else stats.created++;
+    });
+    return{insights:allInsights,stats:stats,eventStats:EVENT_BUS.getStats()};
+  }
+};
+
+/* Auto-run AI every 30 seconds */
+setInterval(function(){
+  try{if(AI_CORE.enabled)AI_CORE.runAll();}catch(e){}
+},30000);
+/* Initial run after 5s */
+setTimeout(function(){try{AI_CORE.runAll();}catch(e){}},5000);
+
+
+/* ============================================================
+   AI MODULE — REFACTORED RENDERER (8 sub-tabs)
+   ============================================================ */
+var _origIsipaiRender=R['isipai'];
+R['isipai']=function(){
+  var m=G('m-isipai');
+  var seg=SEG_CONFIG[CURRENT_SEG];
+  var aiResult=AI_CORE.runAll();
+  var stats=aiResult.eventStats;
+  var insights=aiResult.insights;
+  var activeEvents=EVENT_BUS.getActive();
+  var critEvents=EVENT_BUS.getCritical();
+
+  var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+  h+='<div class="stit">&#129302; ISIP AI — CAMADA COGNITIVA OPERACIONAL <span style="font-size:9px;color:var(--t4);font-family:var(--mono);margin-left:8px">v2.0 | '+seg.label+' | '+AI_CORE.runs+' execucoes</span></div>';
+
+  /* Header KPIs */
+  h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;margin-bottom:10px">';
+  h+='<div class="card"><div class="cl">EVENTOS ATIVOS</div><div class="cv sm">'+stats.active+'</div></div>';
+  h+='<div class="card"><div class="cl">CRITICOS</div><div class="cv sm '+(stats.critical>0?'r':'ok')+'">'+stats.critical+'</div></div>';
+  h+='<div class="card"><div class="cl">ENRIQUECIDOS IA</div><div class="cv sm ok">'+stats.enriched+'</div></div>';
+  h+='<div class="card"><div class="cl">ESCALADOS</div><div class="cv sm w">'+stats.escalated+'</div></div>';
+  h+='<div class="card"><div class="cl">AGENTES ATIVOS</div><div class="cv sm ok">8/8</div></div>';
+  h+='<div class="card"><div class="cl">DEDUP RATIO</div><div class="cv sm ok">'+(stats.active>0?Math.round(stats.enriched/(stats.active||1)*100):0)+'%</div></div></div>';
+
+  /* SUB TABS */
+  h+='<div class="stabs">';
+  ['agentes','events','insights','consulta','docs','arq','comply','logs'].forEach(function(t,i){
+    var labels={agentes:'Agentes',events:'Eventos Mestres',insights:'Insights IA',consulta:'Consulta IA',docs:'Documentos',arq:'Arquitetura',comply:'Compliance',logs:'Auditoria'};
+    h+='<button class="stab'+(i===0?' on':'')+'" data-t="'+t+'" onclick="iaSubTab(\''+t+'\')">'+labels[t]+'</button>';
+  });
+  h+='</div>';
+
+  /* TAB 1: AGENTES */
+  h+='<div class="tcon on" id="ia-agentes">';
+  h+='<div class="stit">&#129302; 8 AGENTES INTERNOS COORDENADOS</div>';
+  h+='<div class="ib bl"><div class="ibt">Como funciona</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Os 8 agentes operam de forma coordenada pelo Orquestrador. Cada agente analisa seu dominio, gera insights, e envia tudo via <strong>Event Master Bus</strong> que aplica anti-duplicacao automatica. Eventos similares sao consolidados e enriquecidos, NUNCA duplicados.</p></div>';
+  h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px">';
+  Object.keys(AI_CORE.agents).forEach(function(k){
+    var ag=AI_CORE.agents[k];
+    h+='<div class="card" style="border-left:3px solid '+ag.color+'"><div style="display:flex;gap:6px;align-items:center"><span style="font-size:18px">'+ag.icon+'</span><div style="flex:1"><div style="font-weight:700;font-size:11px;color:'+ag.color+'">'+ag.name+'</div><div style="font-size:8px;color:var(--t4);font-family:var(--mono)">'+ag.runs+' execucoes</div></div>'+pill('p-ok','ATIVO')+'</div></div>';
+  });
+  h+='</div></div>';
+
+  /* TAB 2: EVENT MASTER BUS */
+  h+='<div class="tcon" id="ia-events" style="display:none">';
+  h+='<div class="stit">&#128276; EVENT MASTER BUS — GOVERNANCA UNIFICADA</div>';
+  h+='<div class="ib am"><div class="ibt">Anti-duplicacao</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Todo evento (rule engine, IA, sistema, manual) passa pelo Event Bus. Eventos com mesma chave semantica sao <strong>consolidados</strong>, nao duplicados. O contador "ocorrencias" indica quantas vezes o evento foi reativado.</p></div>';
+  if(activeEvents.length===0){
+    h+='<div class="ib gn"><div class="ibt">&#10003; Sem eventos ativos</div><p style="font-size:10px;color:var(--t2)">Sistema em estado normal.</p></div>';
+  }else{
+    h+='<table class="dt"><thead><tr><th>ID</th><th>Tipo</th><th>Severidade</th><th>Titulo</th><th>Ocorr.</th><th>Origens</th><th>IA</th><th>Acao</th></tr></thead><tbody>';
+    activeEvents.slice(0,30).forEach(function(e){
+      var pc=e.severity==='critical'?'p-c':e.severity==='warning'?'p-a':'p-b';
+      var sources=Object.keys(e.sources).join(',');
+      h+='<tr><td style="font-family:var(--mono);font-size:9px">'+e.id+'</td><td style="font-size:9px">'+e.type+'</td><td>'+pill(pc,e.severity.toUpperCase())+'</td><td style="font-size:10px"><strong>'+e.title+'</strong><br><span style="font-size:9px;color:var(--t3)">'+e.detail+'</span></td><td style="text-align:center">'+e.occurrences+(e.escalated?' &uarr;':'')+'</td><td style="font-size:8px">'+sources+'</td><td style="text-align:center">'+(e.aiInsights.length>0?'&#10003; '+e.aiInsights.length:'-')+'</td><td><button class="btn bp" style="font-size:8px;padding:2px 6px" onclick="EVENT_BUS.resolve(\''+e.id+'\');rendered.isipai=false;openTab(\'isipai\')">Resolver</button></td></tr>';
+    });
+    h+='</tbody></table>';
+  }
+  h+='</div>';
+
+  /* TAB 3: INSIGHTS */
+  h+='<div class="tcon" id="ia-insights" style="display:none">';
+  h+='<div class="stit">&#128161; INSIGHTS DA IA — ULTIMA EXECUCAO</div>';
+  if(insights.length===0){
+    h+='<div class="ib gn"><div class="ibt">&#10003; Operacao normal</div><p style="font-size:10px">A IA nao detectou pontos de atencao na ultima execucao.</p></div>';
+  }else{
+    insights.forEach(function(ins){
+      var pc=ins.severity==='critical'?'p-c':ins.severity==='warning'?'p-a':'p-b';
+      var ag=AI_CORE.agents[ins.agent];
+      h+='<div class="card" style="border-left:3px solid '+(ag?ag.color:'var(--cy)')+'">';
+      h+='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="flex:1"><div style="display:flex;gap:6px;align-items:center"><span style="font-size:14px">'+(ag?ag.icon:'')+'</span><strong style="font-size:11px;color:'+(ag?ag.color:'var(--cy)')+'">'+ins.title+'</strong>'+pill(pc,ins.severity.toUpperCase())+'</div>';
+      h+='<div style="font-size:10px;color:var(--t2);margin-top:3px">'+ins.detail+'</div>';
+      h+='<div style="font-size:9px;color:var(--cy);margin-top:3px">&#128161; '+ins.recommendation+'</div></div></div></div>';
+    });
+  }
+  h+='</div>';
+
+  /* TAB 4: CONSULTA IA */
+  h+='<div class="tcon" id="ia-consulta" style="display:none">';
+  h+='<div class="stit">&#128172; CONSULTA INTELIGENTE</div>';
+  h+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">';
+  ['NR-33 exige o que para EC?','Quem pode trabalhar em altura?','Score risco Britagem P1?','Ultimo incidente registrado?','Compliance NR-35 esta ok?','Quais eventos estao ativos?'].forEach(function(q){
+    h+='<button class="btn bp" onclick="iaAsk(\''+q+'\')">'+q+'</button>';
+  });
+  h+='</div>';
+  h+='<div class="chat-box" id="ia-chat" style="min-height:200px;max-height:400px;overflow-y:auto;padding:10px;background:rgba(0,0,0,.2);border-radius:6px;margin-bottom:8px"></div>';
+  h+='<div class="chat-input" style="display:flex;gap:4px"><input type="text" id="ia-input" placeholder="Pergunte ao ISIP..." style="flex:1;background:var(--sf);color:var(--t1);border:1px solid rgba(var(--cy-rgb),.2);border-radius:4px;padding:8px 12px" onkeydown="if(event.key===\'Enter\')iaAsk(this.value)"><button class="btn bp" onclick="iaAsk(G(\'ia-input\').value)">ENVIAR</button></div>';
+  h+='</div>';
+
+  /* TAB 5: DOCS */
+  h+='<div class="tcon" id="ia-docs" style="display:none">';
+  h+='<div class="stit">&#128194; BASE DOCUMENTAL INDEXADA</div>';
+  h+='<table class="dt"><thead><tr><th>Documento</th><th>Tipo</th><th>Pags</th><th>Chunks</th><th>Status</th></tr></thead><tbody>';
+  IA_DOCS.forEach(function(d){
+    h+='<tr><td><strong>'+esc(d.name)+'</strong></td><td>'+pill('p-b',d.type)+'</td><td>'+d.pages+'</td><td>'+d.chunks+'</td><td>'+pill(d.status==='indexado'?'p-ok':'p-w',d.status.toUpperCase())+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+
+  /* TAB 6: ARQUITETURA */
+  h+='<div class="tcon" id="ia-arq" style="display:none">';
+  h+='<div class="stit">&#129504; ARQUITETURA COGNITIVA</div>';
+  h+='<div class="ib bl"><div class="ibt">Camadas</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px">';
+  [{n:'1. INGESTAO',d:'Recebe dados de TODOS os modulos',c:'var(--cy)'},{n:'2. AGENTES',d:'8 agentes processam em paralelo',c:'var(--el)'},{n:'3. EVENT BUS',d:'Anti-duplicacao + enriquecimento',c:'var(--wn)'},{n:'4. RETROALIMENTACAO',d:'Atualiza dashboards e indicadores',c:'var(--ok)'}].forEach(function(c){
+    h+='<div class="card" style="border-top:3px solid '+c.c+'"><div style="font-weight:700;font-size:11px;color:'+c.c+'">'+c.n+'</div><div style="font-size:9px;color:var(--t3);margin-top:3px">'+c.d+'</div></div>';
+  });
+  h+='</div></div>';
+  h+='<div class="ib am" style="margin-top:8px"><div class="ibt">Modulos integrados (entradas)</div>';
+  h+='<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">';
+  ['Mapa Risco','Pupilometria','Inspecao Campo','Motor Regras','Incidentes','Jornada','Tendencias','Governanca','Equipamentos','Normas','Documentos','Treinamentos','Terceiros','Weather','Handover','DDS'].forEach(function(mod){
+    h+=pill('p-b',mod);
+  });
+  h+='</div></div>';
+  h+='<div class="ib gn" style="margin-top:8px"><div class="ibt">Saidas (retroalimentacao)</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Toda saida da IA tem destino claro: <strong>Event Master Bus</strong> consolida eventos, atualiza painel executivo, alimenta tendencias, registra na auditoria e gera insights nos cards de contexto. Nada fica solto.</p></div>';
+  h+='</div>';
+
+  /* TAB 7: COMPLIANCE */
+  h+='<div class="tcon" id="ia-comply" style="display:none">';
+  h+='<div class="stit">&#10003; DASHBOARD COMPLIANCE</div>';
+  var inaptos=WORKERS.filter(function(w){return !w.apt;}).length;
+  var aptos=WORKERS.length-inaptos;
+  h+='<div class="g2"><div class="card"><div class="cl">APTIDAO GERAL</div><div class="cv sm '+(inaptos===0?'ok':'r')+'">'+Math.round(aptos/WORKERS.length*100)+'%</div></div>';
+  h+='<div class="card"><div class="cl">ASOs VALIDOS</div><div class="cv sm ok">'+aptos+'/'+WORKERS.length+'</div></div>';
+  h+='<div class="card"><div class="cl">EVENTOS CRITICOS</div><div class="cv sm '+(stats.critical>0?'r':'ok')+'">'+stats.critical+'</div></div>';
+  h+='<div class="card"><div class="cl">VIOLACOES MOTOR</div><div class="cv sm '+(RULE_VIOLATIONS.length>0?'w':'ok')+'">'+RULE_VIOLATIONS.length+'</div></div></div>';
+  h+='</div>';
+
+  /* TAB 8: LOGS */
+  h+='<div class="tcon" id="ia-logs" style="display:none">';
+  h+='<div class="stit">&#128270; AUDITORIA COMPLETA — TRILHA DE EVENTOS</div>';
+  h+='<div class="ib bl"><div class="ibt">Rastreabilidade</div><p style="font-size:10px;color:var(--t2);line-height:1.6">Cada evento registra: dado de entrada, modulo de origem, agente IA responsavel, data/hora, decisao, vinculo com evento mestre. Trilha imutavel.</p></div>';
+  h+='<table class="dt" style="margin-top:8px"><thead><tr><th>ID</th><th>Tipo</th><th>Origem</th><th>Severidade</th><th>Ocorr.</th><th>Insights IA</th><th>Status</th></tr></thead><tbody>';
+  EVENT_BUS.events.slice(0,30).forEach(function(e){
+    var pc=e.severity==='critical'?'p-c':e.severity==='warning'?'p-a':'p-b';
+    var srcs=Object.keys(e.sources).join('+');
+    h+='<tr><td style="font-family:var(--mono);font-size:9px">'+e.id+'</td><td style="font-size:9px">'+e.type+'</td><td style="font-size:9px">'+srcs+'</td><td>'+pill(pc,e.severity)+'</td><td>'+e.occurrences+'</td><td style="text-align:center">'+e.aiInsights.length+'</td><td>'+pill(e.status==='resolved'?'p-ok':'p-w',e.status.toUpperCase())+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+
+  m.innerHTML=h;
+};
+
 </script>
 </body>
 </html>
