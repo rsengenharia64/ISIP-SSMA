@@ -478,7 +478,29 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 .planta-status-badge{padding:6px 14px;border-radius:6px;background:linear-gradient(180deg,rgba(var(--ok-rgb),0.2) 0%,rgba(var(--ok-rgb),0.08) 100%);border:1px solid rgba(var(--ok-rgb),0.4);text-align:center;box-shadow:0 0 16px rgba(var(--ok-rgb),0.2),inset 0 1px 0 rgba(255,255,255,0.06)}
 @keyframes plantaScan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 .planta-scan-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(var(--cy-rgb),0.6),transparent);animation:plantaScan 4s linear infinite;pointer-events:none}
-.planta-illustration{position:relative;margin:14px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.2) 100%);border:1px solid rgba(var(--cy-rgb),0.15);box-shadow:0 6px 24px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.05);height:240px;z-index:5}
+.planta-illustration{position:relative;margin:14px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.2) 100%);border:1px solid rgba(var(--cy-rgb),0.25);box-shadow:0 8px 32px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.08);height:340px;z-index:5}
+.planta-illustration .plant-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.55) contrast(1.15) saturate(1.25);transition:filter .4s}
+.planta-illustration:hover .plant-photo{filter:brightness(0.7) contrast(1.2) saturate(1.4)}
+.planta-illustration .plant-svg-fallback{position:absolute;inset:0;width:100%;height:100%;display:none}
+.planta-illustration .plant-photo.failed{display:none}
+.planta-illustration .plant-photo.failed ~ .plant-svg-fallback{display:block}
+.planta-illustration .plant-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,0.5) 100%),linear-gradient(180deg,rgba(0,8,16,0.4) 0%,transparent 30%,transparent 70%,rgba(0,8,16,0.7) 100%);pointer-events:none}
+.planta-illustration .plant-hud{position:absolute;inset:0;pointer-events:none;z-index:10}
+.planta-illustration .hud-corner{position:absolute;width:30px;height:30px;border:2px solid var(--cy);box-shadow:0 0 12px rgba(var(--cy-rgb),0.6)}
+.planta-illustration .hud-corner.tl{top:10px;left:10px;border-right:none;border-bottom:none}
+.planta-illustration .hud-corner.tr{top:10px;right:10px;border-left:none;border-bottom:none}
+.planta-illustration .hud-corner.bl{bottom:10px;left:10px;border-right:none;border-top:none}
+.planta-illustration .hud-corner.br{bottom:10px;right:10px;border-left:none;border-top:none}
+.planta-illustration .hud-title{position:absolute;top:18px;left:50%;transform:translateX(-50%);font-family:var(--hud);font-size:13px;font-weight:900;color:#fff;letter-spacing:.15em;text-shadow:0 2px 12px rgba(0,0,0,0.9),0 0 16px rgba(var(--cy-rgb),0.6);padding:6px 16px;background:rgba(0,8,16,0.7);border:1px solid rgba(var(--cy-rgb),0.4);border-radius:4px;backdrop-filter:blur(8px)}
+.planta-illustration .hud-status{position:absolute;top:18px;left:18px;display:flex;gap:6px;align-items:center;background:rgba(0,8,16,0.7);padding:5px 10px;border-radius:4px;backdrop-filter:blur(6px);border:1px solid rgba(var(--ok-rgb),0.4)}
+.planta-illustration .hud-status .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 1.5s infinite}
+.planta-illustration .hud-status span{font-family:var(--mono);font-size:9px;color:var(--ok);font-weight:700;letter-spacing:.05em}
+.planta-illustration .hud-coords{position:absolute;bottom:18px;left:18px;font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.6);letter-spacing:.08em}
+.planta-illustration .hud-time{position:absolute;bottom:18px;right:18px;font-family:var(--mono);font-size:8px;color:rgba(var(--cy-rgb),0.9);letter-spacing:.08em;text-shadow:0 0 6px rgba(var(--cy-rgb),0.6)}
+.planta-illustration .hud-stage-pin{position:absolute;display:flex;align-items:center;gap:4px;background:rgba(0,8,16,0.85);border:1px solid currentColor;border-radius:4px;padding:3px 8px;backdrop-filter:blur(6px);font-family:var(--hud);font-size:9px;font-weight:700;text-shadow:0 0 6px currentColor;box-shadow:0 0 12px currentColor}
+.planta-illustration .hud-stage-pin .pin-num{width:14px;height:14px;border-radius:50%;background:currentColor;color:#000;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900}
+.planta-illustration .scan-overlay{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.015) 3px,rgba(255,255,255,0.015) 4px);pointer-events:none}
+.planta-illustration .vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,0.6) 100%);pointer-events:none}
 .planta-illustration svg{display:block;width:100%;height:100%}
 .planta-illustration::after{content:'DIGITAL TWIN OPERACIONAL';position:absolute;bottom:6px;right:10px;font-family:var(--hud);font-size:7px;letter-spacing:.15em;color:rgba(255,255,255,0.3);pointer-events:none}
 @keyframes flicker{0%,100%{opacity:1}50%{opacity:0.7}}
@@ -3636,6 +3658,72 @@ var SEGMENT_VISUAL_DNA={
 function getSegDNA(){return SEGMENT_VISUAL_DNA[CURRENT_SEG]||SEGMENT_VISUAL_DNA.mineracao;}
 
 
+
+/* PHOTO-BASED PLANT VIEW — Real industrial photos per segment */
+var SEG_PLANT_PHOTOS={
+  mineracao:[
+    'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1600&q=80',
+    'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1600&q=80',
+    'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=1600&q=80'
+  ],
+  siderurgia:[
+    'https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=1600&q=80',
+    'https://images.unsplash.com/photo-1611288875785-f0a06ab4f5cd?w=1600&q=80',
+    'https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?w=1600&q=80'
+  ],
+  cimento:[
+    'https://images.unsplash.com/photo-1581093458791-9d09c7ed8b18?w=1600&q=80',
+    'https://images.unsplash.com/photo-1565728744382-61accd4aa148?w=1600&q=80',
+    'https://images.unsplash.com/photo-1597166555285-7a48eb5b1b65?w=1600&q=80'
+  ],
+  petroleo:[
+    'https://images.unsplash.com/photo-1518604666860-9ed391f76460?w=1600&q=80',
+    'https://images.unsplash.com/photo-1605649461784-edc01e1d40e1?w=1600&q=80',
+    'https://images.unsplash.com/photo-1582486225644-b9d4ac24f02f?w=1600&q=80'
+  ],
+  usinas:[
+    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1600&q=80',
+    'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1600&q=80',
+    'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1600&q=80'
+  ]
+};
+function getSegPlantPhoto(seg){
+  var photos = SEG_PLANT_PHOTOS[seg] || SEG_PLANT_PHOTOS.mineracao;
+  return photos[0];
+}
+function getSegPlantHUD(seg, dna, chain){
+  var now = new Date();
+  var ts = now.toLocaleTimeString('pt-BR') + ' | ' + now.toLocaleDateString('pt-BR');
+  var coords = {
+    mineracao: 'LAT -19.984 LON -43.989',
+    siderurgia: 'LAT -22.567 LON -43.196',
+    cimento: 'LAT -19.916 LON -43.937',
+    petroleo: 'LAT -22.974 LON -43.183',
+    usinas: 'LAT -22.450 LON -45.450'
+  };
+  var html = '<div class="plant-overlay"></div>';
+  html += '<div class="scan-overlay"></div>';
+  html += '<div class="vignette"></div>';
+  html += '<div class="plant-hud">';
+  html += '<div class="hud-corner tl"></div><div class="hud-corner tr"></div>';
+  html += '<div class="hud-corner bl"></div><div class="hud-corner br"></div>';
+  html += '<div class="hud-status"><div class="dot"></div><span>LIVE FEED</span></div>';
+  html += '<div class="hud-title">' + dna.label + '</div>';
+  html += '<div class="hud-coords">' + (coords[seg]||'LAT 00.000 LON 00.000') + ' | DIGITAL TWIN OPERACIONAL</div>';
+  html += '<div class="hud-time">REC ' + ts + '</div>';
+  /* Stage pins distributed across image */
+  var stages = chain.stages || [];
+  stages.forEach(function(st, idx){
+    var x = 8 + (idx * (84 / Math.max(stages.length-1, 1)));
+    var y = 35 + (idx % 2 === 0 ? 0 : 25);
+    html += '<div class="hud-stage-pin" style="left:' + x + '%;top:' + y + '%;color:' + st.color + '">';
+    html += '<div class="pin-num">' + (idx+1) + '</div><span>' + st.n + '</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+  return html;
+}
+
 /* PLANT SVG ILLUSTRATIONS — Real digital twin per segment */
 function getSegPlantSVG(seg, dna){
   var p = dna.palette;
@@ -3824,7 +3912,11 @@ R['planta']=function(){
   h+='<div class="seg-signature" style="color:'+dna.palette.primary+'">'+dna.icon+'</div>';
 
   /* REAL PLANT ILLUSTRATION — SVG digital twin per segment */
-  h+='<div class="planta-illustration">'+getSegPlantSVG(seg,dna)+'</div>';
+  h+='<div class="planta-illustration">';
+  h+='<img class="plant-photo" src="'+getSegPlantPhoto(seg)+'" alt="'+dna.label+'" onerror="this.classList.add(\'failed\')"/>';
+  h+='<div class="plant-svg-fallback">'+getSegPlantSVG(seg,dna)+'</div>';
+  h+=getSegPlantHUD(seg,dna,chain);
+  h+='</div>';
 
   /* PROCESS CHAIN — cinematic stages */
   h+='<div style="padding:18px 14px;overflow-x:auto">';
