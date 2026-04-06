@@ -3913,7 +3913,6 @@ R['planta']=function(){
 
   /* REAL PLANT ILLUSTRATION — SVG digital twin per segment */
   h+='<div class="planta-illustration">';
-  h+='<img class="plant-photo" src="'+getSegPlantPhoto(seg)+'" alt="'+dna.label+'" onerror="this.classList.add(\'failed\')"/>';
   h+='<div class="plant-svg-fallback">'+getSegPlantSVG(seg,dna)+'</div>';
   h+=getSegPlantHUD(seg,dna,chain);
   h+='</div>';
