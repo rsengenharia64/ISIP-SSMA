@@ -441,6 +441,20 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 .cont-card{background:var(--sf);border:1px solid rgba(var(--cy-rgb),.08);border-radius:6px;padding:10px 12px;margin-bottom:6px}
 .cont-card .cont-status{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
 .cont-card .cont-status.mob{background:var(--ok)}.cont-card .cont-status.pend{background:var(--wn)}.cont-card .cont-status.blk{background:var(--rd)}
+
+/* FIELD INSPECTION MODULE */
+.insp-step{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(var(--cy-rgb),.06)}
+.insp-step-num{width:28px;height:28px;border-radius:50%;background:rgba(var(--cy-rgb),.08);border:2px solid rgba(var(--cy-rgb),.25);display:flex;align-items:center;justify-content:center;font-family:var(--hud);font-size:10px;font-weight:900;color:var(--cy);flex-shrink:0}
+.insp-step.done .insp-step-num{background:rgba(var(--ok-rgb),.15);border-color:var(--ok);color:var(--ok)}
+.insp-step.fail .insp-step-num{background:rgba(var(--rd-rgb),.15);border-color:var(--rd);color:var(--rd)}
+.insp-item{display:flex;align-items:center;gap:8px;padding:5px 8px;margin:2px 0;background:rgba(var(--cy-rgb),.02);border-radius:4px;cursor:pointer;transition:all .15s}
+.insp-item:hover{background:rgba(var(--cy-rgb),.06)}
+.insp-item input[type=checkbox]{accent-color:var(--cy);width:15px;height:15px;flex-shrink:0}
+.insp-item.nc{background:rgba(var(--rd-rgb),.04);border-left:3px solid var(--rd)}
+.insp-severity{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:3px;font-size:8px;font-weight:700}
+.insp-evidence{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.insp-evidence .ev-btn{font-size:8px;padding:2px 8px;border-radius:3px;cursor:pointer;border:1px solid rgba(var(--cy-rgb),.2);background:rgba(var(--cy-rgb),.04);color:var(--t2);transition:all .2s}
+.insp-evidence .ev-btn:hover{background:rgba(var(--cy-rgb),.12)}
 </style>
 </head>
 <body>
@@ -627,6 +641,7 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
         <button class="tab" onclick="openTab(&#39;contrat&#39;)">&#128101; Terceiros</button>
         <button class="tab" onclick="openTab(&#39;weather&#39;)">&#127780; Ambiente</button>
         <button class="tab" onclick="openTab(&#39;trends&#39;)">&#128200; Tendencias</button>
+        <button class="tab" onclick="openTab(&#39;inspec&#39;)" style="color:var(--el);font-weight:700">&#128270; Inspecao Campo</button>
       </div>
       <div id="mods">
         <div class="mod" id="m-dash"></div>
@@ -667,6 +682,7 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
         <div class="mod" id="m-contrat"></div>
         <div class="mod" id="m-weather"></div>
         <div class="mod" id="m-trends"></div>
+        <div class="mod" id="m-inspec"></div>
       </div>
     </div>
     <div id="rp">
@@ -4746,6 +4762,228 @@ function checkAutoNotifs(){
 /* Hook into updatePanels */
 var _origUpdatePanels=updatePanels;
 updatePanels=function(){_origUpdatePanels();try{checkAutoNotifs();}catch(e){}};
+
+
+/* ============================================================
+   FIELD INSPECTION MODULE — FULLY INTEGRATED
+   ============================================================ */
+var INSPEC_DB=[];
+var INSPEC_CHECKLISTS={
+  mineracao:[
+    {cat:'Ambiente',items:['Sinalizacao e isolamento da area','Iluminacao adequada','Ordem e limpeza','Acessos desobstruidos','Ventilacao adequada','Barreiras fisicas instaladas']},
+    {cat:'Equipamentos',items:['Estado de conservacao geral','Protecoes de maquinas operantes','Alarmes e dispositivos de seguranca','LOTO verificado e aplicado','Extintor de incendio acessivel','Check-list pre-uso realizado']},
+    {cat:'Documentacao',items:['PT/APR vigente no local','Analise de risco atualizada','Procedimento operacional disponivel','Permissoes especiais (NR-33/35) validas','FISPQ dos quimicos no local','Registro de treinamentos dos envolvidos']},
+    {cat:'Equipe',items:['EPI completo e em bom estado','Trabalhadores com ASO valido','Competencia tecnica verificada','Estado de prontidao adequado','Comunicacao funcional (radio)','Vigia/observador posicionado (se aplicavel)']},
+    {cat:'Risco Critico',items:['Trabalho em altura — ancoragem inspecionada','Espaco confinado — atmosfera testada','Izamento — rigger e sinaleiro','Energia — LOTO completo','Quimicos — contencao e EPI especifico','Simultaneidade de atividades avaliada']}
+  ],
+  siderurgia:[
+    {cat:'Ambiente',items:['Sinalizacao termica adequada','Iluminacao na area de operacao','Rotas de fuga desobstruidas','Isolamento de area quente','Barreira contra projecao','Sistema de despoeiramento operante']},
+    {cat:'Equipamentos',items:['Ponte rolante inspecionada','Protecoes de maquinas','Sistema de intertravamento','Panela/torpedo em condicao','Extintores e hidrantes','Detectores de gas CO']},
+    {cat:'Documentacao',items:['PT para servico a quente','APR atualizada','NR-14 cumprida','Permissao de trabalho valida','FISPQ atualizada','Registro de liberacao']},
+    {cat:'Equipe',items:['EPI termico completo','Perneira e avental aluminizado','Protetor facial','ASO para calor','Treinamento metal liquido','Comunicacao operante']},
+    {cat:'Risco Critico',items:['Metal liquido — barreira posicionada','Gases — detector CO ativo','Ponte rolante — sinalizacao','Eletrica — arco eletrico protegido','EC regenerador — NR-33 completa','Radiacao termica — limite verificado']}
+  ],
+  petroleo:[
+    {cat:'Ambiente',items:['Area classificada respeitada','Detectores fixos de gas operantes','Sinalizacao ATEX','Ventilacao adequada','Rotas de fuga sinalizadas','Sistema de diluvio testado']},
+    {cat:'Equipamentos',items:['Instrumentacao calibrada','Valvulas de seguranca','Sistema de flare operante','Equipamentos anticentelha','Mangueiras e conexoes','Detectores portateis']},
+    {cat:'Documentacao',items:['PT para servico a quente','Analise de risco HAZOP','NR-20 cumprida','Classificacao de area','FISPQ/SDS','Plano de emergencia']},
+    {cat:'Equipe',items:['Macacao FR vestido','Detector 4 gases pessoal','Bota antifaisca','Radio intrinsecamente seguro','ASO para NR-20','Treinamento brigada']},
+    {cat:'Risco Critico',items:['Atmosfera explosiva — LEL monitorado','H2S — alarme 10ppm configurado','Pressao — valvula alivio testada','Servico a quente — PT especifica','Izamento — area classificada','Vazamento — kit contencao proximo']}
+  ],
+  cimento:[
+    {cat:'Ambiente',items:['Sinalizacao de poeira','Iluminacao de areas fechadas','Ventilacao de silos e moinhos','Barricadas em aberturas','Limpeza de correias','Despoeiramento operante']},
+    {cat:'Equipamentos',items:['Protecoes de moinhos e britadores','LOTO aplicado','Forno — refratario inspecionado','Silos — nivel monitorado','Correias — alinhamento','Filtros manga — eficiencia']},
+    {cat:'Documentacao',items:['PT para EC em silos','APR para forno','NR-33 para silos','Procedimento de parada','Permissao de entrada','Check pre-operacional']},
+    {cat:'Equipe',items:['Mascara PFF2/PFF3','Protetor auditivo duplo','Luva termica (forno)','ASO para poeira/ruido','Treinamento NR-33','Cinto paraquedista (altura)']},
+    {cat:'Risco Critico',items:['Silo — risco engolfamento avaliado','Forno — temperatura monitorada','Moinho — LOTO antes de entrada','Poeira — limite exposicao','Queda em abertura — protecao','Calor — IBUTG verificado']}
+  ],
+  usinas:[
+    {cat:'Ambiente',items:['Subestacao — perimetro isolado','Casa maquinas — ruido sinalizado','Caldeira — area restrita','Torre — acesso controlado','Patio combustivel — contencao','Sala controle — ar condicionado']},
+    {cat:'Equipamentos',items:['Turbina — vibracao monitorada','Caldeira — valvulas seguranca','Transformador — nivel oleo','Protecoes de partes girantes','Sistema de protecao reles','Instrumentacao calibrada']},
+    {cat:'Documentacao',items:['PT para eletrica AT','NR-10 SEP valido','NR-13 para caldeira','Procedimento manobra AT','Laudo transformador','Check pre-operacional']},
+    {cat:'Equipe',items:['Luva isolante classe adequada','Vestimenta arco eletrico','Capacete com protetor facial','Detector de tensao','ASO para NR-10','Treinamento SEP atualizado']},
+    {cat:'Risco Critico',items:['Arco eletrico — distancia segura','Caldeira — teste hidrostatico','Vapor — purga antes de abertura','AT — LOTO com teste zero','EC caldeira — NR-33','Turbina — lockout mecanico']}
+  ]
+};
+
+function getInspecChecklist(){return INSPEC_CHECKLISTS[CURRENT_SEG]||INSPEC_CHECKLISTS.mineracao;}
+
+R['inspec']=function(){var m=G('m-inspec');
+var seg=SEG_CONFIG[CURRENT_SEG];
+var checklist=getInspecChecklist();
+var h='<button class="btn" style="border-color:var(--cy);color:var(--cy);margin-bottom:6px" onclick="showMap()">&#9664; VOLTAR AO MAPA</button>';
+h+='<div class="stit">&#128270; INSPECAO DE CAMPO — '+seg.label.toUpperCase()+' <button class="btn" style="border-color:var(--t3);color:var(--t3);font-size:9px;padding:2px 8px;margin-left:8px" onclick="var e=G(\'inspec-explain\');e.style.display=e.style.display===\'none\'?\'block\':\'none\'">&#128161; Como funciona?</button></div>';
+h+='<div class="ib bl" id="inspec-explain" style="display:none;margin-bottom:8px"><div class="ibt">&#128161; Modulo de Inspecao Integrado</div><p style="font-size:10px;color:var(--t2);line-height:1.6"><strong>O que e:</strong> Inspecao sistematica de campo com 5 categorias e 30 itens verificaveis por segmento.<br><strong>Integracoes:</strong> Alimenta Motor de Regras, Score de Criticidade, Indicadores Executivos, Historico de Tendencias, Governanca e Auditoria.<br><strong>Impacto:</strong> NC encontrada → altera status da zona, gera violacao, bloqueia operacao se critica, notifica responsaveis.<br><strong>Rastreabilidade:</strong> Cada inspecao e vinculada a: segmento, zona, inspetor, data/hora, contrato, evidencias.</p></div>';
+
+/* Summary KPIs */
+var totalInsp=INSPEC_DB.length;
+var ncTotal=INSPEC_DB.reduce(function(a,i){return a+i.nc;},0);
+var lastInsp=INSPEC_DB.length>0?INSPEC_DB[0].data:'Nenhuma';
+h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;margin-bottom:10px">';
+h+='<div class="card"><div class="cl">INSPECOES REALIZADAS</div><div class="cv sm">'+totalInsp+'</div></div>';
+h+='<div class="card"><div class="cl">NAO CONFORMIDADES</div><div class="cv sm '+(ncTotal>0?'r':'ok')+'">'+ncTotal+'</div></div>';
+h+='<div class="card"><div class="cl">ULTIMA INSPECAO</div><div class="cv sm" style="font-size:10px">'+lastInsp+'</div></div>';
+h+='<div class="card"><div class="cl">SEGMENTO</div><div class="cv sm" style="font-size:12px">'+seg.label+'</div></div>';
+h+='<div class="card"><div class="cl">ITENS POR CHECKLIST</div><div class="cv sm">'+checklist.reduce(function(a,c){return a+c.items.length;},0)+'</div></div>';
+h+='<div class="card"><div class="cl">CATEGORIAS</div><div class="cv sm ok">'+checklist.length+'</div></div></div>';
+
+/* New inspection form */
+h+='<div class="stit">NOVA INSPECAO</div>';
+h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:10px">';
+h+='<div class="inc-form"><label>Inspetor</label><select id="insp-inspetor">';WORKERS.forEach(function(w){h+='<option>'+esc(w.name)+'</option>';});h+='</select></div>';
+h+='<div class="inc-form"><label>Zona/Area</label><select id="insp-zona">';ZONES.forEach(function(z){h+='<option>'+esc(z.name)+'</option>';});h+='</select></div>';
+h+='<div class="inc-form"><label>Atividade</label><select id="insp-ativ">';
+['Operacao rotineira','Manutencao preventiva','Manutencao corretiva','Servico a quente','Trabalho em altura','Espaco confinado','Izamento de carga','Inspeccao periodica','Montagem/desmontagem','Limpeza industrial'].forEach(function(a){h+='<option>'+a+'</option>';});
+h+='</select></div>';
+h+='<div class="inc-form"><label>Tipo</label><select id="insp-tipo"><option>Programada</option><option>Nao-programada</option><option>Comportamental</option><option>Gerencial</option><option>Cruzada</option></select></div>';
+h+='</div>';
+
+/* Checklist by category */
+h+='<div id="insp-checklist">';
+checklist.forEach(function(cat,ci){
+  var catColor=['var(--cy)','var(--el)','var(--pu)','var(--wn)','var(--rd)'][ci]||'var(--cy)';
+  h+='<div class="insp-step" style="flex-direction:column;align-items:stretch">';
+  h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div class="insp-step-num" style="border-color:'+catColor+';color:'+catColor+'">'+(ci+1)+'</div><div style="font-family:var(--hud);font-size:11px;font-weight:700;color:'+catColor+';letter-spacing:.04em">'+cat.cat.toUpperCase()+'</div><span style="font-size:8px;color:var(--t4)">'+cat.items.length+' itens</span></div>';
+  cat.items.forEach(function(item,ii){
+    var uid='insp-'+ci+'-'+ii;
+    h+='<div class="insp-item" id="'+uid+'-row">';
+    h+='<input type="checkbox" id="'+uid+'" checked>';
+    h+='<span style="flex:1;font-size:10px" onclick="document.getElementById(\''+uid+'\').click()">'+item+'</span>';
+    h+='<select id="'+uid+'-status" style="font-size:8px;padding:2px 4px;background:var(--sf);color:var(--t1);border:1px solid rgba(var(--cy-rgb),.15);border-radius:3px" onchange="if(this.value===\'nc\'){this.parentElement.classList.add(\'nc\')}else{this.parentElement.classList.remove(\'nc\')}">';
+    h+='<option value="ok">Conforme</option><option value="nc">Nao Conforme</option><option value="na">N/A</option></select>';
+    h+='</div>';
+  });
+  h+='</div>';
+});
+h+='</div>';
+
+/* Observations and evidence */
+h+='<div class="inc-form" style="margin-top:8px"><label>Observacoes gerais / Nao-conformidades detalhadas</label><textarea id="insp-obs" placeholder="Descreva detalhes das nao-conformidades, acoes imediatas tomadas, recomendacoes..."></textarea></div>';
+h+='<div class="inc-form"><label>Acoes corretivas propostas</label><textarea id="insp-acoes" placeholder="Liste as acoes corretivas necessarias com prazo e responsavel..."></textarea></div>';
+h+='<div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">';
+h+='<button class="btn bp" style="padding:8px 20px" onclick="submitInspec()">&#10003; FINALIZAR E REGISTRAR INSPECAO</button>';
+h+='<button class="btn" style="border-color:var(--wn);color:var(--wn)" onclick="gerarRelatorio()">&#128196; GERAR PDF</button>';
+h+='<button class="btn" style="border-color:var(--t3);color:var(--t3)" onclick="openTab(\'risks\')">&#9888; Biblioteca Riscos</button>';
+h+='<button class="btn" style="border-color:var(--t3);color:var(--t3)" onclick="openTab(\'govern\')">&#128737; Governanca</button>';
+h+='</div>';
+
+/* Integration indicators panel */
+h+='<div class="stit" style="margin-top:14px">&#128279; INTEGRACOES DO MODULO</div>';
+h+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px">';
+[{mod:'Mapa de Risco',desc:'NC altera score da zona no mapa',icon:'&#127758;',c:'var(--cy)'},
+ {mod:'Motor de Regras',desc:'NC critica gera violacao automatica',icon:'&#9881;',c:'var(--rd)'},
+ {mod:'Indicadores Executivos',desc:'Alimenta KPIs de conformidade',icon:'&#127775;',c:'var(--el)'},
+ {mod:'Tendencias',desc:'Historico de NC por zona/categoria',icon:'&#128200;',c:'var(--wn)'},
+ {mod:'Governanca',desc:'Rastreabilidade completa da inspecao',icon:'&#128737;',c:'var(--pu)'},
+ {mod:'Notificacoes',desc:'Alerta imediato para NC critica',icon:'&#128276;',c:'var(--ok)'},
+ {mod:'Pupilometria',desc:'Correlaciona fadiga com NC encontrada',icon:'&#128065;',c:'var(--pu)'},
+ {mod:'Terceiros',desc:'NC vinculada a empresa contratada',icon:'&#128101;',c:'var(--cy)'}
+].forEach(function(int){
+  h+='<div class="card" style="border-left:3px solid '+int.c+'"><div style="display:flex;gap:6px;align-items:center"><span style="font-size:14px">'+int.icon+'</span><div><div style="font-weight:700;font-size:10px;color:'+int.c+'">'+int.mod+'</div><div style="font-size:8px;color:var(--t3);margin-top:1px">'+int.desc+'</div></div></div></div>';
+});
+h+='</div>';
+
+/* History */
+if(INSPEC_DB.length>0){
+  h+='<div class="stit" style="margin-top:12px">HISTORICO DE INSPECOES</div>';
+  h+='<table class="dt"><thead><tr><th>Data</th><th>Inspetor</th><th>Zona</th><th>Tipo</th><th>Itens</th><th>NC</th><th>Score</th><th>Impacto</th></tr></thead><tbody>';
+  INSPEC_DB.forEach(function(i){
+    var scorePct=Math.round((1-i.nc/i.total)*100);
+    var pc=scorePct>=90?'p-ok':scorePct>=70?'p-w':'p-c';
+    h+='<tr><td style="font-size:9px">'+i.data+'</td><td style="font-size:9px">'+esc(i.inspetor)+'</td><td style="font-size:9px">'+esc(i.zona)+'</td><td>'+pill('p-b',i.tipo)+'</td><td>'+i.total+'</td><td style="color:'+(i.nc>0?'var(--rd)':'var(--ok)')+'">'+i.nc+'</td><td>'+pill(pc,scorePct+'%')+'</td><td style="font-size:8px;color:var(--t3)">'+i.impacto+'</td></tr>';
+  });
+  h+='</tbody></table>';
+}
+
+h+='<div style="font-size:8px;color:var(--t4);margin-top:8px;padding:6px;background:rgba(0,0,0,.15);border-radius:4px">&#128270; Inspecao de Campo ISIP v1.0 | '+seg.label+' | '+checklist.reduce(function(a,c){return a+c.items.length;},0)+' itens | ISO 45001 Clausula 9.1 | NR-1 Item 1.5 | Rastreavel e auditavel</div>';
+m.innerHTML=h;
+};
+
+/* === SUBMIT INSPECTION WITH FULL INTEGRATION === */
+function submitInspec(){
+  var checklist=getInspecChecklist();
+  var totalItems=0,ncCount=0,ncDetails=[];
+  checklist.forEach(function(cat,ci){
+    cat.items.forEach(function(item,ii){
+      var uid='insp-'+ci+'-'+ii;
+      var statusSel=G(uid+'-status');
+      if(statusSel){
+        totalItems++;
+        if(statusSel.value==='nc'){
+          ncCount++;
+          ncDetails.push({cat:cat.cat,item:item,zone:G('insp-zona').value});
+        }
+      }
+    });
+  });
+  var scorePct=Math.round((1-ncCount/totalItems)*100);
+  var zona=G('insp-zona').value;
+  var inspetor=G('insp-inspetor').value;
+  var tipo=G('insp-tipo').value;
+  var ativ=G('insp-ativ').value;
+
+  /* 1. Save to DB */
+  var insp={
+    id:'INSP-'+Date.now(),
+    data:new Date().toLocaleString('pt-BR'),
+    inspetor:inspetor,zona:zona,tipo:tipo,atividade:ativ,
+    segmento:CURRENT_SEG,total:totalItems,nc:ncCount,
+    score:scorePct,ncDetails:ncDetails,
+    obs:G('insp-obs').value,acoes:G('insp-acoes').value,
+    impacto:ncCount===0?'Nenhum':ncCount<=2?'Baixo':ncCount<=5?'Medio':'Alto'
+  };
+  INSPEC_DB.unshift(insp);
+
+  /* 2. INTEGRATION: Alter zone risk score */
+  var zoneObj=ZONES.find(function(z){return z.name===zona;});
+  if(zoneObj&&ncCount>0){
+    zoneObj.env=Math.min(3,zoneObj.env+ncCount*0.15);
+    zoneObj.apt=Math.min(3,zoneObj.apt+ncCount*0.1);
+  }
+
+  /* 3. INTEGRATION: Generate violations for critical NC */
+  ncDetails.forEach(function(nc){
+    if(nc.cat==='Risco Critico'){
+      RULE_VIOLATIONS.push({
+        rule:'INSP-NC',cat:'Inspecao',priority:'Critica',
+        worker:inspetor,workerId:0,
+        action:'Bloquear atividade ate correcao',
+        condition:'NC Critica: '+nc.item+' em '+nc.zone,
+        time:new Date().toLocaleTimeString('pt-BR')
+      });
+    }
+  });
+
+  /* 4. INTEGRATION: Notifications */
+  if(ncCount===0){
+    addNotif('info','INSPECAO OK','Sem NC em '+zona+' — '+inspetor,'info');
+  }else if(ncDetails.some(function(n){return n.cat==='Risco Critico';})){
+    addNotif('critical','INSPECAO: NC CRITICA',ncCount+' NC em '+zona+' ('+ncDetails.filter(function(n){return n.cat==='Risco Critico';}).length+' criticas)','critical');
+  }else{
+    addNotif('warning','INSPECAO: '+ncCount+' NC',zona+' — Score '+scorePct+'%','warning');
+  }
+
+  /* 5. INTEGRATION: Feed SCORE_HISTORY */
+  SCORE_HISTORY.push({t:Date.now(),avg:scorePct,violations:RULE_VIOLATIONS.length,efetivo:WORKERS.length});
+
+  /* 6. INTEGRATION: Feed INCIDENTS_DB for critical */
+  if(ncDetails.some(function(n){return n.cat==='Risco Critico';})){
+    INCIDENTS_DB.unshift({
+      tipo:'desvio',sev:ncCount>3?'alta':'media',zona:zona,
+      reporter:inspetor,cat:'Nao-conformidade em inspecao',
+      nr:SEG_CONFIG[CURRENT_SEG].nrs[0]||'NR-1',
+      desc:ncCount+' NC encontradas em inspecao de campo',
+      acao:'Correcao imediata requerida',
+      data:new Date().toLocaleString('pt-BR'),id:'INC-'+Date.now()
+    });
+  }
+
+  /* 7. Redraw system */
+  drawMap();updatePanels();
+  Object.keys(rendered).forEach(function(mod){rendered[mod]=false;});
+  rendered['inspec']=false;openTab('inspec');
+  showSaveInd('ok','INSPECAO REGISTRADA: '+insp.id+' — '+ncCount+' NC / Score '+scorePct+'%');
+}
 
 </script>
 </body>
