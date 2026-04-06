@@ -478,6 +478,23 @@ select:focus{outline:1px solid var(--cy);border-color:var(--cy)}
 .planta-status-badge{padding:6px 14px;border-radius:6px;background:linear-gradient(180deg,rgba(var(--ok-rgb),0.2) 0%,rgba(var(--ok-rgb),0.08) 100%);border:1px solid rgba(var(--ok-rgb),0.4);text-align:center;box-shadow:0 0 16px rgba(var(--ok-rgb),0.2),inset 0 1px 0 rgba(255,255,255,0.06)}
 @keyframes plantaScan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 .planta-scan-line{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(var(--cy-rgb),0.6),transparent);animation:plantaScan 4s linear infinite;pointer-events:none}
+
+/* SEGMENT-SPECIFIC PLANTA SIGNATURES */
+#m-planta.seg-mineracao{background:radial-gradient(ellipse 60% 40% at 30% 60%,rgba(139,69,19,0.35) 0%,transparent 60%),radial-gradient(ellipse 50% 30% at 75% 40%,rgba(212,118,42,0.25) 0%,transparent 60%),linear-gradient(180deg,#0a0604,#0f0805,#080302)!important}
+#m-planta.seg-siderurgia{background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(255,69,0,0.4) 0%,transparent 55%),radial-gradient(ellipse 40% 30% at 30% 30%,rgba(255,140,0,0.35) 0%,transparent 50%),linear-gradient(180deg,#0a0202,#100404,#080202)!important}
+#m-planta.seg-cimento{background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(160,160,160,0.25) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 30% 70%,rgba(245,222,179,0.2) 0%,transparent 50%),linear-gradient(180deg,#080808,#0c0c0c,#060606)!important}
+#m-planta.seg-petroleo{background:radial-gradient(ellipse 50% 40% at 30% 30%,rgba(0,180,216,0.3) 0%,transparent 55%),radial-gradient(ellipse 60% 40% at 70% 60%,rgba(0,40,80,0.5) 0%,transparent 60%),linear-gradient(180deg,#020610,#040a18,#020408)!important}
+#m-planta.seg-usinas{background:radial-gradient(ellipse 60% 40% at 50% 30%,rgba(255,215,0,0.25) 0%,transparent 55%),radial-gradient(ellipse 50% 40% at 30% 70%,rgba(30,144,255,0.3) 0%,transparent 60%),linear-gradient(180deg,#020410,#040818,#020408)!important}
+.planta-element-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0;padding:0 14px}
+.planta-element{background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.3) 100%);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 8px;text-align:center;backdrop-filter:blur(8px);transition:all .25s;cursor:pointer;position:relative;overflow:hidden}
+.planta-element::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:currentColor;box-shadow:0 0 12px currentColor}
+.planta-element:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.6)}
+.planta-element-icon{font-size:32px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 0 12px currentColor)}
+.planta-element-name{font-family:var(--hud);font-size:9px;font-weight:700;letter-spacing:.04em;color:#fff}
+.planta-element-stat{font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.6);margin-top:3px}
+.seg-signature{position:absolute;top:14px;right:14px;font-size:48px;opacity:0.08;pointer-events:none;z-index:1;text-shadow:0 0 40px currentColor}
+.seg-watermark{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);font-family:var(--hud);font-size:90px;font-weight:900;opacity:0.025;letter-spacing:.15em;pointer-events:none;white-space:nowrap;color:#fff}
+
 </style>
 </head>
 <body>
@@ -3548,9 +3565,72 @@ var PLANT_CHAINS={
     kpis:[{n:'CAPACIDADE',v:'500',u:'MW',m:'META: 95% FC'},{n:'DISPONIB.',v:'93%',u:'',m:''},{n:'SEGURANCA',v:'1.2',u:'TRIR',m:''},{n:'RENDIM.',v:'42%',u:'Ciclo comb.',m:''},{n:'EMISSOES',v:'-10%',u:'vs 2023',m:''}]
   }
 };
+
+/* ============================================================
+   SEGMENT VISUAL DNA — ENGINE DE LAYOUT POR SEGMENTO
+   Cada segmento tem assinatura visual única (cores, atmosfera,
+   ícones, silhuetas) para evitar layout genérico.
+   ============================================================ */
+var SEGMENT_VISUAL_DNA={
+  mineracao:{
+    icon:'\u26CF\uFE0F',
+    palette:{primary:'#D4762A',secondary:'#8B4513',accent:'#F4A460',glow:'rgba(212,118,42,0.4)',deep:'#2A1A0A'},
+    bg:'radial-gradient(ellipse 60% 40% at 30% 60%,rgba(139,69,19,0.35) 0%,transparent 60%),radial-gradient(ellipse 50% 30% at 75% 40%,rgba(212,118,42,0.25) 0%,transparent 60%),radial-gradient(ellipse 80% 50% at 50% 100%,rgba(80,40,10,0.4) 0%,transparent 70%),linear-gradient(180deg,#0a0604 0%,#0f0805 50%,#080302 100%)',
+    silhouette:'\u26CF \u{1F69B} \u26F0',
+    keywords:['Pit','Britagem','Correia','Patio','Barragem','Caminhao FE'],
+    elements:[{n:'Mina Aberta',i:'\u{1F30B}',pos:'top-left'},{n:'Britagem',i:'\u2699',pos:'top-mid'},{n:'Correia',i:'\u27A1',pos:'mid'},{n:'Pilha',i:'\u26F0',pos:'bot-left'},{n:'Caminhao FE',i:'\u{1F69B}',pos:'bot-right'}],
+    label:'CICLO MINEROMETALURGICO',
+    atmosphere:'arida-poeira'
+  },
+  siderurgia:{
+    icon:'\u{1F525}',
+    palette:{primary:'#FF4500',secondary:'#8B0000',accent:'#FFD700',glow:'rgba(255,69,0,0.5)',deep:'#1A0000'},
+    bg:'radial-gradient(ellipse 70% 50% at 50% 50%,rgba(255,69,0,0.4) 0%,transparent 55%),radial-gradient(ellipse 40% 30% at 30% 30%,rgba(255,140,0,0.35) 0%,transparent 50%),radial-gradient(ellipse 50% 30% at 70% 70%,rgba(178,34,34,0.3) 0%,transparent 55%),linear-gradient(180deg,#0a0202 0%,#100404 50%,#080202 100%)',
+    silhouette:'\u{1F525} \u26EA \u{1F3ED}',
+    keywords:['Forno','Aciaria','Lingotamento','Coqueria','Laminacao','Sinter'],
+    elements:[{n:'Alto-Forno',i:'\u{1F525}',pos:'top-left'},{n:'Aciaria LD',i:'\u26A1',pos:'top-mid'},{n:'Lingotamento',i:'\u{1F4E6}',pos:'mid'},{n:'Laminacao',i:'\u{1F4CF}',pos:'bot-mid'},{n:'Coqueria',i:'\u{1F3ED}',pos:'bot-right'}],
+    label:'CICLO SIDERURGICO INTEGRADO',
+    atmosphere:'incandescente-fundicao'
+  },
+  cimento:{
+    icon:'\u{1F3D7}\uFE0F',
+    palette:{primary:'#A0A0A0',secondary:'#D3D3D3',accent:'#F5DEB3',glow:'rgba(160,160,160,0.4)',deep:'#1A1A1A'},
+    bg:'radial-gradient(ellipse 60% 40% at 50% 50%,rgba(160,160,160,0.25) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 30% 70%,rgba(245,222,179,0.2) 0%,transparent 50%),radial-gradient(ellipse 50% 40% at 70% 30%,rgba(112,128,144,0.3) 0%,transparent 55%),linear-gradient(180deg,#080808 0%,#0c0c0c 50%,#060606 100%)',
+    silhouette:'\u{1F3D7} \u{1F31E} \u{1F3ED}',
+    keywords:['Forno','Moinho','Silo','Britagem','Clinquer','Pre-homog'],
+    elements:[{n:'Pedreira',i:'\u26F0',pos:'top-left'},{n:'Moinho',i:'\u2699',pos:'top-mid'},{n:'Forno Rotativo',i:'\u{1F525}',pos:'mid'},{n:'Resfriador',i:'\u2744',pos:'bot-mid'},{n:'Silos',i:'\u{1F3D7}',pos:'bot-right'}],
+    label:'CICLO CIMENTEIRO',
+    atmosphere:'pulverulenta-mineral'
+  },
+  petroleo:{
+    icon:'\u{1F6E2}\uFE0F',
+    palette:{primary:'#00B4D8',secondary:'#003366',accent:'#FFD700',glow:'rgba(0,180,216,0.45)',deep:'#000A14'},
+    bg:'radial-gradient(ellipse 50% 40% at 30% 30%,rgba(0,180,216,0.3) 0%,transparent 55%),radial-gradient(ellipse 60% 40% at 70% 60%,rgba(0,40,80,0.5) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 50% 80%,rgba(255,140,0,0.25) 0%,transparent 50%),linear-gradient(180deg,#020610 0%,#040a18 50%,#020408 100%)',
+    silhouette:'\u{1F6E2} \u26F4 \u{1F525}',
+    keywords:['Plataforma','Compressor','Tanque','Flare','Refino','Separador'],
+    elements:[{n:'Plataforma',i:'\u{1F30A}',pos:'top-left'},{n:'Separadores',i:'\u2699',pos:'top-mid'},{n:'Compressor',i:'\u26A1',pos:'mid'},{n:'Tanques',i:'\u{1F6E2}',pos:'bot-mid'},{n:'Flare',i:'\u{1F525}',pos:'bot-right'}],
+    label:'CICLO PETROLIFERO INTEGRADO',
+    atmosphere:'maritima-energetica'
+  },
+  usinas:{
+    icon:'\u26A1',
+    palette:{primary:'#FFD700',secondary:'#1E90FF',accent:'#00FF7F',glow:'rgba(255,215,0,0.4)',deep:'#0A0A14'},
+    bg:'radial-gradient(ellipse 60% 40% at 50% 30%,rgba(255,215,0,0.25) 0%,transparent 55%),radial-gradient(ellipse 50% 40% at 30% 70%,rgba(30,144,255,0.3) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 70% 60%,rgba(0,255,127,0.2) 0%,transparent 50%),linear-gradient(180deg,#020410 0%,#040818 50%,#020408 100%)',
+    silhouette:'\u26A1 \u{1F300} \u{1F3ED}',
+    keywords:['Turbina','Caldeira','Subestacao','Gerador','Condensador','Resfriamento'],
+    elements:[{n:'Caldeira',i:'\u{1F525}',pos:'top-left'},{n:'Turbina',i:'\u{1F300}',pos:'top-mid'},{n:'Gerador',i:'\u26A1',pos:'mid'},{n:'Subestacao',i:'\u{1F50C}',pos:'bot-mid'},{n:'Torre Resfr.',i:'\u2744',pos:'bot-right'}],
+    label:'CICLO DE GERACAO ENERGETICA',
+    atmosphere:'eletromecanica-vapor'
+  }
+};
+function getSegDNA(){return SEGMENT_VISUAL_DNA[CURRENT_SEG]||SEGMENT_VISUAL_DNA.mineracao;}
+
 R['planta']=function(){
   var m=G('m-planta');
   var seg=CURRENT_SEG||'mineracao';
+  var dna=getSegDNA();
+  /* Apply segment-specific class for DNA-driven background */
+  m.className='mod on seg-'+seg;
   var chain=PLANT_CHAINS[seg]||PLANT_CHAINS.mineracao;
   var viol=RULE_VIOLATIONS.length;
   var critZ=ZONES.filter(function(z){return sc2(score(z))>=6;}).length;
@@ -3577,6 +3657,17 @@ R['planta']=function(){
   h+='<div class="planta-status-badge"><div style="font-size:8px;color:var(--ok);letter-spacing:.05em">OPERACAO</div><div style="font-size:11px;font-weight:900;color:var(--ok);text-shadow:0 0 10px rgba(var(--ok-rgb),0.6)">NORMAL</div></div>';
   h+='<button class="btn" style="border-color:var(--cy);color:var(--cy);font-size:9px;padding:6px 12px" onclick="showMap()">&#9664; MAPA</button>';
   h+='</div></div>';
+
+  /* SEGMENT WATERMARK + SIGNATURE ELEMENTS — DNA per segment */
+  h+='<div class="seg-watermark">'+dna.label+'</div>';
+  h+='<div class="seg-signature" style="color:'+dna.palette.primary+'">'+dna.icon+'</div>';
+  h+='<div class="planta-element-grid">';
+  dna.elements.forEach(function(el,ei){
+    var pal=[dna.palette.primary,dna.palette.secondary,dna.palette.accent,dna.palette.primary,dna.palette.secondary];
+    var col=pal[ei]||dna.palette.primary;
+    h+='<div class="planta-element" style="color:'+col+'"><div class="planta-element-icon">'+el.i+'</div><div class="planta-element-name">'+esc(el.n)+'</div><div class="planta-element-stat">ATIVO &middot; '+dna.atmosphere.toUpperCase()+'</div></div>';
+  });
+  h+='</div>';
 
   /* PROCESS CHAIN — cinematic stages */
   h+='<div style="padding:18px 14px;overflow-x:auto">';
